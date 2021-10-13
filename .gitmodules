@@ -1,0 +1,6 @@
+[submodule "FFDConverter/Gibbed.IO"]
+	path = FFDConverter/Gibbed.IO
+	url = https://github.com/gibbed/Gibbed.IO.git
+[submodule "FFDConverter/NDesk.Options"]
+	path = FFDConverter/NDesk.Options
+	url = https://github.com/gibbed/NDesk.Options.git
