@@ -18,16 +18,17 @@ namespace FFDConverter
         public int size;
         public int bold;
         public int italic;
+        public int charsCount;
     }
     public struct charDescBMF
     {
         public int id;
         public int x;
         public int y;
-        public int w;
-        public int h;
-        public int xoff;
-        public int yoff;
+        public int width;
+        public int height;
+        public int xoffset;
+        public int yoffset;
         public int xadvance;
         public int page;
         public int chnl;

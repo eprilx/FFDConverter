@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "--bmfontDesc=testV.fnt -f fcz_bold_default.ffd"
+      "commandLineArgs": "-v FC5 -b testV_text.fnt -f fcz_bold_default.ffd"
     }
   }
 }

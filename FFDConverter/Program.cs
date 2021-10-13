@@ -13,7 +13,7 @@ namespace FFDConverter
 
             string ToolVersion = "0.0.1";
             string originalFFD = null;
-            string charDesBMF = null;
+            string fntBMF = null;
             string output = null;
             string version = null;
             List<string> SupportedGame = new List<string>()
@@ -26,14 +26,14 @@ namespace FFDConverter
 
 
             var p = new OptionSet() {
-                { "v|version=", "(require) Name of game. (FC2,FC3,...)",
+                { "v|version=", "(required) Name of game. (FC2,FC3,...)",
                    v => version = v  },
                 { "f|originalFFD=",
-                   "(require) Original FFD file (*.ffd)",
+                   "(required) Original FFD file (*.ffd)",
                     v => originalFFD = v },
                 { "b|bmfontDesc=",
-                    "(require) Bmfont descriptor file (*.fnt)",
-                    v => charDesBMF = v },
+                    "(required) Bmfont descriptor file (*.fnt)",
+                    v => fntBMF = v },
                 { "o|NewFFD=",
                    "(optional) New FFD file",
                     v => output = v },
@@ -57,7 +57,7 @@ namespace FFDConverter
                 output = originalFFD + ".new.ffd";
             }
 
-            if (version == null || originalFFD == null || charDesBMF == null || show_help )
+            if (version == null || originalFFD == null || fntBMF == null || show_help )
             {
                 ShowHelp(p);
                 return;
@@ -66,12 +66,14 @@ namespace FFDConverter
             if(!originalFFD.EndsWith(".ffd"))
             {
                 Console.WriteLine("Unknown FFD file.");
+                ShowHelp(p);
                 return;
             }
 
-            if (!originalFFD.EndsWith(".fnt"))
+            if (!fntBMF.EndsWith(".fnt"))
             {
-                Console.WriteLine("Unknown Bmfont descriptor file.");
+                Console.WriteLine("Unknown BMFont file.");
+                ShowHelp(p);
                 return;
             }
 
@@ -102,7 +104,7 @@ namespace FFDConverter
                 p.WriteOptionDescriptions(Console.Out);
             }
 
-            (generalInfoBMF BMFinfo, List<charDescBMF> charDescList_, List<kernelDescBMF> kernelDescList) = BMFontFormat.LoadBMF(charDesBMF);
+            (generalInfoBMF BMFinfo, List<charDescBMF> charDescList_, List<kernelDescBMF> kernelDescList) = BMFontFormat.LoadBMF(fntBMF);
 
             List<charDescFFD> ffdDescList_ = FFDFormat.LoadFFD(originalFFD);
             foreach (charDescFFD item in ffdDescList_)
