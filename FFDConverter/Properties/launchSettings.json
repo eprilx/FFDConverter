@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "FFDConverter": {
+      "commandName": "Project",
+      "commandLineArgs": "--bmfontDesc=testV.fnt -f fcz_bold_default.ffd"
+    }
+  }
+}
