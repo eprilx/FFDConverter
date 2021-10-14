@@ -8,28 +8,22 @@ namespace FFDConverter
     {
         static void Main(string[] args)
         {
-
-            bool show_help = false;
-
-            string ToolVersion = "0.0.1";
+            string ToolVersion = "0.0.2";
             string originalFFD = null;
             string fntBMF = null;
             string output = null;
             string version = null;
+            bool show_help = false;
             List<string> SupportedGame = new()
                     {
                         "FC5"
-                        /*"FC2","FC3","FC4","FC5","FCND",
-                        "AC2", "ACBr", "ACRe", "AC3", "AC4",
-                        "WD1", "WD2"*/
                     };
-
 
             var p = new OptionSet() {
                 { "v|version=", "(required) Name of game. (FC2,FC3,...)",
                    v => version = v  },
                 { "f|originalFFD=",
-                   "(required) Original FFD file (*.ffd)",
+                   "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
                     v => originalFFD = v },
                 { "b|bmfontDesc=",
                     "(required) Bmfont descriptor file (*.fnt)",
@@ -40,7 +34,6 @@ namespace FFDConverter
                 { "h|help",  "show this message and exit",
                    v => show_help = v != null },
             };
-
 
             try
             {
@@ -54,7 +47,7 @@ namespace FFDConverter
 
             if (output == null)
             {
-                output = originalFFD + ".new.ffd";
+                output = originalFFD + ".new";
             }
 
             if (version == null || originalFFD == null || fntBMF == null || show_help)
@@ -63,7 +56,7 @@ namespace FFDConverter
                 return;
             }
 
-            if (!originalFFD.EndsWith(".ffd"))
+            if (!originalFFD.EndsWith(".ffd") && !originalFFD.EndsWith(".Fire_Font_Descriptor"))
             {
                 Console.WriteLine("Unknown FFD file.");
                 ShowHelp(p);
@@ -88,6 +81,9 @@ namespace FFDConverter
                 return;
             }
 
+            FFDFormat.CreateFFD(originalFFD, fntBMF, output);
+            Done();
+
             void ShowHelp(OptionSet p)
             {
                 Console.Write("\nFFDConverter v" + ToolVersion);
@@ -104,17 +100,13 @@ namespace FFDConverter
                 p.WriteOptionDescriptions(Console.Out);
             }
 
-            (generalInfoBMF BMFinfo, List<charDescBMF> charDescList_, List<kernelDescBMF> kernelDescList) = BMFontFormat.LoadBMF(fntBMF);
-
-            List<charDescFFD> ffdDescList_ = FFDFormat.LoadFFD(originalFFD);
-            foreach (charDescFFD item in ffdDescList_)
+            void Done()
             {
-                //Console.WriteLine(String.Format("first={0,-5} second={1,-5} amount={2,-5}", item.id, item.widthScale, item.heightScale));
+                Console.Write("\nFFDConverter v" + ToolVersion);
+                Console.WriteLine(" by eprilx");
+                Console.WriteLine("Done!");
             }
 
-
         }
-
-
     }
 }

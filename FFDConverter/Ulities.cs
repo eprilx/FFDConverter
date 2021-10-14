@@ -17,5 +17,15 @@ namespace FFDConverter
             FinalString = STR[Pos1..Pos2];
             return FinalString;
         }
+
+        public static float intUVmappingFloat(int number, int widthHeightImg)
+        {
+            return (float)number / (float)widthHeightImg;
+        }
+
+        public static int intScaleInt(int number, float Scale)
+        {
+            return (int)((float)number * Scale);
+        }
     }
 }
