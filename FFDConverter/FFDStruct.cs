@@ -18,6 +18,7 @@ namespace FFDConverter
             this.BitmapName = new();
         }
     }
+
     public struct charDescFFD
     {
         public ushort id;

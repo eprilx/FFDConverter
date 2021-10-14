@@ -1,6 +1,5 @@
 ﻿namespace FFDConverter
 {
-
     public struct generalInfoBMF
     {
         public int lineHeight;
@@ -15,6 +14,7 @@
         public int charsCount;
         public int kernsCount;
     }
+
     public struct charDescBMF
     {
         public int id;

@@ -2,7 +2,6 @@
 
 namespace FFDConverter
 {
-
     class Ulities
     {
         public static string StringBetween(string STR, string FirstString, string LastString)
@@ -18,9 +17,13 @@ namespace FFDConverter
             return FinalString;
         }
 
-        public static float intUVmappingFloat(int number, int widthHeightImg)
+        public static (float,float,float,float) getUVmapping(int x, int y, int width, int height, int WidthImg, int HeightImg)
         {
-            return (float)number / (float)widthHeightImg;
+            float UVLeft = x / (float)WidthImg;
+            float UVTop = y / (float)HeightImg;
+            float UVRight = (x + width) / (float)WidthImg;
+            float UVBottom = (y + height) / (float)HeightImg;
+            return (UVLeft, UVTop, UVRight, UVBottom);
         }
 
         public static int intScaleInt(int number, float Scale)

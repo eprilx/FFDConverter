@@ -110,7 +110,7 @@ namespace FFDConverter
             List<charDescBMF> BMFcharDescList = new();
             List<kernelDescBMF> BMFkernelDescList = new();
             generalInfoBMF infoBMF = new();
-            (infoBMF, BMFcharDescList, BMFkernelDescList ) = BMFontFormat.LoadBMF(inputBMF);
+            (infoBMF, BMFcharDescList, BMFkernelDescList) = BMFontFormat.LoadBMF(inputBMF);
 
             //Create FFD
             var output = File.Create(outputFFD);
@@ -188,14 +188,15 @@ namespace FFDConverter
             {
                 output.WriteValueU16((ushort)infoChar.id);
                 output.WriteByte((byte)infoChar.page);
-                output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.x, infoBMF.WidthImg));
-                output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.y, infoBMF.HeightImg));
-                output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.width, infoBMF.WidthImg));
-                output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.height, infoBMF.HeightImg));
-                output.WriteValueU16((ushort)infoChar.xoffset);
-                output.WriteValueU16((ushort)infoChar.yoffset);
+                (float UVleft, float UVtop, float UVright, float UVbottom) = Ulities.getUVmapping(infoChar.x, infoChar.y, infoChar.width, infoChar.height, infoBMF.WidthImg, infoBMF.HeightImg);
+                output.WriteValueF32(UVleft);
+                output.WriteValueF32(UVtop);
+                output.WriteValueF32(UVright);
+                output.WriteValueF32(UVbottom);
+                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.xoffset, 8));
+                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.yoffset, 8));
                 output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.width, 8)));
-                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.width, 8)));
+                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.height, 8)));
             }
             output.WriteBytes(unkFFD.unkFooter);
             output.Close();
