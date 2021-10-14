@@ -122,16 +122,16 @@ namespace FFDConverter
 
             // Calculate offsetbitmapNames
             int sizefontName = infoFFD.fontName.Length + 1;
-            int sizeTable1 = infoBMF.charsCount * 2 + 2 + 2;
+            int sizeTable1 = (infoBMF.charsCount * 2) + 2 + 2;
             if (infoFFD.table1EqualZero)
                 sizeTable1 = infoBMF.charsCount * 4;
             int sizeTable2 = infoBMF.charsCount * 2;
             int sizeTable3 = infoBMF.charsCount * 2;
-            int sizeTable4 = infoBMF.charsCount * 2 + 6;
+            int sizeTable4 = (infoBMF.charsCount * 2) + 6;
             int sizeTable5 = infoBMF.charsCount * 2;
             int sizeTable6 = 2;
             if (infoFFD.kernsCount > 0)
-                sizeTable6 = infoBMF.kernsCount * 6 + 2;
+                sizeTable6 = (infoBMF.kernsCount * 6) + 2;
 
             uint OffsetBitmapNames = (uint)(4 + sizefontName + sizeTable1 + sizeTable2 + sizeTable3 + sizeTable4 + sizeTable5 + sizeTable6);
 
@@ -143,7 +143,7 @@ namespace FFDConverter
 
             for(int i = 0; i <= infoBMF.charsCount; i++)
             {
-                output.WriteValueU16((ushort)(infoBMF.charsCount * 2 + 2 + i * 2));
+                output.WriteValueU16((ushort)((infoBMF.charsCount * 2) + 2 + (i * 2)));
             }
 
             for (int i = 0; i < infoBMF.charsCount; i++)

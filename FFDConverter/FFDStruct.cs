@@ -31,7 +31,6 @@ namespace FFDConverter
         public short yoffset;
         public ushort widthScale;
         public ushort heightScale;
-
     }
 
     public struct xadvanceDescFFD

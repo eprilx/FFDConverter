@@ -106,7 +106,6 @@ namespace FFDConverter
                 Console.WriteLine(" by eprilx");
                 Console.WriteLine("Done!");
             }
-
         }
     }
 }
