@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v FC5 -b testV_text.fnt -f fcz_bold_default.ffd"
+      "commandLineArgs": "-v FC5 -b testV_text_kern.fnt -f fcz_bold_default.ffd"
     }
   }
 }

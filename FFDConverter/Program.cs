@@ -16,7 +16,7 @@ namespace FFDConverter
             string fntBMF = null;
             string output = null;
             string version = null;
-            List<string> SupportedGame = new List<string>()
+            List<string> SupportedGame = new()
                     {
                         "FC5"
                         /*"FC2","FC3","FC4","FC5","FCND",
@@ -46,7 +46,7 @@ namespace FFDConverter
             {
                 p.Parse(Environment.GetCommandLineArgs());
             }
-            catch (OptionException e)
+            catch (OptionException)
             {
                 Console.WriteLine("Try 'FFDConverter --help' for more information.");
                 return;
@@ -57,13 +57,13 @@ namespace FFDConverter
                 output = originalFFD + ".new.ffd";
             }
 
-            if (version == null || originalFFD == null || fntBMF == null || show_help )
+            if (version == null || originalFFD == null || fntBMF == null || show_help)
             {
                 ShowHelp(p);
                 return;
             }
 
-            if(!originalFFD.EndsWith(".ffd"))
+            if (!originalFFD.EndsWith(".ffd"))
             {
                 Console.WriteLine("Unknown FFD file.");
                 ShowHelp(p);
@@ -81,7 +81,7 @@ namespace FFDConverter
             {
                 Console.WriteLine("Unknown game.");
                 Console.WriteLine("List:");
-                foreach(string gamename in SupportedGame)
+                foreach (string gamename in SupportedGame)
                 {
                     Console.WriteLine("- " + gamename);
                 }

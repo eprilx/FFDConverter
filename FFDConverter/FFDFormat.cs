@@ -1,17 +1,11 @@
-﻿using System;
+﻿using Gibbed.IO;
 using System.Collections.Generic;
-using Gibbed.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 
 namespace FFDConverter
 {
-
     class FFDFormat
     {
-
         public static List<charDescFFD> LoadFFD(string inputFFD)
         {
             List<charDescFFD> FFDDescList = new();
@@ -65,13 +59,13 @@ namespace FFDConverter
                     unk = input.ReadValueU8(),
                     xadvanceScale = input.ReadValueU8()
                 });
-            };
+            }
 
             for (int i = 0; i < charCount; i++)
             {
                 input.ReadValueU16(); // = 8
             }
-            
+
             int sizeKernel = input.ReadValueU16();
             input.ReadBytes(sizeKernel); // data kernel (not use)
             string BitmapNames = input.ReadStringZ();
@@ -94,7 +88,7 @@ namespace FFDConverter
                 });
             }
 
-            foreach(charDescFFD ffdItem in FFDDescList)
+            foreach (charDescFFD ffdItem in FFDDescList)
             {
                 //Console.WriteLine(String.Format("id={0,-10} uvleft={1,-10} uvtop={2,-10} uvright={3,-10} uvbottom={4,-10}", 
                 //    ffdItem.id, ffdItem.UVLeft, ffdItem.UVTop, ffdItem.UVRight, ffdItem.UVBottom));

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FFDConverter
+﻿namespace FFDConverter
 {
 
     public struct generalInfoBMF
@@ -19,6 +13,7 @@ namespace FFDConverter
         public int bold;
         public int italic;
         public int charsCount;
+        public int kernsCount;
     }
     public struct charDescBMF
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 
 namespace FFDConverter
 {
@@ -18,7 +14,7 @@ namespace FFDConverter
             {
                 Pos2 = STR.LastIndexOf(STR.Last()) + 1;
             }
-            FinalString = STR.Substring(Pos1, Pos2 - Pos1);
+            FinalString = STR[Pos1..Pos2];
             return FinalString;
         }
     }
