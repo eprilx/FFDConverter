@@ -10,7 +10,9 @@ namespace FFDConverter
     {
         public static void LoadFFD(FileStream input, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, ref UnknownStuff_FC5 unkFFD)
         {
-            unkFFD.unkHeader1 = input.ReadBytes(4);
+            input.Position = 0;
+            unkFFD.unkHeader1 = input.ReadBytes(3);
+            infoFFD.pagesCount = input.ReadValueU8();
             infoFFD.charsCount = input.ReadValueU16();
             unkFFD.unkHeader2 = input.ReadBytes(34);
 
@@ -24,11 +26,10 @@ namespace FFDConverter
             input.Position -= 2;
             if (checkNull == 0)
             {
-                for (int i = 0; i < infoFFD.charsCount; i++)
+                for (int i = 0; i <= infoFFD.charsCount; i++)
                 {
                     input.ReadValueU32(); // = 0
                 }
-                input.ReadValueU32();
                 infoFFD.table1EqualZero = true;
             }
             else
@@ -70,15 +71,18 @@ namespace FFDConverter
                 input.ReadBytes(sizeKernel); // data kernel (not use)
             else
                 infoFFD.kernsCount = 0;
-            infoFFD.BitmapName1 = input.ReadStringZ();
-            infoFFD.BitmapName2 = input.ReadStringZ();
+            
+            for (int i = 0; i < infoFFD.pagesCount; i ++)
+            {
+                infoFFD.BitmapName.Add(input.ReadStringZ());
+            }
 
             for (int i = 0; i < infoFFD.charsCount; i++)
             {
                 FFDDescList.Add(new charDescFFD
                 {
                     id = input.ReadValueU16(), // = id
-                    zero = input.ReadValueU8(), // = 0
+                    page = input.ReadValueU8(),
                     UVLeft = input.ReadValueF32(),
                     UVTop = input.ReadValueF32(),
                     UVRight = input.ReadValueF32(),
@@ -95,6 +99,7 @@ namespace FFDConverter
         {
             //Load FFD
             generalInfoFFD infoFFD = new();
+            infoFFD.CreateListBitmapName();
             List<charDescFFD> FFDDescList = new();
             List<xadvanceDescFFD> FFDxadvanceList = new();
             UnknownStuff_FC5 unkFFD = new();
@@ -111,6 +116,7 @@ namespace FFDConverter
             var output = File.Create(outputFFD);
 
             output.WriteBytes(unkFFD.unkHeader1);
+            output.WriteValueU8(infoFFD.pagesCount);
             output.WriteValueU16((ushort)infoBMF.charsCount);
             output.WriteBytes(unkFFD.unkHeader2);
 
@@ -172,13 +178,16 @@ namespace FFDConverter
             {
                 output.WriteValueU16(0);
             }
-            output.WriteStringZ(infoFFD.BitmapName1);
-            output.WriteStringZ(infoFFD.BitmapName2);
 
+            for (int i = 0; i < infoFFD.pagesCount; i++)
+            {
+                output.WriteStringZ(infoFFD.BitmapName[i]);
+            }
+            
             foreach (charDescBMF infoChar in BMFcharDescList)
             {
                 output.WriteValueU16((ushort)infoChar.id);
-                output.WriteByte((byte)0);
+                output.WriteByte((byte)infoChar.page);
                 output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.x, infoBMF.WidthImg));
                 output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.y, infoBMF.HeightImg));
                 output.WriteValueF32(Ulities.intUVmappingFloat(infoChar.width, infoBMF.WidthImg));

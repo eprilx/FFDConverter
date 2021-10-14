@@ -5,19 +5,23 @@ namespace FFDConverter
     public struct generalInfoFFD
     {
         public string fontName;
+        public byte pagesCount;
         public ushort charsCount;
         public bool table1EqualZero;
         public short table2Value;
         public short table5Value;
         public short kernsCount;
-        public string BitmapName1;
-        public string BitmapName2;
+        public List<string> BitmapName;
 
+        public void CreateListBitmapName()
+        {
+            this.BitmapName = new();
+        }
     }
     public struct charDescFFD
     {
         public ushort id;
-        public byte zero;
+        public byte page;
         public float UVLeft;
         public float UVTop;
         public float UVRight;

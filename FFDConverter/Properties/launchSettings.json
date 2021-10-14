@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v FC5 -b testV_text_kern.fnt -f fcz_bold_default.ffd -o new.ffd"
+      "commandLineArgs": "-v FC5 -b testV_text_kern.fnt -f ffd_original\\xingothic-sc_w6_chinesesimple.ffd -o new.ffd"
     }
   }
 }
