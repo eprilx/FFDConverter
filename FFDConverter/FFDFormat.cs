@@ -32,16 +32,17 @@ namespace FFDConverter
 {
     class FFDFormat
     {
-        public static void LoadFFD(FileStream input, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, ref UnknownStuff_FC5 unkFFD)
+        public static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, ref UnknownStuff_FC5 unkFFD, Config config)
         {
+            var input = File.OpenRead(inputFFD);
             input.Position = 0;
-            unkFFD.unkHeader1 = input.ReadBytes(3);
+            unkFFD.unkHeader1 = input.ReadBytes(config.unkHeader1);
             infoFFD.pagesCount = input.ReadValueU8();
             infoFFD.charsCount = input.ReadValueU16();
-            unkFFD.unkHeader2 = input.ReadBytes(34);
+            unkFFD.unkHeader2 = input.ReadBytes(config.unkHeader2);
 
             uint OffsetBitmapNames = input.ReadValueU32(); // OffsetBitmapNames_Real = OffsetBitmapNames + CurrentPosition
-            unkFFD.unkHeader3 = input.ReadBytes(4);
+            unkFFD.unkHeader3 = input.ReadBytes(config.unkHeader3);
             byte sizeFontName = input.ReadValueU8();
             infoFFD.fontName = input.ReadString(sizeFontName);
             infoFFD.charsCount = input.ReadValueU16();
@@ -119,16 +120,19 @@ namespace FFDConverter
             }
             unkFFD.unkFooter = input.ReadBytes((int)(input.Length - input.Position));
         }
-        public static void CreateFFD(string inputFFD, string inputBMF, string outputFFD )
+        public static void CreateFFD(string inputFFD, string inputBMF, string outputFFD, string versionGame)
         {
+            //get default config
+            Config config = DefaultConfig.Get(versionGame);
+
             //Load FFD
             generalInfoFFD infoFFD = new();
             infoFFD.CreateListBitmapName();
             List<charDescFFD> FFDDescList = new();
             List<xadvanceDescFFD> FFDxadvanceList = new();
             UnknownStuff_FC5 unkFFD = new();
-            var input = File.OpenRead(inputFFD);
-            LoadFFD(input, ref infoFFD, FFDDescList, FFDxadvanceList, ref unkFFD);
+            
+            LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, ref unkFFD, config);
 
             //Load BMFont
             List<charDescBMF> BMFcharDescList = new();
@@ -185,7 +189,7 @@ namespace FFDConverter
             foreach (charDescBMF infoChar in BMFcharDescList)
             {
                 output.WriteByte(0);
-                output.WriteByte((byte)(infoChar.xadvance * 2));
+                output.WriteByte((byte)(Ulities.intScaleInt(infoChar.xadvance, config.scaleXadvance)));
             }
 
             for (int i = 0; i < infoBMF.charsCount; i++)
@@ -217,10 +221,10 @@ namespace FFDConverter
                 output.WriteValueF32(UVtop);
                 output.WriteValueF32(UVright);
                 output.WriteValueF32(UVbottom);
-                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.xoffset, 8));
-                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.yoffset, 8));
-                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.width, 8)));
-                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.height, 8)));
+                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.xoffset, config.scaleXoffset));
+                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.yoffset + config.addCustomYoffset, config.scaleYoffset));
+                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.width, config.scaleWidth)));
+                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.height, config.scaleHeight)));
             }
             output.WriteBytes(unkFFD.unkFooter);
             output.Close();

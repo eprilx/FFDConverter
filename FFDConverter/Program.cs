@@ -105,7 +105,7 @@ namespace FFDConverter
                 return;
             }
 
-            FFDFormat.CreateFFD(originalFFD, fntBMF, output);
+            FFDFormat.CreateFFD(originalFFD, fntBMF, output, version);
             Done();
 
             void ShowHelp(OptionSet p)
