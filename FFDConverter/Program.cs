@@ -32,7 +32,7 @@ namespace FFDConverter
     {
         static void Main(string[] args)
         {
-            string ToolVersion = "0.0.3";
+            string ToolVersion = "1.0.0";
             string originalFFD = null;
             string fntBMF = null;
             string output = null;
