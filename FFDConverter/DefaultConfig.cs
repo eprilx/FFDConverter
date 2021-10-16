@@ -70,13 +70,18 @@ namespace FFDConverter
                 string nameGame = xmlString.Attribute("name").Value;
                 if (nameGame == versionGame)
                 {
-                    var culture = (CultureInfo)CultureInfo.CurrentCulture.Clone();
-                    culture.NumberFormat.NumberDecimalSeparator = ".";
-                    config.scaleXoffset = float.Parse(xmlString.Attribute("scaleXoffset").Value, culture);
-                    config.scaleYoffset = float.Parse(xmlString.Attribute("scaleYoffset").Value, culture);
-                    config.scaleWidth = float.Parse(xmlString.Attribute("scaleWidth").Value, culture);
-                    config.scaleHeight = float.Parse(xmlString.Attribute("scaleHeight").Value, culture);
-                    config.scaleXadvance = float.Parse(xmlString.Attribute("scaleXadvance").Value, culture);
+                    //var culture = (CultureInfo)CultureInfo.GetCultureInfo("en-US").Clone();
+                    //config.scaleXoffset = float.Parse(xmlString.Attribute("scaleXoffset").Value, culture);
+                    //config.scaleYoffset = float.Parse(xmlString.Attribute("scaleYoffset").Value, culture);
+                    //config.scaleWidth = float.Parse(xmlString.Attribute("scaleWidth").Value, culture);
+                    //config.scaleHeight = float.Parse(xmlString.Attribute("scaleHeight").Value, culture);
+                    //config.scaleXadvance = float.Parse(xmlString.Attribute("scaleXadvance").Value, culture);
+
+                    config.scaleXoffset = float.Parse(xmlString.Attribute("scaleXoffset").Value);
+                    config.scaleYoffset = float.Parse(xmlString.Attribute("scaleYoffset").Value);
+                    config.scaleWidth = float.Parse(xmlString.Attribute("scaleWidth").Value);
+                    config.scaleHeight = float.Parse(xmlString.Attribute("scaleHeight").Value);
+                    config.scaleXadvance = float.Parse(xmlString.Attribute("scaleXadvance").Value);
                     config.addCustomYoffset = int.Parse(xmlString.Attribute("addCustomYoffset").Value);
                     config.unkHeader1 = int.Parse(xmlString.Attribute("unkHeader1").Value);
                     config.unkHeader2 = int.Parse(xmlString.Attribute("unkHeader2").Value);

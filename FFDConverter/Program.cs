@@ -25,6 +25,8 @@ SOFTWARE.
 using Mono.Options;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Threading;
 
 namespace FFDConverter
 {
@@ -104,6 +106,11 @@ namespace FFDConverter
                 }
                 return;
             }
+            // Change current culture
+            CultureInfo culture;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
 
             FFDFormat.CreateFFD(originalFFD, fntBMF, output, version);
             Done();
