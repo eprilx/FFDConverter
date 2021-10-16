@@ -132,7 +132,6 @@ namespace FFDConverter
 
             string info = input[0];
             BMFinfo.face = Ulities.StringBetween(info, "face=\"", "\" ");
-            Console.WriteLine("output=" + Ulities.StringBetween(info, "size=", " "));
             BMFinfo.size = int.Parse(Ulities.StringBetween(info, "size=", " "));
             BMFinfo.bold = int.Parse(Ulities.StringBetween(info, "bold=", " "));
             BMFinfo.italic = int.Parse(Ulities.StringBetween(info, "italic=", " "));
