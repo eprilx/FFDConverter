@@ -39,6 +39,12 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 
 ![1.3](sampleImg/1.3xadvance.png)
 
+- addCustomYoffset = -3
+
+![0Y](sampleImg/0Yoffset.png)
+- add CustomYoffset = -10
+
+![-10Y](sampleImg/Sub10Yoffset.png)
 *Note 2: Make font more smoother without nasty pixel, try creating [signed distance field font with Hiero](https://github.com/libgdx/libgdx/wiki/Distance-field-fonts) or searching about ``signed distance field`` for more solution.*
 
 ## TODO
