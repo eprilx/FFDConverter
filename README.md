@@ -34,9 +34,9 @@ Example: FFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold
 
 #### If the font is displayed incorrectly in game, you should edit config.xml to be more compatible.
 - scaleXadvance = 1.0
-![sampleImg](1.0xadvance.png)
+![1.0](sampleImg/1.0xadvance.png)
 - scaleXadvance = 1.3
-![sampleImg](1.3xadvance.png)
+![1.3](sampleImg/1.3xadvance.png)
 
 ## TODO
 Support more game.
