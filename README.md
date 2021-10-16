@@ -45,4 +45,4 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 Support more game.
 
 ## License
-[MIT](License)
+[MIT](LICENSE)
