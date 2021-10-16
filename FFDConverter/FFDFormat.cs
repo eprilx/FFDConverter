@@ -32,7 +32,7 @@ namespace FFDConverter
 {
     class FFDFormat
     {
-        public static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, ref UnknownStuff_FC5 unkFFD, Config config)
+        public static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, ref UnknownStuff unkFFD, Config config)
         {
             var input = File.OpenRead(inputFFD);
             input.Position = 0;
@@ -51,7 +51,7 @@ namespace FFDConverter
             input.Position -= 2;
             if (checkNull == 0)
             {
-                for (int i = 0; i <= infoFFD.charsCount; i++)
+                for (int i = 0; i < infoFFD.charsCount; i++)
                 {
                     input.ReadValueU32(); // = 0
                 }
@@ -66,10 +66,20 @@ namespace FFDConverter
                 infoFFD.table1EqualZero = false;
             }
 
-            for (int i = 0; i < infoFFD.charsCount; i++)
+            // if table 1 = zero then table 2 = null
+            if (infoFFD.table1EqualZero)
             {
-                infoFFD.table2Value = input.ReadValueS16(); // = 17
+                uint sizeTable34 = input.ReadValueU32(); // = charCount * 4 + 4
             }
+            else
+            {
+                for (int i = 0; i < infoFFD.charsCount; i++)
+                {
+                    infoFFD.table2Value = input.ReadValueS16(); // = 17
+                }
+            }
+
+            
             for (int i = 0; i < infoFFD.charsCount; i++)
             {
                 input.ReadValueU16(); // = id
@@ -130,7 +140,7 @@ namespace FFDConverter
             infoFFD.CreateListBitmapName();
             List<charDescFFD> FFDDescList = new();
             List<xadvanceDescFFD> FFDxadvanceList = new();
-            UnknownStuff_FC5 unkFFD = new();
+            UnknownStuff unkFFD = new();
             
             LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, ref unkFFD, config);
 
@@ -151,10 +161,15 @@ namespace FFDConverter
             // Calculate offsetbitmapNames
             int sizefontName = infoFFD.fontName.Length + 1;
             int sizeTable1 = (infoBMF.charsCount * 2) + 2 + 2;
-            if (infoFFD.table1EqualZero)
-                sizeTable1 = infoBMF.charsCount * 4;
             int sizeTable2 = infoBMF.charsCount * 2;
             int sizeTable3 = infoBMF.charsCount * 2;
+            if (infoFFD.table1EqualZero)
+            { 
+                sizeTable1 = infoBMF.charsCount * 4 + 2;
+                sizeTable2 = 0;
+                sizeTable3 += 4;
+            }
+
             int sizeTable4 = (infoBMF.charsCount * 2) + 6;
             int sizeTable5 = infoBMF.charsCount * 2;
             int sizeTable6 = 2;
@@ -169,14 +184,28 @@ namespace FFDConverter
             output.WriteString(infoFFD.fontName);
             output.WriteValueU16((ushort)infoBMF.charsCount);
 
-            for(int i = 0; i <= infoBMF.charsCount; i++)
+            if (!infoFFD.table1EqualZero)
             {
-                output.WriteValueU16((ushort)((infoBMF.charsCount * 2) + 2 + (i * 2)));
+                // write table 1 and 2
+                for (int i = 0; i <= infoBMF.charsCount; i++)
+                {
+                    output.WriteValueU16((ushort)((infoBMF.charsCount * 2) + 2 + (i * 2)));
+                }
+                for (int i = 0; i < infoBMF.charsCount; i++)
+                {
+                    output.WriteValueU16((ushort)infoFFD.table2Value);
+                }
             }
-
-            for (int i = 0; i < infoBMF.charsCount; i++)
+            else
             {
-                output.WriteValueU16((ushort)infoFFD.table2Value);
+                // write only table1 = 0, table2 = null
+                for (int i = 0; i < infoBMF.charsCount; i++)
+                {
+                    output.WriteValueU32(0);
+                }
+                // write size table34
+                uint sizeTable34 = (uint)((infoBMF.charsCount * 4) + 4);
+                output.WriteValueU32(sizeTable34);
             }
 
             foreach(charDescBMF infoChar in BMFcharDescList)

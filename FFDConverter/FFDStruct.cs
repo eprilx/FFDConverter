@@ -70,7 +70,7 @@ namespace FFDConverter
         public short amountScale;
     }
 
-    public struct UnknownStuff_FC5
+    public struct UnknownStuff
     {
         public byte[] unkHeader1;
         public byte[] unkHeader2;

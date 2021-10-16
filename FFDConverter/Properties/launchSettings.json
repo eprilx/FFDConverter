@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v FCP -b testV_text_kern.fnt -f fcp\\tradegothic_lt_bold_default.ffd -o new.ffd"
+      "commandLineArgs": "-v FCP -b testV_text_kern.fnt -f FC3\\trade_gothic_neurotic_default.ffd -o new.ffd"
     }
   }
 }
