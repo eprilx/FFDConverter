@@ -39,7 +39,7 @@ Example: FFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold
 
 ![1.3](sampleImg/1.3xadvance.png)
 
-#### *Note 2: Make font more smoother without nasty pixel, try creating signed distance field font with Hiero or searching about ``signed distance field`` for more solution.*
+#### *Note 2: Make font more smoother without nasty pixel, try creating [signed distance field font with Hiero](https://github.com/libgdx/libgdx/wiki/Distance-field-fonts) or searching about ``signed distance field`` for more solution.*
 
 ## TODO
 Support more game.
