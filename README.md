@@ -5,7 +5,7 @@ Currently the tool only support Far Cry 5 and Far Cry Primal. You can upload mor
 
 ## Installation
 
-Donwload [lastest release](https://github.com/eprilx/FFDConverter/releases) and run FFDConverter.exe
+Donwload [lastest release](https://github.com/eprilx/FFDConverter/releases) and run FFDConverter.exe from command prompt.
 
 ## Build from source
 - **[Install .NET 5](https://dotnet.microsoft.com/download/dotnet/5.0)**
