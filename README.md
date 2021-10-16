@@ -17,8 +17,7 @@ Donwload [lastest release](https://github.com/eprilx/FFDConverter/releases) and 
 FFDConverter [OPTIONS]
 Options:
   -v, --version=VALUE        (required) Name of game. (FC2,FC3,...)
-  -f, --originalFFD=VALUE    (required) Original FFD file (*.ffd|*.Fire_Font_
-                               Descriptor)
+  -f, --originalFFD=VALUE    (required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)
   -b, --bmfontDesc=VALUE     (required) Bmfont descriptor file (*.fnt)
   -o, --NewFFD=VALUE         (optional) New FFD file
   -h, --help                 show this message and exit
