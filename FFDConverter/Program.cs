@@ -34,7 +34,7 @@ namespace FFDConverter
     {
         static void Main(string[] args)
         {
-            string ToolVersion = "1.0.1";
+            string ToolVersion = "1.0.2";
             string originalFFD = null;
             string fntBMF = null;
             string output = null;
@@ -42,7 +42,8 @@ namespace FFDConverter
             bool show_help = false;
             List<string> SupportedGame = new()
                     {
-                        "FC5", "FCP", "FC3"
+                        "FC5", "FCP", "FC3",
+                        "WD1"
                     };
 
             var p = new OptionSet() {
@@ -52,10 +53,10 @@ namespace FFDConverter
                    "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
                     v => originalFFD = v },
                 { "b|bmfontDesc=",
-                    "(required) Bmfont descriptor file (*.fnt)",
+                    "(required) Character description file (*.fnt)",
                     v => fntBMF = v },
                 { "o|NewFFD=",
-                   "(optional) New FFD file",
+                   "(optional) Output new FFD file",
                     v => output = v },
                 { "h|help",  "show this message and exit",
                    v => show_help = v != null },
@@ -91,7 +92,7 @@ namespace FFDConverter
 
             if (!fntBMF.EndsWith(".fnt"))
             {
-                Console.WriteLine("Unknown BMFont file.");
+                Console.WriteLine("Unknown character description file.");
                 ShowHelp(p);
                 return;
             }
@@ -129,6 +130,9 @@ namespace FFDConverter
                 Console.WriteLine("\nUsage: FFDConverter [OPTIONS]");
                 Console.WriteLine("Options:");
                 p.WriteOptionDescriptions(Console.Out);
+
+                Console.WriteLine("\nExample: FFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.new.ffd");
+                Console.WriteLine("\nMore usage: https://github.com/eprilx/FFDConverter#usage");
             }
 
             void Done()
