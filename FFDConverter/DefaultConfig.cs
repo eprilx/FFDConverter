@@ -47,6 +47,7 @@ namespace FFDConverter
         public int unkHeader1;
         public int unkHeader2;
         public int unkHeader3;
+        public int unkHeaderAC;
     }
     class DefaultConfig
     {
@@ -86,6 +87,8 @@ namespace FFDConverter
                     config.unkHeader1 = int.Parse(xmlString.Attribute("unkHeader1").Value);
                     config.unkHeader2 = int.Parse(xmlString.Attribute("unkHeader2").Value);
                     config.unkHeader3 = int.Parse(xmlString.Attribute("unkHeader3").Value);
+                    config.unkHeaderAC = int.Parse(xmlString.Attribute("unkHeaderAC").Value);
+
                     break;
                 }
             }

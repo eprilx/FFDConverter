@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v WD2 -b test.fnt -f WD2\\helveticaneuelt_w1g_65_md_default.ffd -o new.ffd"
+      "commandLineArgs": "-v AC4 -b test.fnt -f \"AC4\\1-Abstergo_Sans_Latin.Fire_Font_Descriptor\" -o new.ffd"
     }
   }
 }

@@ -34,7 +34,7 @@ namespace FFDConverter
     {
         static void Main(string[] args)
         {
-            string ToolVersion = "1.0.3";
+            string ToolVersion = "1.1.0";
             string originalFFD = null;
             string fntBMF = null;
             string output = null;
@@ -43,7 +43,8 @@ namespace FFDConverter
             List<string> SupportedGame = new()
                     {
                         "FC5", "FCP", "FC3",
-                        "WD1", "WD2"
+                        "WD1", "WD2",
+                        "AC4"
                     };
 
             var p = new OptionSet() {

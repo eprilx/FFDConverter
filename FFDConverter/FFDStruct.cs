@@ -72,6 +72,7 @@ namespace FFDConverter
 
     public struct UnknownStuff
     {
+        public byte[] unkHeaderAC;
         public byte[] unkHeader1;
         public byte[] unkHeader2;
         public byte[] unkHeader3;
