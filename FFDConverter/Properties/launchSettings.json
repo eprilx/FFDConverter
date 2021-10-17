@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v WD1 -b test.fnt -f WD1\\helveticaneuelt_w1g_65_md_numbers.ffd -o new.ffd"
+      "commandLineArgs": "-v WD2 -b test.fnt -f WD2\\helveticaneuelt_w1g_65_md_default.ffd -o new.ffd"
     }
   }
 }
