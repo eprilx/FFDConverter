@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v2.2.1
       with:
         name: artifact
-        path: ./FFDConverter.sln/bin/Release/net5.0
+        path: ./FFDConverter/bin/Release/net5.0
     - uses: papeloto/action-zip@v1
       with:
         files: ./FFDConverter/bin/Release/net5.0
