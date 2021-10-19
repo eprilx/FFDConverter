@@ -1,0 +1,60 @@
+name: Draft-release
+on:
+  workflow_dispatch:
+ 
+jobs:
+
+  draft-FFDConverter-win:
+    runs-on: windows-latest
+
+    steps:
+    # setup  
+    - name: checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - uses: microsoft/setup-msbuild@v1.0.2
+
+     # environmental variables
+    - run: echo "PROJC=./FFDConverter/FFDConverter.csproj" >> $env:GITHUB_ENV
+    - run: echo "OUTC=./publish/console/" >> $env:GITHUB_ENV
+    - run: echo "FINALOUT=./publish" >> $env:GITHUB_ENV
+    - run: echo "NAME=FFDConverter" >> $env:GITHUB_ENV
+    - run: echo "REF=${{github.ref}}" >> $env:GITHUB_ENV
+    - run: echo "SHA=${{github.sha}}" >> $env:GITHUB_ENV
+    - run: echo "MREPO=${{github.repository}}" >> $env:GITHUB_ENV
+    
+    - name: Get version
+      uses: naminodarie/get-net-sdk-project-versions-action@v1
+      id: get-version
+      with:
+        proj-path:  ${{env.PROJ}}
+    - name: Get console version
+      uses: naminodarie/get-net-sdk-project-versions-action@v1
+      id: get-version-cli
+      with:
+        proj-path: ${{env.PROJC}}
+        
+    - run: echo "VERSIONC=${{steps.get-version-cli.outputs.assembly-version}}" >> $env:GITHUB_ENV
+    
+    # Publish console
+    - run: msbuild ${{env.PROJC}} -t:restore -t:Build -t:Publish /p:PublishDir=".${{env.OUTC}}" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
+
+    - run: echo "CONSOLE=${{env.NAME}}_${{env.VERSIONC}}.zip" >> $env:GITHUB_ENV
+
+    # Create assets
+    # create zip
+    - run: Compress-Archive -Path ${{env.OUTC}}* -DestinationPath ${{env.FINALOUT}}/${{env.CONSOLE}}
+
+
+    # RELEASE
+    - name: Release
+      run: |
+          gh release create ${{ env.VERSION }} -t "${{env.NAME}} v${{env.VERSION}}" -d -p ${{ env.FILES }}
+      env:
+        FILES: ${{env.FINALOUT}}/${{env.CONSOLE}}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
