@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v AC4 -b test.fnt -f \"AC4\\1-Abstergo_Sans_Latin.Fire_Font_Descriptor\" -o new.ffd"
+      "commandLineArgs": "-v FarCry5 -b test.fnt -f \"FC5\\fcz_title_default.ffd\" -o new.ffd"
     }
   }
 }

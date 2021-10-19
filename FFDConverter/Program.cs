@@ -26,6 +26,7 @@ using Mono.Options;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 
@@ -42,25 +43,21 @@ namespace FFDConverter
             string output = null;
             string version = null;
             bool show_help = false;
-            List<string> SupportedGame = new()
-                    {
-                        "FC5", "FCP", "FC3",
-                        "WD1", "WD2",
-                        "AC4"
-                    };
+            bool show_list = false;
+            List<string> SupportedGame = DefaultConfig.GetSupportedList();
 
             var p = new OptionSet() {
                 { "v|version=", "(required) Name of game. (FC2,FC3,...)",
                    v => version = v  },
-                { "f|originalFFD=",
-                   "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
+                { "f|originalFFD=", "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
                     v => originalFFD = v },
-                { "b|charDesc=",
-                    "(required) Character description file (*.fnt)",
+                { "b|charDesc=", "(required) Character description file (*.fnt)",
                     v => fntBMF = v },
                 { "o|NewFFD=",
                    "(optional) Output new FFD file",
                     v => output = v },
+                { "l|list", "show list supported games",
+                    v => show_list = v != null },
                 { "h|help",  "show this message and exit",
                    v => show_help = v != null },
             };
@@ -75,14 +72,19 @@ namespace FFDConverter
                 return;
             }
 
-            if (output == null)
+            if (show_list)
             {
-                output = originalFFD + ".new";
+                PrintSupportedGame();
+                return;
             }
-
-            if (version == null || originalFFD == null || fntBMF == null || show_help)
+            else if (show_help || args.Length == 0 || version == null || originalFFD == null || fntBMF == null)
             {
                 ShowHelp(p);
+                return;
+            }
+            else if (SupportedGame.FirstOrDefault(x => x.Contains(version)) == null )
+            {
+                PrintSupportedGame();
                 return;
             }
 
@@ -100,42 +102,41 @@ namespace FFDConverter
                 return;
             }
 
-            if (!SupportedGame.Contains(version))
-            {
-                Console.WriteLine("Unknown game.");
-                Console.WriteLine("List:");
-                foreach (string gamename in SupportedGame)
-                {
-                    Console.WriteLine("- " + gamename);
-                }
-                return;
-            }
             // Change current culture
             CultureInfo culture;
             culture = CultureInfo.CreateSpecificCulture("en-US");
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
-
+            // CreateFFD
+            if (output == null)
+                output = originalFFD + ".new";
             FFDFormat.CreateFFD(originalFFD, fntBMF, output, version);
             Done();
 
             void ShowHelp(OptionSet p)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("\nFFDConverter v" + ToolVersion);
                 Console.WriteLine(" by eprilx");
                 Console.Write("Check for more update: ");
                 Console.WriteLine("https://github.com/eprilx/FFDConverter/releases");
-                Console.Write("Supported game: ");
-                foreach (string game in SupportedGame)
-                {
-                    Console.Write(game + " ");
-                }
+
                 Console.WriteLine("\nUsage: FFDConverter [OPTIONS]");
                 Console.WriteLine("Options:");
                 p.WriteOptionDescriptions(Console.Out);
 
                 Console.WriteLine("\nExample: FFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.new.ffd");
                 Console.WriteLine("\nMore usage: https://github.com/eprilx/FFDConverter#usage");
+                Console.ResetColor();
+            }
+
+            void PrintSupportedGame()
+            {
+                Console.WriteLine("Supported games: ");
+                foreach (string game in SupportedGame)
+                {
+                    Console.WriteLine(game);
+                }
             }
 
             void Done()

@@ -69,15 +69,8 @@ namespace FFDConverter
             foreach (XElement xmlString in xmlStringsGame)
             {
                 string nameGame = xmlString.Attribute("name").Value;
-                if (nameGame == versionGame)
+                if (nameGame.Contains(versionGame))
                 {
-                    //var culture = (CultureInfo)CultureInfo.GetCultureInfo("en-US").Clone();
-                    //config.scaleXoffset = float.Parse(xmlString.Attribute("scaleXoffset").Value, culture);
-                    //config.scaleYoffset = float.Parse(xmlString.Attribute("scaleYoffset").Value, culture);
-                    //config.scaleWidth = float.Parse(xmlString.Attribute("scaleWidth").Value, culture);
-                    //config.scaleHeight = float.Parse(xmlString.Attribute("scaleHeight").Value, culture);
-                    //config.scaleXadvance = float.Parse(xmlString.Attribute("scaleXadvance").Value, culture);
-
                     config.scaleXoffset = float.Parse(xmlString.Attribute("scaleXoffset").Value);
                     config.scaleYoffset = float.Parse(xmlString.Attribute("scaleYoffset").Value);
                     config.scaleWidth = float.Parse(xmlString.Attribute("scaleWidth").Value);
@@ -93,6 +86,25 @@ namespace FFDConverter
                 }
             }
             return config;
+        }
+        public static List<string> GetSupportedList()
+        {
+            List<string> SupportedGame = new();
+            XDocument xmlDoc = new();
+            try
+            {
+                xmlDoc = XDocument.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.xml"));
+            }
+            catch (XmlException)
+            {
+                throw new InvalidOperationException("Missing config.xml");
+            }
+            XElement xmlRoot = xmlDoc.Element("config");
+
+            IEnumerable<XElement> xmlStringsGame = xmlRoot.Elements("game");
+            foreach (XElement xmlString in xmlStringsGame)
+                SupportedGame.Add(xmlString.Attribute("name").Value);
+            return SupportedGame;
         }
     }
 }

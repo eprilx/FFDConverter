@@ -37,8 +37,7 @@ namespace FFDConverter
         {
             try
             {
-                XDocument xmlDoc = new();
-                xmlDoc = XDocument.Load(inputBMF);
+                XDocument.Load(inputBMF);
             }
             catch (XmlException)
             {
