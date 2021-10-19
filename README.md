@@ -50,7 +50,7 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 *Note 2: Make font more smoother without nasty pixel, try creating [signed distance field font with Hiero](https://github.com/libgdx/libgdx/wiki/Distance-field-fonts) or searching about ``signed distance field`` for more solution.*
 
 ## TODO
-Support more game.
+[Support more game.](https://github.com/eprilx/FFDConverter/issues/2)
 
 ## License
 [MIT](LICENSE)
