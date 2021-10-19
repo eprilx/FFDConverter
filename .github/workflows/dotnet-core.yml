@@ -35,6 +35,10 @@ jobs:
       with:
         files: ./FFDConverter/bin/Release/net5.0
         dest: release.zip
+    - name: Delete drafts
+      uses: hugo19941994/delete-draft-releases@v1.0.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
