@@ -26,6 +26,7 @@ using Mono.Options;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Reflection;
 using System.Threading;
 
 namespace FFDConverter
@@ -34,7 +35,8 @@ namespace FFDConverter
     {
         static void Main(string[] args)
         {
-            string ToolVersion = "1.1.0";
+            string ToolVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
             string originalFFD = null;
             string fntBMF = null;
             string output = null;
@@ -53,7 +55,7 @@ namespace FFDConverter
                 { "f|originalFFD=",
                    "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
                     v => originalFFD = v },
-                { "b|bmfontDesc=",
+                { "b|charDesc=",
                     "(required) Character description file (*.fnt)",
                     v => fntBMF = v },
                 { "o|NewFFD=",
@@ -122,7 +124,7 @@ namespace FFDConverter
                 Console.Write("\nFFDConverter v" + ToolVersion);
                 Console.WriteLine(" by eprilx");
                 Console.Write("Check for more update: ");
-                Console.WriteLine("https://github.com/eprilx/FFDConverter");
+                Console.WriteLine("https://github.com/eprilx/FFDConverter/releases");
                 Console.Write("Supported game: ");
                 foreach (string game in SupportedGame)
                 {

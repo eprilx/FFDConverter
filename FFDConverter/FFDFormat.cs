@@ -305,7 +305,6 @@ namespace FFDConverter
             }
             asize += (uint)(infoBMF.charsCount * 27 + 4);
             return asize;
-
         }
     }
 }
