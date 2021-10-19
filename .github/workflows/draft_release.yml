@@ -28,11 +28,6 @@ jobs:
     - run: echo "SHA=${{github.sha}}" >> $env:GITHUB_ENV
     - run: echo "MREPO=${{github.repository}}" >> $env:GITHUB_ENV
     
-    - name: Get version
-      uses: naminodarie/get-net-sdk-project-versions-action@v1
-      id: get-version
-      with:
-        proj-path:  ${{env.PROJ}}
     - name: Get console version
       uses: naminodarie/get-net-sdk-project-versions-action@v1
       id: get-version-cli
@@ -54,7 +49,7 @@ jobs:
     # RELEASE
     - name: Release
       run: |
-          gh release create ${{ env.VERSION }} -t "${{env.NAME}} v${{env.VERSION}}" -d -p ${{ env.FILES }}
+          gh release create ${{ env.VERSIONC }} -t "${{env.NAME}} v${{env.VERSIONC}}" -d -p ${{ env.FILES }}
       env:
         FILES: ${{env.FINALOUT}}/${{env.CONSOLE}}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
