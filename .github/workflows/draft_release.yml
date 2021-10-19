@@ -28,11 +28,6 @@ jobs:
     - run: echo "SHA=${{github.sha}}" >> $env:GITHUB_ENV
     - run: echo "MREPO=${{github.repository}}" >> $env:GITHUB_ENV
     
-    - name: Get version
-      uses: naminodarie/get-net-sdk-project-versions-action@v1
-      id: get-version
-      with:
-        proj-path:  ${{env.PROJ}}
     - name: Get console version
       uses: naminodarie/get-net-sdk-project-versions-action@v1
       id: get-version-cli
