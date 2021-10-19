@@ -49,7 +49,7 @@ jobs:
     # RELEASE
     - name: Release
       run: |
-          gh release create ${{ env.VERSION }} -t "${{env.NAME}} v${{env.VERSION}}" -d -p ${{ env.FILES }}
+          gh release create ${{ env.VERSIONC }} -t "${{env.NAME}} v${{env.VERSIONC}}" -d -p ${{ env.FILES }}
       env:
         FILES: ${{env.FINALOUT}}/${{env.CONSOLE}}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
