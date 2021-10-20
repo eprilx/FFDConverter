@@ -59,9 +59,9 @@ namespace FFDConverter
             {
                 xmlDoc = XDocument.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),"config.xml"));
             }
-            catch (XmlException)
+            catch (XmlException e)
             {
-                throw new InvalidOperationException("Missing config.xml");
+                throw new InvalidOperationException("config.xml file: " + e.Message);
             }
             XElement xmlRoot = xmlDoc.Element("config");
 
@@ -95,9 +95,9 @@ namespace FFDConverter
             {
                 xmlDoc = XDocument.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.xml"));
             }
-            catch (XmlException)
+            catch (XmlException e)
             {
-                throw new InvalidOperationException("Missing config.xml");
+                throw new InvalidOperationException("config.xml file: " + e.Message);
             }
             XElement xmlRoot = xmlDoc.Element("config");
 

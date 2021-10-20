@@ -241,8 +241,9 @@ namespace FFDConverter
 
             if (infoFFD.kernsCount > 0)
             {
-                output.WriteValueU16((ushort)infoBMF.kernsCount);
+                output.WriteValueU16(0);
                 //TODO kernel stuff
+                //output.WriteValueU16((ushort)infoBMF.kernsCount);
             }
             else
             {
