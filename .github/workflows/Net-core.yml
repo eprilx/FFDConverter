@@ -29,7 +29,7 @@ jobs:
         proj-path: ./FFDConverter/FFDConverter.csproj
 
     - name: publish FFDConverter
-      run: msbuild .\FFDConverter\FFDConverter.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/console/" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
+      run: msbuild .\FFDConverter\FFDConverter.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/console/windows" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2
