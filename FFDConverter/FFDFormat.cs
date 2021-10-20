@@ -314,7 +314,7 @@ namespace FFDConverter
             {
                 asize += (uint)(infoFFD.BitmapName[i].Length + 1);
             }
-            asize += (uint)(infoBMF.charsCount * 27 + 4);
+            asize += (uint)(infoBMF.charsCount * 27 + (config.unkHeaderAC - 9));
             return asize;
         }
     }

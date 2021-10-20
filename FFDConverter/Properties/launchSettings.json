@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v Blood -b test.fnt -f \"FC3BD\\eurostile_bold_default.ffd\" -o new.ffd"
+      "commandLineArgs": "-v Creed2 -b test.fnt -f \"AC2\\1717-AC2Aaux_ProMedium_Latin.Fire_Font_Descriptor\" -o new.ffd"
     }
   }
 }
