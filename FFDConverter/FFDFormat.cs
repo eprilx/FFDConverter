@@ -32,7 +32,7 @@ namespace FFDConverter
 {
     class FFDFormat
     {
-        private static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, ref UnknownStuff unkFFD, Config config)
+        private static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, List<kernelDescFFD> FFDkernelList, ref UnknownStuff unkFFD, Config config)
         {
             var input = File.OpenRead(inputFFD);
             input.Position = 0;
@@ -80,11 +80,20 @@ namespace FFDConverter
             }
 
             // read table 6 kernel
-            int sizeKernel = input.ReadValueU16();
-            if (sizeKernel > 0)
-                input.ReadBytes(sizeKernel); // data kernel (not use)
-            else
-                infoFFD.kernsCount = 0;
+            infoFFD.kernsCount = input.ReadValueU16();
+            if (infoFFD.kernsCount > 0)
+            {
+                // data kernel
+                for (int i = 0; i <infoFFD.kernsCount; i++)
+                {
+                    FFDkernelList.Add(new kernelDescFFD
+                    {
+                        first = input.ReadValueU16(),
+                        second = input.ReadValueU16(),
+                        amountScale = input.ReadValueU16()
+                    });
+                }
+            }
             
             //read textures name
             for (int i = 0; i < infoFFD.pagesCount; i ++)
@@ -165,8 +174,9 @@ namespace FFDConverter
             infoFFD.CreateListBitmapName();
             List<charDescFFD> FFDDescList = new();
             List<xadvanceDescFFD> FFDxadvanceList = new();
+            List<kernelDescFFD> FFDkernelList = new();
             UnknownStuff unkFFD = new();
-            LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, ref unkFFD, config);
+            LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
 
             //Load BMFont
             List<charDescBMF> BMFcharDescList = new();
@@ -239,7 +249,7 @@ namespace FFDConverter
                 output.WriteValueU16((ushort)infoFFD.table5Value);
             }
 
-            if (infoFFD.kernsCount > 0)
+            if (infoFFD.kernsCount > 0 && infoBMF.kernsCount > 0)
             {
                 output.WriteValueU16(0);
                 //TODO kernel stuff

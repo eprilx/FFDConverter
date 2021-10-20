@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v FarCry5 -b test.fnt -f \"FC5\\fcz_title_default.ffd\" -o new.ffd"
+      "commandLineArgs": "-v Blood -b test.fnt -f \"FC3BD\\eurostile_bold_default.ffd\" -o new.ffd"
     }
   }
 }

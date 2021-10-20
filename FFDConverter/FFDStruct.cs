@@ -34,7 +34,7 @@ namespace FFDConverter
         public bool table1EqualZero;
         public short table2Value;
         public short table5Value;
-        public short kernsCount;
+        public ushort kernsCount;
         public List<string> BitmapName;
 
         public void CreateListBitmapName()
@@ -65,9 +65,9 @@ namespace FFDConverter
 
     public struct kernelDescFFD
     {
-        public short first;
-        public short second;
-        public short amountScale;
+        public ushort first;
+        public ushort second;
+        public ushort amountScale;
     }
 
     public struct UnknownStuff

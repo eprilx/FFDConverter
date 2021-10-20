@@ -174,23 +174,26 @@ namespace FFDConverter
                 });
             }
 
-            int kernLine = 2 + pageLine + BMFinfo.charsCount + 1;
-            string kernings = input[kernLine];
-            BMFinfo.kernsCount = int.Parse(Ulities.StringBetween(kernings, "count=", " "));
-            for (int i = 1; i <= BMFinfo.kernsCount; i++)
+            try
             {
-                string kern = input[kernLine + i];
-                kernelDescList.Add(new kernelDescBMF
+                int kernLine = 2 + pageLine + BMFinfo.charsCount + 1;
+                string kernings = input[kernLine];
+                BMFinfo.kernsCount = int.Parse(Ulities.StringBetween(kernings, "count=", " "));
+                for (int i = 1; i <= BMFinfo.kernsCount; i++)
                 {
-                    first = int.Parse(Ulities.StringBetween(kern, "first=", " ")),
-                    second = int.Parse(Ulities.StringBetween(kern, "second=", " ")),
-                    amount = int.Parse(Ulities.StringBetween(kern, "amount=", " "))
-                });
+                    string kern = input[kernLine + i];
+                    kernelDescList.Add(new kernelDescBMF
+                    {
+                        first = int.Parse(Ulities.StringBetween(kern, "first=", " ")),
+                        second = int.Parse(Ulities.StringBetween(kern, "second=", " ")),
+                        amount = int.Parse(Ulities.StringBetween(kern, "amount=", " "))
+                    });
+                }
             }
-            //foreach (kernelDescBMF _infochar in kernelDescList)
-            //{
-            //    Console.WriteLine(String.Format("{0,-5} {1,-5}", _infochar.first, _infochar.amount));
-            //}
+            catch
+            {
+                BMFinfo.kernsCount = 0;
+            }
             return (BMFinfo, charDescList, kernelDescList);
         }
     }
