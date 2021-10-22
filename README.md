@@ -35,23 +35,24 @@ FFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.
 *Note 2: Make font more smoother without nasty pixel, try creating [signed distance field font with Hiero](https://github.com/libgdx/libgdx/wiki/Distance-field-fonts) or searching about ``signed distance field`` for more solution.*
 
 If the font is displayed incorrectly in game, you should edit config.xml to be more compatible.
-- scaleXadvance = 1.0
+- *scaleXadvance = 1.0 (left) and scaleXadvance = 1.3 (right)*
 
-![1.0](sampleImg/1.0xadvance.png)
-- scaleXadvance = 1.3
+<img src="sampleImg/1.0xadvance.png" height="360"/>&emsp;<img src="sampleImg/1.3xadvance.png" height="360"/>
 
-![1.3](sampleImg/1.3xadvance.png)
+- *addCustomYoffset = -3 and -10*
 
-- addCustomYoffset = -3
+<img src="sampleImg/0Yoffset.png" height="360"/>&emsp;<img src="sampleImg/Sub10Yoffset.png" height="360"/>
 
-![0Y](sampleImg/0Yoffset.png)
-- addCustomYoffset = -10
+- *scaleWidth = scaleHeight = 8.0 and 12.0*
 
-![-10Y](sampleImg/Sub10Yoffset.png)
-- scaleWidth = 12.0 and scaleHeight = 12.0
+<img src="sampleImg/0Yoffset.png" height="360"/>&emsp;<img src="sampleImg/scaleWH12.png" height="360"/>
 
-![scaleWH12](sampleImg/scaleWH12.png)
-
+## Special Thanks
+- [abodora](https://github.com/abodora) (providing sample files for Assassin's Creed 2 (AC2), AC Brotherhood, AC Revelation)
+- [rezamms](https://github.com/rezamms) (providing sample files for Far Cry 3 Blood Dragon (FC3BD), FC4)
+- Eirlys#7340 (providing sample files for Watch Dogs 1, 2)
+- [halfway](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=65552) (providing sample files for FC3)
+- [ramyzahran](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=63812) (providing sample files for FC Primal)
 
 ## TODO
 [Support more game.](https://github.com/eprilx/FFDConverter/issues/2)
