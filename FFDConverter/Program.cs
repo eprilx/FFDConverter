@@ -115,19 +115,15 @@ namespace FFDConverter
 
             void ShowHelp(OptionSet p)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.Write("\nFFDConverter v" + ToolVersion);
-                Console.WriteLine(" by eprilx");
-                Console.Write("Check for more update: ");
-                Console.WriteLine("https://github.com/eprilx/FFDConverter/releases");
-
+                PrintCredit();
                 Console.WriteLine("\nUsage: FFDConverter [OPTIONS]");
                 Console.WriteLine("Options:");
                 p.WriteOptionDescriptions(Console.Out);
 
-                Console.WriteLine("\nExample: FFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.new.ffd");
+                Console.WriteLine("\nExample: \nFFDConverter -l\nFFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.new.ffd");
                 Console.WriteLine("\nMore usage: https://github.com/eprilx/FFDConverter#usage");
-                Console.ResetColor();
+                Console.Write("More update: ");
+                Console.WriteLine("https://github.com/eprilx/FFDConverter/releases");
             }
 
             void PrintSupportedGame()
@@ -138,12 +134,23 @@ namespace FFDConverter
                     Console.WriteLine(game);
                 }
             }
-
-            void Done()
+            void PrintCredit()
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("\nFFDConverter v" + ToolVersion);
                 Console.WriteLine(" by eprilx");
-                Console.WriteLine("Done!");
+                Console.Write("Special thanks to: ");
+                Console.WriteLine("abodora, rezamms, Eirlys, halfway, ramyzahran");
+                Console.ResetColor();
+            }
+            void Done()
+            {
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\n" + output + " has been created!");
+                Console.ResetColor();
+                Console.Write("\n********************************************");
+                PrintCredit();
+                Console.WriteLine("********************************************");
             }
         }
     }

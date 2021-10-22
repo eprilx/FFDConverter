@@ -171,7 +171,7 @@ namespace FFDConverter
 
             //Load FFD
             generalInfoFFD infoFFD = new();
-            infoFFD.CreateListBitmapName();
+            infoFFD.BitmapName = new();
             List<charDescFFD> FFDDescList = new();
             List<xadvanceDescFFD> FFDxadvanceList = new();
             List<kernelDescFFD> FFDkernelList = new();
@@ -251,9 +251,14 @@ namespace FFDConverter
 
             if (infoFFD.kernsCount > 0 && infoBMF.kernsCount > 0)
             {
-                output.WriteValueU16(0);
-                //TODO kernel stuff
-                //output.WriteValueU16((ushort)infoBMF.kernsCount);
+                //kernel stuff
+                output.WriteValueU16((ushort)infoBMF.kernsCount);
+                foreach (kernelDescBMF kerning in BMFkernelDescList)
+                {
+                    output.WriteValueU16((ushort)kerning.first);
+                    output.WriteValueU16((ushort)kerning.second);
+                    output.WriteValueS16((short)(kerning.amount * 200));
+                }
             }
             else
             {

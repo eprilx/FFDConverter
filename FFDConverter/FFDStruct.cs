@@ -36,11 +36,6 @@ namespace FFDConverter
         public short table5Value;
         public ushort kernsCount;
         public List<string> BitmapName;
-
-        public void CreateListBitmapName()
-        {
-            this.BitmapName = new();
-        }
     }
 
     public struct charDescFFD
