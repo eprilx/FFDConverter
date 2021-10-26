@@ -67,5 +67,11 @@ namespace FFDConverter
         {
             return (int)((float)number * Scale);
         }
+
+        public static float floatRevScaleInt(float number, float Scale)
+        {
+            return ((float)number / Scale);
+        }
+
     }
 }

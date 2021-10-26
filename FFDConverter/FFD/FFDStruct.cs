@@ -50,7 +50,7 @@ namespace FFDConverter
         public short yoffset;
         public ushort widthScale;
         public ushort heightScale;
-        
+        public xadvanceDescFFD xadvance;
         public bool checkRotate(int WidthImage, int HeightImage)
         {
             (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(this.UVLeft, this.UVTop, this.UVRight, this.UVBottom, WidthImage, HeightImage);
@@ -59,6 +59,11 @@ namespace FFDConverter
                 return true;
             }
             return false;
+        }
+        public void setXadvance(byte unk, byte xadvanceScale)
+        {
+            this.xadvance.unk = unk;
+            this.xadvance.xadvanceScale = xadvanceScale;
         }
     }
 

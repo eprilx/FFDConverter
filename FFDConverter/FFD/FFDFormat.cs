@@ -116,7 +116,10 @@ namespace FFDConverter
                     yoffset = input.ReadValueS16(),
                     widthScale = input.ReadValueU16(),
                     heightScale = input.ReadValueU16(),
+                    
                 });
+
+                FFDDescList[i].setXadvance(FFDxadvanceList[i].unk, FFDxadvanceList[i].xadvanceScale);
             }
 
             // read footer

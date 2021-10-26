@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System.Collections.Generic;
+
 namespace FFDConverter
 {
     public struct generalInfoBMF
@@ -30,6 +32,7 @@ namespace FFDConverter
         public int _base;
         public int WidthImg; // width image
         public int HeightImg; // height image
+        public int pages;
 
         public string face;
         public int size;
@@ -37,6 +40,8 @@ namespace FFDConverter
         public int italic;
         public int charsCount;
         public int kernsCount;
+        public List<int> idImg;
+        public List<string> fileImg;
 
         public void setDefault()
         {
@@ -46,6 +51,8 @@ namespace FFDConverter
             this.italic = 0;
             this.lineHeight = 0;
             this._base = 0;
+            this.idImg = new();
+            this.fileImg = new();
         }
     }
 
@@ -61,6 +68,14 @@ namespace FFDConverter
         public float xadvance;
         public int page;
         public int chnl;
+
+        public void setDefault()
+        {
+            this.xoffset = 0;
+            this.yoffset = 0;
+            this.page = 0;
+            this.chnl = 0;
+        }
     }
     public struct kernelDescBMF
     {

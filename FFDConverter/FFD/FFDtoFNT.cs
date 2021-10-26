@@ -47,14 +47,48 @@ namespace FFDConverter
             FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
 
             //generalInfoBMF BMFinfo, List< charDescBMF > charDescList, List<kernelDescBMF> kernelDescList)
+            
             //convert infoFFD 2 infoBMF
             generalInfoBMF infoBMF = new();
             infoBMF.setDefault();
             infoBMF.face = infoFFD.fontName;
+            infoBMF.charsCount = infoFFD.charsCount;
+            infoBMF.kernsCount = infoFFD.kernsCount;
+            infoBMF.pages = infoFFD.pagesCount;
+            for (int i = 0; i < infoBMF.pages; i++)
+            {
+                infoBMF.idImg.Add(i);
+                infoBMF.fileImg.Add(infoFFD.BitmapName[i]);
+            }
+            // Get width/height image font from user
+            int WidthImg = 1024;
+            int HeightImg = 1024;
 
+            //convert charDescFFD 2 charDescBMF
+            List<charDescBMF> charDescList = new();
+            foreach (charDescFFD charFFD in FFDDescList)
+            {
+                (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(charFFD.UVLeft, charFFD.UVTop, charFFD.UVRight, charFFD.UVBottom, WidthImg, HeightImg);
+                float xoffset = Ulities.floatRevScaleInt(charFFD.xoffset, config.scaleXoffset);
+                float yoffset = Ulities.floatRevScaleInt(charFFD.yoffset, config.scaleYoffset);
 
+                charDescBMF charBMF = new();
+                charBMF.setDefault();
+                charBMF.id = charFFD.id;
+                charBMF.x = x;
+                charBMF.y = y;
+                charBMF.width = width;
+                charBMF.height = height;
+                charBMF.xoffset = xoffset;
+                charBMF.yoffset = yoffset;
+                charBMF.xadvance = charFFD.xadvance.xadvanceScale;
+                charBMF.page = charFFD.page;
+                charDescList.Add(charBMF);
+            }
 
-            //CreateTextBMF(outputFNT, infoBMF,)
+            // convert kernel
+            List<kernelDescBMF> kernelDescList = new();
+            BMFontFormat.CreateTextBMF(outputFNT, infoBMF, charDescList, kernelDescList);
         }
     }
 }

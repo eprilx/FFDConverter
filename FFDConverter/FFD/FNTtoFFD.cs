@@ -53,7 +53,7 @@ namespace FFDConverter
             List<kernelDescBMF> BMFkernelDescList = new();
             generalInfoBMF infoBMF = new();
             (infoBMF, BMFcharDescList, BMFkernelDescList) = BMFontFormat.LoadBMF(inputBMF);
-
+            
             //Create FFD
             var output = File.Create(outputFFD);
 
