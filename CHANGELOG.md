@@ -1,6 +1,6 @@
 Supported games:
 - Far Cry: 3, BloodDragon, Primal, 4, 5
-- Assassin Creed: 2, Brotherhood, Revelation, 4
+- Assassin Creed: 2, Brotherhood, Revelation, 3 Remastered, 4
 - Watch dogs: 1, 2
 
 
