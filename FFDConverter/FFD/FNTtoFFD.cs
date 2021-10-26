@@ -26,145 +26,15 @@ using Gibbed.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace FFDConverter
 {
-    class FFDFormat
+    class FNTtoFFD
     {
-        private static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, List<kernelDescFFD> FFDkernelList, ref UnknownStuff unkFFD, Config config)
-        {
-            var input = File.OpenRead(inputFFD);
-            input.Position = 0;
-
-            //Read header
-            ReadHeaderFFD(input,ref infoFFD,ref unkFFD, config);
-
-            // Read Table1
-            ReadTable1FFD(input, ref infoFFD);
-
-            // if table 1 = zero then table 2 = null
-            if (infoFFD.table1EqualZero)
-            {
-                uint sizeTable34 = input.ReadValueU32(); // = charCount * 4 + 4
-            }
-            else
-            {
-                for (int i = 0; i < infoFFD.charsCount; i++)
-                {
-                    infoFFD.table2Value = input.ReadValueS16(); // = 17
-                }
-            }
-
-            // read table 3
-            for (int i = 0; i < infoFFD.charsCount; i++)
-            {
-                input.ReadValueU16(); // = id
-            }
-
-            // read table 4
-            unkFFD.unk6bytes = input.ReadBytes(6); // ascender ???
-            for (int i = 0; i < infoFFD.charsCount; i++)
-            {
-                FFDxadvanceList.Add(new xadvanceDescFFD
-                {
-                    unk = input.ReadValueU8(),
-                    xadvanceScale = input.ReadValueU8()
-                });
-            }
-
-            // read table 5
-            for (int i = 0; i < infoFFD.charsCount; i++)
-            {
-                infoFFD.table5Value = input.ReadValueS16(); // = 8
-            }
-
-            // read table 6 kernel
-            infoFFD.kernsCount = input.ReadValueU16();
-            if (infoFFD.kernsCount > 0)
-            {
-                // data kernel
-                for (int i = 0; i <infoFFD.kernsCount; i++)
-                {
-                    FFDkernelList.Add(new kernelDescFFD
-                    {
-                        first = input.ReadValueU16(),
-                        second = input.ReadValueU16(),
-                        amountScale = input.ReadValueU16()
-                    });
-                }
-            }
-            
-            //read textures name
-            for (int i = 0; i < infoFFD.pagesCount; i ++)
-            {
-                infoFFD.BitmapName.Add(input.ReadStringZ());
-            }
-
-            // read charDescFFD
-            for (int i = 0; i < infoFFD.charsCount; i++)
-            {
-                FFDDescList.Add(new charDescFFD
-                {
-                    id = input.ReadValueU16(), // = id
-                    page = input.ReadValueU8(),
-                    UVLeft = input.ReadValueF32(),
-                    UVTop = input.ReadValueF32(),
-                    UVRight = input.ReadValueF32(),
-                    UVBottom = input.ReadValueF32(),
-                    xoffset = input.ReadValueS16(),
-                    yoffset = input.ReadValueS16(),
-                    widthScale = input.ReadValueU16(),
-                    heightScale = input.ReadValueU16(),
-                });
-            }
-
-            // read footer
-            unkFFD.unkFooter = input.ReadBytes((int)(input.Length - input.Position));
-        }
-
-        private static void ReadHeaderFFD(FileStream input, ref generalInfoFFD infoFFD, ref UnknownStuff unkFFD, Config config)
-        {
-            if(config.unkHeaderAC > 0)
-            {
-                unkFFD.unkHeaderAC = input.ReadBytes(config.unkHeaderAC);
-                uint asizeFFD = input.ReadValueU32();
-            }
-            unkFFD.unkHeader1 = input.ReadBytes(config.unkHeader1);
-            infoFFD.pagesCount = input.ReadValueU8();
-            infoFFD.charsCount = input.ReadValueU16();
-            unkFFD.unkHeader2 = input.ReadBytes(config.unkHeader2);
-
-            uint OffsetBitmapNames = input.ReadValueU32(); // OffsetBitmapNames_Real = OffsetBitmapNames + CurrentPosition
-            unkFFD.unkHeader3 = input.ReadBytes(config.unkHeader3);
-            byte sizeFontName = input.ReadValueU8();
-            infoFFD.fontName = input.ReadString(sizeFontName);
-        }
-
-        private static void ReadTable1FFD(FileStream input, ref generalInfoFFD infoFFD)
-        {
-            infoFFD.charsCount = input.ReadValueU16();
-            int checkNull = input.ReadValueU16();
-            input.Position -= 2;
-            if (checkNull == 0)
-            {
-                for (int i = 0; i < infoFFD.charsCount; i++)
-                {
-                    input.ReadValueU32(); // = 0
-                }
-                infoFFD.table1EqualZero = true;
-            }
-            else
-            {
-                for (int i = 0; i <= infoFFD.charsCount; i++)
-                {
-                    input.ReadValueU16(); // = charCount * 2 + 2 + i * 2
-                }
-                infoFFD.table1EqualZero = false;
-            }
-        }
-
-        public static void CreateFFD(string inputFFD, string inputBMF, string outputFFD, string versionGame)
+        public static void CreateFFDfromFNT(string inputFFD, string inputBMF, string outputFFD, string versionGame)
         {
             //get default config
             Config config = DefaultConfig.Get(versionGame);
@@ -176,7 +46,7 @@ namespace FFDConverter
             List<xadvanceDescFFD> FFDxadvanceList = new();
             List<kernelDescFFD> FFDkernelList = new();
             UnknownStuff unkFFD = new();
-            LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
+            FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
 
             //Load BMFont
             List<charDescBMF> BMFcharDescList = new();
@@ -231,7 +101,7 @@ namespace FFDConverter
                 output.WriteValueU32(sizeTable34);
             }
 
-            foreach(charDescBMF infoChar in BMFcharDescList)
+            foreach (charDescBMF infoChar in BMFcharDescList)
             {
                 output.WriteValueU16((ushort)infoChar.id);
             }
@@ -241,7 +111,7 @@ namespace FFDConverter
             foreach (charDescBMF infoChar in BMFcharDescList)
             {
                 output.WriteByte(0);
-                output.WriteByte((byte)(Ulities.intScaleInt(infoChar.xadvance, config.scaleXadvance)));
+                output.WriteByte((byte)(Ulities.floatScaleInt(infoChar.xadvance, config.scaleXadvance)));
             }
 
             for (int i = 0; i < infoBMF.charsCount; i++)
@@ -269,20 +139,20 @@ namespace FFDConverter
             {
                 output.WriteStringZ(infoFFD.BitmapName[i]);
             }
-            
+
             foreach (charDescBMF infoChar in BMFcharDescList)
             {
                 output.WriteValueU16((ushort)infoChar.id);
                 output.WriteByte((byte)infoChar.page);
-                (float UVleft, float UVtop, float UVright, float UVbottom) = Ulities.getUVmapping(infoChar.x, infoChar.y, infoChar.width, infoChar.height, infoBMF.WidthImg, infoBMF.HeightImg);
+                (float UVleft, float UVtop, float UVright, float UVbottom) = Ulities.getUVmappingFromPoint(infoChar.x, infoChar.y, infoChar.width, infoChar.height, infoBMF.WidthImg, infoBMF.HeightImg);
                 output.WriteValueF32(UVleft);
                 output.WriteValueF32(UVtop);
                 output.WriteValueF32(UVright);
                 output.WriteValueF32(UVbottom);
-                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.xoffset, config.scaleXoffset));
-                output.WriteValueU16((ushort)Ulities.intScaleInt(infoChar.yoffset + config.addCustomYoffset, config.scaleYoffset));
-                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.width, config.scaleWidth)));
-                output.WriteValueU16((ushort)(Ulities.intScaleInt(infoChar.height, config.scaleHeight)));
+                output.WriteValueU16((ushort)Ulities.floatScaleInt(infoChar.xoffset, config.scaleXoffset));
+                output.WriteValueU16((ushort)Ulities.floatScaleInt(infoChar.yoffset + config.addCustomYoffset, config.scaleYoffset));
+                output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.width, config.scaleWidth)));
+                output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.height, config.scaleHeight)));
             }
             output.WriteBytes(unkFFD.unkFooter);
             output.Close();
@@ -322,5 +192,6 @@ namespace FFDConverter
             asize += (uint)(infoBMF.charsCount * 27 + (config.unkHeaderAC - 9));
             return asize;
         }
+
     }
 }

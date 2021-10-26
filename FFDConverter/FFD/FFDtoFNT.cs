@@ -22,50 +22,39 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace FFDConverter
 {
-    public struct generalInfoBMF
+    class FFDtoFNT
     {
-        public int lineHeight;
-        public int _base;
-        public int WidthImg; // width image
-        public int HeightImg; // height image
-
-        public string face;
-        public int size;
-        public int bold;
-        public int italic;
-        public int charsCount;
-        public int kernsCount;
-
-        public void setDefault()
+        public static void ConvertFFDtoFNT(string inputFFD, string outputFNT, string versionGame)
         {
-            this.face = "";
-            this.size = 0;
-            this.bold = 0;
-            this.italic = 0;
-            this.lineHeight = 0;
-            this._base = 0;
-        }
-    }
+            //get default config
+            Config config = DefaultConfig.Get(versionGame);
 
-    public struct charDescBMF
-    {
-        public int id;
-        public float x;
-        public float y;
-        public float width;
-        public float height;
-        public float xoffset;
-        public float yoffset;
-        public float xadvance;
-        public int page;
-        public int chnl;
-    }
-    public struct kernelDescBMF
-    {
-        public int first;
-        public int second;
-        public int amount;
+            //Load FFD
+            generalInfoFFD infoFFD = new();
+            infoFFD.BitmapName = new();
+            List<charDescFFD> FFDDescList = new();
+            List<xadvanceDescFFD> FFDxadvanceList = new();
+            List<kernelDescFFD> FFDkernelList = new();
+            UnknownStuff unkFFD = new();
+            FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
+
+            //generalInfoBMF BMFinfo, List< charDescBMF > charDescList, List<kernelDescBMF> kernelDescList)
+            //convert infoFFD 2 infoBMF
+            generalInfoBMF infoBMF = new();
+            infoBMF.setDefault();
+            infoBMF.face = infoFFD.fontName;
+
+
+
+            //CreateTextBMF(outputFNT, infoBMF,)
+        }
     }
 }

@@ -83,13 +83,13 @@ namespace FFDConverter
                     charDescList.Add(new charDescBMF
                     {
                         id = int.Parse(xmlString.Attribute("id").Value),
-                        x = int.Parse(xmlString.Attribute("x").Value),
-                        y = int.Parse(xmlString.Attribute("y").Value),
-                        width = int.Parse(xmlString.Attribute("width").Value),
-                        height = int.Parse(xmlString.Attribute("height").Value),
-                        xoffset = int.Parse(xmlString.Attribute("xoffset").Value),
-                        yoffset = int.Parse(xmlString.Attribute("yoffset").Value),
-                        xadvance = int.Parse(xmlString.Attribute("xadvance").Value),
+                        x = float.Parse(xmlString.Attribute("x").Value),
+                        y = float.Parse(xmlString.Attribute("y").Value),
+                        width = float.Parse(xmlString.Attribute("width").Value),
+                        height = float.Parse(xmlString.Attribute("height").Value),
+                        xoffset = float.Parse(xmlString.Attribute("xoffset").Value),
+                        yoffset = float.Parse(xmlString.Attribute("yoffset").Value),
+                        xadvance = float.Parse(xmlString.Attribute("xadvance").Value),
                         page = int.Parse(xmlString.Attribute("page").Value),
                         chnl = int.Parse(xmlString.Attribute("chnl").Value),
                     });
@@ -195,6 +195,14 @@ namespace FFDConverter
                 BMFinfo.kernsCount = 0;
             }
             return (BMFinfo, charDescList, kernelDescList);
+        }
+
+        public static void CreateTextBMF(string outputBMF, generalInfoBMF BMFinfo, List<charDescBMF> charDescList, List<kernelDescBMF> kernelDescList)
+        {
+            var output = File.CreateText(outputBMF);
+            //info face = "TITANESE Regular" size = 32 bold = 0 italic = 0 charset = "" unicode = 0 stretchH = 100 smooth = 1 aa = 1 padding = 4,4,4,4 spacing = -8,-8
+            output.WriteLine(String.Format("info face = \"{0} size = {1} bold = {2} italic = {3}", BMFinfo.face, BMFinfo.size, BMFinfo.bold, BMFinfo.italic));
+
         }
     }
 }

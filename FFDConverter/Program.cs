@@ -110,7 +110,7 @@ namespace FFDConverter
             // CreateFFD
             if (output == null)
                 output = originalFFD + ".new";
-            FFDFormat.CreateFFD(originalFFD, fntBMF, output, version);
+            FNTtoFFD.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
             Done();
 
             void ShowHelp(OptionSet p)

@@ -41,7 +41,7 @@ namespace FFDConverter
             return FinalString;
         }
 
-        public static (float,float,float,float) getUVmapping(int x, int y, int width, int height, int WidthImg, int HeightImg)
+        public static (float,float,float,float) getUVmappingFromPoint(float x, float y, float width, float height, int WidthImg, int HeightImg)
         {
             float UVLeft = x / (float)WidthImg;
             float UVTop = y / (float)HeightImg;
@@ -54,12 +54,16 @@ namespace FFDConverter
         {
             float x = UVLeft * WidthImg;
             float y = UVTop * HeightImg;
-            float width = UVRight * WidthImg - x;
-            float height = UVBottom * HeightImg - y;
+            float width = (UVRight * WidthImg) - x;
+            float height = (UVBottom * HeightImg) - y;
             return (x, y, width, height);
         }
 
         public static int intScaleInt(int number, float Scale)
+        {
+            return (int)((float)number * Scale);
+        }
+        public static int floatScaleInt(float number, float Scale)
         {
             return (int)((float)number * Scale);
         }

@@ -50,6 +50,16 @@ namespace FFDConverter
         public short yoffset;
         public ushort widthScale;
         public ushort heightScale;
+        
+        public bool checkRotate(int WidthImage, int HeightImage)
+        {
+            (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(this.UVLeft, this.UVTop, this.UVRight, this.UVBottom, WidthImage, HeightImage);
+            if (width < 0 || height < 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 
     public struct xadvanceDescFFD
