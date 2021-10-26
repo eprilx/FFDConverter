@@ -53,7 +53,7 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 - Eirlys#7340 (providing sample files for Watch Dogs 1, 2)
 - [halfway](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=65552) (providing sample files for FC3)
 - [ramyzahran](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=63812) (providing sample files for FC Primal)
-
+- [Rick Gibbed](https://github.com/gibbed) ([Gibbed.IO](https://github.com/gibbed/Gibbed.IO) library)
 ## TODO
 [Support more game.](https://github.com/eprilx/FFDConverter/issues/2)
 
