@@ -48,7 +48,7 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 <img src="sampleImg/0Yoffset.png" height="360"/>&emsp;<img src="sampleImg/scaleWH12.png" height="360"/>
 
 ## Special Thanks
-- [abodora](https://github.com/abodora) (providing sample files for Assassin's Creed 2 (AC2), AC Brotherhood, AC Revelation)
+- [abodora](https://github.com/abodora) (providing sample files for Assassin's Creed 2 (AC2), AC Brotherhood, AC Revelation, AC 3 Remastered)
 - [rezamms](https://github.com/rezamms) (providing sample files for Far Cry 3 Blood Dragon (FC3BD), FC4)
 - Eirlys#7340 (providing sample files for Watch Dogs 1, 2)
 - [halfway](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=65552) (providing sample files for FC3)
