@@ -161,13 +161,13 @@ namespace FFDConverter
                 charDescList.Add(new charDescBMF
                 {
                     id = int.Parse(Ulities.StringBetween(_char, "id=", " ")),
-                    x = int.Parse(Ulities.StringBetween(_char, "x=", " ")),
-                    y = int.Parse(Ulities.StringBetween(_char, "y=", " ")),
-                    width = int.Parse(Ulities.StringBetween(_char, "width=", " ")),
-                    height = int.Parse(Ulities.StringBetween(_char, "height=", " ")),
-                    xoffset = int.Parse(Ulities.StringBetween(_char, "xoffset=", " ")),
-                    yoffset = int.Parse(Ulities.StringBetween(_char, "yoffset=", " ")),
-                    xadvance = int.Parse(Ulities.StringBetween(_char, "xadvance=", " ")),
+                    x = float.Parse(Ulities.StringBetween(_char, "x=", " ")),
+                    y = float.Parse(Ulities.StringBetween(_char, "y=", " ")),
+                    width = float.Parse(Ulities.StringBetween(_char, "width=", " ")),
+                    height = float.Parse(Ulities.StringBetween(_char, "height=", " ")),
+                    xoffset = float.Parse(Ulities.StringBetween(_char, "xoffset=", " ")),
+                    yoffset = float.Parse(Ulities.StringBetween(_char, "yoffset=", " ")),
+                    xadvance = float.Parse(Ulities.StringBetween(_char, "xadvance=", " ")),
                     page = int.Parse(Ulities.StringBetween(_char, "page=", " ")),
                     chnl = int.Parse(Ulities.StringBetween(_char, "chnl=", " "))
                 });
@@ -216,7 +216,7 @@ namespace FFDConverter
             foreach(charDescBMF _char in charDescList)
             {
                 //char id=0       x=169  y=0    width=34   height=67   xoffset=4    yoffset=16   xadvance=42   page=0    chnl=0 
-                output.WriteLine(String.Format("char id={0,-8}x={1,-8:0.0}y={2,-8:0.0}width={3,-8:0.0}height={4,-8:0.0}xoffset={5,-8:0.0}yoffset={6,-8:0.0}xadvance={7,-8:0.0}page={8,-8}chnl={9,-8}", _char.id, _char.x,_char.y,_char.width,_char.height,_char.xoffset,_char.yoffset,_char.xadvance,_char.page,_char.chnl));
+                output.WriteLine(String.Format("char id={0,-8}x={1,-8:0.00}y={2,-8:0.00}width={3,-8:0.00}height={4,-8:0.00}xoffset={5,-8:0.00}yoffset={6,-8:0.00}xadvance={7,-8:0.00}page={8,-8}chnl={9,-8}", _char.id, _char.x,_char.y,_char.width,_char.height,_char.xoffset,_char.yoffset,_char.xadvance,_char.page,_char.chnl));
             }
 
             //kernings count=667

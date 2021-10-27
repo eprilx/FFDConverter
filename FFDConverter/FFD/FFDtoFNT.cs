@@ -60,15 +60,16 @@ namespace FFDConverter
                 infoBMF.idImg.Add(i);
                 infoBMF.fileImg.Add(infoFFD.BitmapName[i]);
             }
+
             // Get width/height image font from user
-            int WidthImg = 1024;
-            int HeightImg = 1024;
+            (infoBMF.WidthImg, infoBMF.HeightImg) = getWidthHeightImageFont();
+
 
             //convert charDescFFD 2 charDescBMF
             List<charDescBMF> charDescList = new();
             foreach (charDescFFD charFFD in FFDDescList)
             {
-                (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(charFFD.UVLeft, charFFD.UVTop, charFFD.UVRight, charFFD.UVBottom, WidthImg, HeightImg);
+                (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(charFFD.UVLeft, charFFD.UVTop, charFFD.UVRight, charFFD.UVBottom, infoBMF.WidthImg, infoBMF.HeightImg);
                 float xoffset = Ulities.floatRevScaleInt(charFFD.xoffset, config.scaleXoffset);
                 float yoffset = Ulities.floatRevScaleInt(charFFD.yoffset, config.scaleYoffset);
 
@@ -81,7 +82,7 @@ namespace FFDConverter
                 charBMF.height = height;
                 charBMF.xoffset = xoffset;
                 charBMF.yoffset = yoffset;
-                charBMF.xadvance = charFFD.xadvance.xadvanceScale;
+                charBMF.xadvance = Ulities.floatRevScaleInt(charFFD.xadvance.xadvanceScale, config.scaleXadvance);
                 charBMF.page = charFFD.page;
                 charDescList.Add(charBMF);
             }
@@ -98,6 +99,18 @@ namespace FFDConverter
                 }) ;
             }
             BMFontFormat.CreateTextBMF(outputFNT, infoBMF, charDescList, kernelDescList);
+        }
+
+        private static (int,int) getWidthHeightImageFont()
+        {
+            int width = 0;
+            int height = 0;
+            Console.WriteLine("Please input width, height of image fonts:");
+            Console.Write("Width = ");
+            Int32.TryParse(Console.ReadLine(), out width);
+            Console.Write("Height = ");
+            Int32.TryParse(Console.ReadLine(), out height);
+            return (width, height);
         }
     }
 }

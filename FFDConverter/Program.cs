@@ -37,16 +37,37 @@ namespace FFDConverter
         static void Main(string[] args)
         {
             string ToolVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-            ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
+            try
+            {
+                ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
+            }
+            catch
+            {
+                ToolVersion = "1.0.0";
+            }
             string originalFFD = null;
             string fntBMF = null;
             string output = null;
             string version = null;
-            bool show_help = false;
             bool show_list = false;
+            string command = null;
             List<string> SupportedGame = DefaultConfig.GetSupportedList();
 
-            var p = new OptionSet() {
+            var p = new OptionSet()
+            {
+                {"fnt2ffd", "Convert FNT to FFD",
+                v => {command = "fnt2ffd"; } },
+                {"ffd2fnt", "Convert FFD to FNT",
+                v=> {command = "ffd2fnt"; } },
+                { "l|list", "show list supported games",
+                    v => show_list = v != null }
+            };
+            p.Parse(args);
+
+            switch(command)
+            {
+                case "fnt2ffd":
+                    p = new OptionSet() {
                 { "v|version=", "(required) Name of game. (FC2,FC3,...)",
                    v => version = v  },
                 { "f|originalFFD=", "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
@@ -56,28 +77,29 @@ namespace FFDConverter
                 { "o|NewFFD=",
                    "(optional) Output new FFD file",
                     v => output = v },
-                { "l|list", "show list supported games",
-                    v => show_list = v != null },
-                { "h|help",  "show this message and exit",
-                   v => show_help = v != null },
-            };
+                };
+                    break;
+                case "ffd2fnt":
+                    p = new OptionSet() {
+                { "v|version=", "(required) Name of game. (FC2,FC3,...)",
+                   v => version = v  },
+                { "f|originalFFD=", "(required) Original FFD file (*.ffd|*.Fire_Font_Descriptor)",
+                    v => originalFFD = v },
+                { "o|NewFNT=",
+                   "(optional) Output FNT file",
+                    v => output = v },
+                };
+                    break;
+            }
+            p.Parse(args);
 
-            try
-            {
-                p.Parse(Environment.GetCommandLineArgs());
-            }
-            catch (OptionException)
-            {
-                Console.WriteLine("Try 'FFDConverter --help' for more information.");
-                return;
-            }
 
             if (show_list)
             {
                 PrintSupportedGame();
                 return;
             }
-            else if (show_help || args.Length == 0 || version == null || originalFFD == null || fntBMF == null)
+            else if (args.Length == 0 || version == null || originalFFD == null || (fntBMF == null && command == "fnt2ffd"))
             {
                 ShowHelp(p);
                 return;
@@ -95,11 +117,14 @@ namespace FFDConverter
                 return;
             }
 
-            if (!fntBMF.EndsWith(".fnt"))
+            if (command == "fnt2ffd")
             {
-                Console.WriteLine("Unknown character description file.");
-                ShowHelp(p);
-                return;
+                if (!fntBMF.EndsWith(".fnt"))
+                {
+                    Console.WriteLine("Unknown character description file.");
+                    ShowHelp(p);
+                    return;
+                }
             }
 
             // Change current culture
@@ -108,23 +133,52 @@ namespace FFDConverter
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
             // CreateFFD
-            if (output == null)
-                output = originalFFD + ".new";
-            FNTtoFFD.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
-            //FFDtoFNT.ConvertFFDtoFNT(originalFFD, "out.fnt", version);
+
+            switch (command)
+            {
+                case "fnt2ffd":
+                    if (output == null)
+                        output = originalFFD + ".new";
+                    FNTtoFFD.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
+                    break;
+                case "ffd2fnt":
+                    if (output == null)
+                        output = originalFFD + ".FNT";
+                    FFDtoFNT.ConvertFFDtoFNT(originalFFD, output, version);
+                    break;
+            }
+            
             Done();
 
             void ShowHelp(OptionSet p)
             {
-                PrintCredit();
-                Console.WriteLine("\nUsage: FFDConverter [OPTIONS]");
+                
+                switch (command)
+                {
+                    case "fnt2ffd":
+                        Console.WriteLine("\nUsage: FFDConverter --fnt2ffd [OPTIONS]");
+                        break;
+                    case "ffd2fnt":
+                        Console.WriteLine("\nUsage: FFDConverter --ffd2fnt [OPTIONS]");
+                        break;
+                    default:
+                        PrintCredit();
+                        Console.WriteLine("\nUsage: FFDConverter [OPTIONS]");
+                        break;
+                }
+                
                 Console.WriteLine("Options:");
                 p.WriteOptionDescriptions(Console.Out);
 
-                Console.WriteLine("\nExample: \nFFDConverter -l\nFFDConverter -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.new.ffd");
-                Console.WriteLine("\nMore usage: https://github.com/eprilx/FFDConverter#usage");
-                Console.Write("More update: ");
-                Console.WriteLine("https://github.com/eprilx/FFDConverter/releases");
+                if (command == null)
+                {
+                    Console.WriteLine("\nExample: \nFFDConverter -l");
+                    Console.WriteLine("FFDConverter --fnt2ffd -v FC5 -f fcz_bold_default.ffd -b arialFC5.fnt -o fcz_bold_default.new.ffd");
+                    Console.WriteLine("FFDConverter --ffd2fnt -v FC5 -f fcz_bold_default.ffd -o fcz_bold_default.ffd.fnt");
+                    Console.WriteLine("\nMore usage: https://github.com/eprilx/FFDConverter#usage");
+                    Console.Write("More update: ");
+                    Console.WriteLine("https://github.com/eprilx/FFDConverter/releases");
+                }
             }
 
             void PrintSupportedGame()

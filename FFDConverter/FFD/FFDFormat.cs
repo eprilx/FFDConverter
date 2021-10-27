@@ -104,6 +104,9 @@ namespace FFDConverter
             // read charDescFFD
             for (int i = 0; i < infoFFD.charsCount; i++)
             {
+                xadvanceDescFFD xadvance;
+                xadvance.unk = FFDxadvanceList[i].unk;
+                xadvance.xadvanceScale = FFDxadvanceList[i].xadvanceScale;
                 FFDDescList.Add(new charDescFFD
                 {
                     id = input.ReadValueU16(), // = id
@@ -116,7 +119,7 @@ namespace FFDConverter
                     yoffset = input.ReadValueS16(),
                     widthScale = input.ReadValueU16(),
                     heightScale = input.ReadValueU16(),
-                    
+                    xadvance = xadvance
                 });
             }
 

@@ -151,8 +151,16 @@ namespace FFDConverter
                 output.WriteValueF32(UVbottom);
                 output.WriteValueU16((ushort)Ulities.floatScaleInt(infoChar.xoffset, config.scaleXoffset));
                 output.WriteValueU16((ushort)Ulities.floatScaleInt(infoChar.yoffset + config.addCustomYoffset, config.scaleYoffset));
-                output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.width, config.scaleWidth)));
-                output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.height, config.scaleHeight)));
+                if (infoChar.width < 0)
+                {
+                    output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.height, config.scaleHeight)));
+                    output.WriteValueU16((ushort)(Ulities.floatScaleInt(-infoChar.width, config.scaleWidth)));
+                }
+                else
+                {
+                    output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.width, config.scaleWidth)));
+                    output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.height, config.scaleHeight)));
+                }
             }
             output.WriteBytes(unkFFD.unkFooter);
             output.Close();
