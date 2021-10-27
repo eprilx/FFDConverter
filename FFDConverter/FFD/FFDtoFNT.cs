@@ -44,7 +44,7 @@ namespace FFDConverter
             List<xadvanceDescFFD> FFDxadvanceList = new();
             List<kernelDescFFD> FFDkernelList = new();
             UnknownStuff unkFFD = new();
-            FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
+            FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, ref config);
 
             //generalInfoBMF BMFinfo, List< charDescBMF > charDescList, List<kernelDescBMF> kernelDescList)
             

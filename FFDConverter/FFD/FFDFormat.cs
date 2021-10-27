@@ -32,13 +32,13 @@ namespace FFDConverter
 {
     class FFDFormat
     {
-        public static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, List<kernelDescFFD> FFDkernelList, ref UnknownStuff unkFFD, Config config)
+        public static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, List<kernelDescFFD> FFDkernelList, ref UnknownStuff unkFFD, ref Config config)
         {
             var input = File.OpenRead(inputFFD);
             input.Position = 0;
 
             //Read header
-            ReadHeaderFFD(input,ref infoFFD,ref unkFFD, config);
+            ReadHeaderFFD(input, ref infoFFD, ref unkFFD, ref config);
 
             // Read Table1
             ReadTable1FFD(input, ref infoFFD);
@@ -124,14 +124,34 @@ namespace FFDConverter
             unkFFD.unkFooter = input.ReadBytes((int)(input.Length - input.Position));
         }
 
-        private static void ReadHeaderFFD(FileStream input, ref generalInfoFFD infoFFD, ref UnknownStuff unkFFD, Config config)
+        private static void ReadHeaderFFD(FileStream input, ref generalInfoFFD infoFFD, ref UnknownStuff unkFFD, ref Config config)
         {
             if(config.unkHeaderAC > 0)
             {
                 unkFFD.unkHeaderAC = input.ReadBytes(config.unkHeaderAC);
                 uint asizeFFD = input.ReadValueU32();
             }
-            unkFFD.unkHeader1 = input.ReadBytes(config.unkHeader1);
+
+            // some hard code
+            if (config.unkHeader1 == 1)
+            {
+                input.ReadByte();
+                ushort scaleFont = input.ReadValueU16();
+                input.Position -= 3;
+                unkFFD.unkHeader1 = input.ReadBytes(3);
+                if (scaleFont > 8000)
+                {
+                    config.scaleXoffset = 16;
+                    config.scaleYoffset = 16;
+                    config.scaleWidth += 8;
+                    config.scaleHeight += 8;
+                }
+            }
+            else
+            {
+                unkFFD.unkHeader1 = input.ReadBytes(config.unkHeader1);
+            }
+
             infoFFD.pagesCount = input.ReadValueU8();
             infoFFD.charsCount = input.ReadValueU16();
             unkFFD.unkHeader2 = input.ReadBytes(config.unkHeader2);

@@ -46,7 +46,7 @@ namespace FFDConverter
             List<xadvanceDescFFD> FFDxadvanceList = new();
             List<kernelDescFFD> FFDkernelList = new();
             UnknownStuff unkFFD = new();
-            FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, config);
+            FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, ref config);
 
             //Load BMFont
             List<charDescBMF> BMFcharDescList = new();
@@ -192,6 +192,5 @@ namespace FFDConverter
             asize += (uint)(infoBMF.charsCount * 27 + (config.unkHeaderAC - 9));
             return asize;
         }
-
     }
 }
