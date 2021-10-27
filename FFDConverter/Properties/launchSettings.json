@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v FCND -b AC2KERN.fnt -f \"FCND\\din_mittelschrift_lt_w1g_default.ffd\" -o new.ffd"
+      "commandLineArgs": "-v ACRo -b AC2KERN.fnt -f \"ACRo\\abstergo_sans_latin.ffd\" -o new.ffd"
     }
   }
 }
