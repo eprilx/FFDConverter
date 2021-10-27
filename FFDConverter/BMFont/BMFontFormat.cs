@@ -110,7 +110,7 @@ namespace FFDConverter
                         {
                             first = int.Parse(xmlString.Attribute("first").Value),
                             second = int.Parse(xmlString.Attribute("second").Value),
-                            amount = int.Parse(xmlString.Attribute("amount").Value),
+                            amount = float.Parse(xmlString.Attribute("amount").Value),
                         });
                     }
                 }
@@ -185,7 +185,7 @@ namespace FFDConverter
                     {
                         first = int.Parse(Ulities.StringBetween(kern, "first=", " ")),
                         second = int.Parse(Ulities.StringBetween(kern, "second=", " ")),
-                        amount = int.Parse(Ulities.StringBetween(kern, "amount=", " "))
+                        amount = float.Parse(Ulities.StringBetween(kern, "amount=", " "))
                     });
                 }
             }
@@ -216,7 +216,7 @@ namespace FFDConverter
             foreach(charDescBMF _char in charDescList)
             {
                 //char id=0       x=169  y=0    width=34   height=67   xoffset=4    yoffset=16   xadvance=42   page=0    chnl=0 
-                output.WriteLine(String.Format("char id={0,-8}x={1,-8}y={2,-8}width={3,-8}height={4,-8}xoffset={5,-8}yoffset={6,-8}xadvance={7,-8}page={8,-8}chnl={9,-8}", _char.id, _char.x,_char.y,_char.width,_char.height,_char.xoffset,_char.yoffset,_char.xadvance,_char.page,_char.chnl));
+                output.WriteLine(String.Format("char id={0,-8}x={1,-8:0.0}y={2,-8:0.0}width={3,-8:0.0}height={4,-8:0.0}xoffset={5,-8:0.0}yoffset={6,-8:0.0}xadvance={7,-8:0.0}page={8,-8}chnl={9,-8}", _char.id, _char.x,_char.y,_char.width,_char.height,_char.xoffset,_char.yoffset,_char.xadvance,_char.page,_char.chnl));
             }
 
             //kernings count=667
@@ -224,7 +224,7 @@ namespace FFDConverter
             foreach(kernelDescBMF kerning in kernelDescList)
             {
                 //kerning first=57 second=56 amount=-2
-                output.WriteLine(String.Format("kerning first={0,-5} second={1,-5} amount={2,-5}", kerning.first, kerning.second, kerning.amount));
+                output.WriteLine(String.Format("kerning first={0,-5} second={1,-5} amount={2,-5:0.0}", kerning.first, kerning.second, kerning.amount));
             }
             output.Close();
         }

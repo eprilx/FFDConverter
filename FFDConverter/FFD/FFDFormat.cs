@@ -90,7 +90,7 @@ namespace FFDConverter
                     {
                         first = input.ReadValueU16(),
                         second = input.ReadValueU16(),
-                        amountScale = input.ReadValueU16()
+                        amountScale = input.ReadValueS16()
                     });
                 }
             }
@@ -118,8 +118,6 @@ namespace FFDConverter
                     heightScale = input.ReadValueU16(),
                     
                 });
-
-                FFDDescList[i].setXadvance(FFDxadvanceList[i].unk, FFDxadvanceList[i].xadvanceScale);
             }
 
             // read footer

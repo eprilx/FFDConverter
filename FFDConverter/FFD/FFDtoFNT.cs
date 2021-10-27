@@ -88,6 +88,15 @@ namespace FFDConverter
 
             // convert kernel
             List<kernelDescBMF> kernelDescList = new();
+            foreach(kernelDescFFD kernelFFD in FFDkernelList)
+            {
+                kernelDescList.Add(new kernelDescBMF
+                {
+                    first = kernelFFD.first,
+                    second = kernelFFD.second,
+                    amount = (kernelFFD.amountScale / (float)200)
+                }) ;
+            }
             BMFontFormat.CreateTextBMF(outputFNT, infoBMF, charDescList, kernelDescList);
         }
     }

@@ -77,7 +77,7 @@ namespace FFDConverter
     {
         public ushort first;
         public ushort second;
-        public ushort amountScale;
+        public short amountScale;
     }
 
     public struct UnknownStuff

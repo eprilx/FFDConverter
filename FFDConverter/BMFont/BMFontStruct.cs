@@ -81,6 +81,6 @@ namespace FFDConverter
     {
         public int first;
         public int second;
-        public int amount;
+        public float amount;
     }
 }
