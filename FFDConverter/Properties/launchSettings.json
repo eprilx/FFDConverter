@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "-v AC3LRE -b AC2KERN.fnt -f \"AC3Remastered\\ACL\\1239-Abstergo_Sans_Latin.Fire_Font_Descriptor\" -o new.ffd"
+      "commandLineArgs": "-v FCND -b AC2KERN.fnt -f \"FCND\\din_mittelschrift_lt_w1g_default.ffd\" -o new.ffd"
     }
   }
 }

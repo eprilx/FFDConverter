@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0"?>
 <config>
-    <game name="FarCryPrimal - FCP" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="FarCry3BloodDragon - FC3BD" scaleXoffset="16.0" scaleYoffset="16.0" scaleWidth="16.0" scaleHeight="16.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="FarCry3 - FC3" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="FarCry4 - FC4" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="FarCry5 - FC5" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="1.3" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="WatchDogs1 - WD1" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="WatchDogs2 - WD2" scaleXoffset="16.0" scaleYoffset="16.0" scaleWidth="16.0" scaleHeight="16.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
-    <game name="Assassin2 - AC2" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="9"/>
-    <game name="AssassinBrotherhood - ACBR" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="9"/>
-    <game name="AssassinRevelation - ACRE" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="9"/>    
-    <game name="Assassin3Remastered - AC3R - AC3LR" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="13"/>    
-    <game name="Assassin4BlackFlag - AC4" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="13"/>
-
+  <game name="FarCryPrimal - FCP" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="FarCry3BloodDragon - FC3BD" scaleXoffset="16.0" scaleYoffset="16.0" scaleWidth="16.0" scaleHeight="16.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="FarCry3 - FC3" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="FarCry4 - FC4" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="FarCry5 - FC5" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="1.3" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="FarCryNewDawn - FCND" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="1" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="WatchDogs1 - WD1" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="WatchDogs2 - WD2" scaleXoffset="16.0" scaleYoffset="16.0" scaleWidth="16.0" scaleHeight="16.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="0"/>
+  <game name="Assassin2 - AC2" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="9"/>
+  <game name="AssassinBrotherhood - ACBR" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="9"/>
+  <game name="AssassinRevelation - ACRE" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="9"/>    
+  <game name="Assassin3Remastered - AC3R - AC3LR" scaleXoffset="1.0" scaleYoffset="1.0" scaleWidth="1.0" scaleHeight="1.0" scaleXadvance="1.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="13"/>    
+  <game name="Assassin4BlackFlag - AC4" scaleXoffset="8.0" scaleYoffset="8.0" scaleWidth="8.0" scaleHeight="8.0" scaleXadvance="2.0" addCustomYoffset="0" unkHeader1="3" unkHeader2="34" unkHeader3="4" unkHeaderAC="13"/>
 </config>
