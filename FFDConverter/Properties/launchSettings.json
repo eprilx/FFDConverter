@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "--fnt2ffd -v AC2 -f 1711-AC2Aaux_ProLight_Latin.Fire_Font_Descriptor -b arialFC5.fnt -o new.ffd"
+      "commandLineArgs": "--fnt2ffd -v WDL -f \"WDL\\orwellbold_default.ffd\" -b arialFC5.fnt -o new.ffd"
     }
   }
 }
