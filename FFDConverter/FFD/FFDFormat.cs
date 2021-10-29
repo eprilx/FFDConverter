@@ -146,22 +146,22 @@ namespace FFDConverter
                 {
                     config.scaleXoffset = 16;
                     config.scaleYoffset = 16;
-                    config.scaleWidth = 16;
-                    config.scaleHeight = 16;
+                    config.scaleWidth *= 16;
+                    config.scaleHeight *= 16;
                 }
                 else if (scaleFont > 1000)
                 {
                     config.scaleXoffset = 8;
                     config.scaleYoffset = 8;
-                    config.scaleWidth = 8;
-                    config.scaleHeight = 8;
+                    config.scaleWidth *= 8;
+                    config.scaleHeight *= 8;
                 }
                 else
                 {
                     config.scaleXoffset = 1;
                     config.scaleYoffset = 1;
-                    config.scaleWidth = 1;
-                    config.scaleHeight = 1;
+                    config.scaleWidth *= 1;
+                    config.scaleHeight *= 1;
                 }
             }
             else
