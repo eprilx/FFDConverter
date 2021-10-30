@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 
 namespace FFDConverter
 {
-    class FFDtoFNT
+    public class FFDtoFNT
     {
         public static void ConvertFFDtoFNT(string inputFFD, string outputFNT, string versionGame)
         {

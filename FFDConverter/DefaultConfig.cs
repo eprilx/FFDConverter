@@ -49,7 +49,7 @@ namespace FFDConverter
         public int unkHeader3;
         public int unkHeaderAC;
     }
-    class DefaultConfig
+    public class DefaultConfig
     {
         public static Config Get(string versionGame)
         {
