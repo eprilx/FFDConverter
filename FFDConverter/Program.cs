@@ -195,7 +195,7 @@ namespace FFDConverter
                 Console.Write("\nFFDConverter v" + ToolVersion);
                 Console.WriteLine(" by eprilx");
                 Console.Write("Special thanks to: ");
-                Console.WriteLine("abodora, rezamms, Eirlys, halfway, ramyzahran");
+                Console.WriteLine("abodora, rezamms, Eirlys, halfway, ramyzahran, shadow_lonely, Rick Gibbed");
                 Console.ResetColor();
             }
             void Done()
