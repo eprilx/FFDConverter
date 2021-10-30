@@ -32,6 +32,7 @@ namespace FFDConverter
         public byte pagesCount;
         public ushort charsCount;
         public bool table1EqualZero;
+        public string table1Type; // U16 or U32
         public short table2Value;
         public short table5Value;
         public ushort kernsCount;

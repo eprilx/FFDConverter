@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "--fnt2ffd -v AC3LHD -f \"Assassin's Creed Liberation HD\\ffd\\1239-Abstergo_Sans_Latin.Fire_Font_Descriptor\" -b arialFC5.fnt -o new.ffd"
+      "commandLineArgs": "--fnt2ffd -v IamAlive -f \"IamAlive\\Chainprinter_Latin.ffd\" -b arialFC5.fnt -o new.ffd"
     }
   }
 }
