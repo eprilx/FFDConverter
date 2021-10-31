@@ -39,6 +39,36 @@ jobs:
         name: windows_${{steps.get-version.outputs.assembly-version}}
         path: ./publish/console/windows
 
+  check-gui-win:
+    runs-on: windows-latest
+    
+    steps:
+    # setup  
+    - name: checkout
+      uses: actions/checkout@v2
+    - name: Checkout submodules
+      run: git submodule update --init --recursive
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.x
+    - uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Get version
+      uses: naminodarie/get-net-sdk-project-versions-action@v1
+      id: get-version
+      with:
+        proj-path: ./FFDConverterGUI/FFDConverterGUI.csproj
+
+    - name: publish FFDConverter
+      run: msbuild .\FFDConverterGUI\FFDConverterGUI.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/gui/windows" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: windows_gui_${{steps.get-version.outputs.assembly-version}}
+        path: ./publish/gui/windows
+ 
   check-console-linux:
     runs-on: ubuntu-latest
     
