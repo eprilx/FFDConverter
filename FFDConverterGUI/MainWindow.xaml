@@ -48,6 +48,15 @@
         <Button x:Name="btn3" Content="..." Width="25" Height="22" Margin="660,0,0,139" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btn3_Click"/>
         <Button x:Name="btn2" Content="..." Width="25" Height="22" Margin="660,0,0,189" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btn2_Click"/>
         <Button x:Name="btn1" Content="..." Width="25" Height="22" Margin="660,0,0,239" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btn1_Click"/>
-
+        <TextBlock Margin="580,0,0,45" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom">           
+            <Hyperlink NavigateUri="https://github.com/eprilx/FFDConverter#usage" RequestNavigate="Hyperlink_RequestNavigate" >
+                More Usage
+            </Hyperlink>
+        </TextBlock>
+        <TextBlock Margin="580,0,0,20" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom">           
+            <Hyperlink NavigateUri="https://github.com/eprilx/FFDConverter/releases" RequestNavigate="Hyperlink_RequestNavigate">
+                More Update
+            </Hyperlink>
+        </TextBlock>
     </Grid>
 </Window>

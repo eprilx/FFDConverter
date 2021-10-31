@@ -158,5 +158,14 @@ namespace FFDConverterGUI
                 txb3.Text = saveFileDialog.FileName;
             }
         }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {        
+            Process process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = e.Uri.AbsoluteUri;
+            process.Start();
+            e.Handled = true;
+        }
     }
 }
