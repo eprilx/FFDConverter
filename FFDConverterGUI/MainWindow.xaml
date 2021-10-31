@@ -38,10 +38,10 @@
         </Label>
 
         <TextBox x:Name="txb1" Width="480" Height="22" Margin="170,0,0,239" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-            <TextBox.Text>*.fnt</TextBox.Text>
+            <TextBox.Text>(*.fnt)</TextBox.Text>
         </TextBox>
         <TextBox x:Name="txb2" Width="480" Height="22" Margin="170,0,0,189" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextChanged="txb2_TextChanged">
-            <TextBox.Text>*.ffd, *.Fire_Font_Descriptor</TextBox.Text>
+            <TextBox.Text>(*.ffd; *.Fire_Font_Descriptor)</TextBox.Text>
         </TextBox>
         <TextBox x:Name="txb3" Width="480" Height="22" Margin="170,0,0,139" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="(Optional)"/>
         <ComboBox x:Name="cbx" Width="480" Height="22" Initialized="ComboBox_Initialized" FontSize="12"  Margin="170,0,0,289" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
