@@ -51,6 +51,13 @@ namespace FFDConverter
             string version = null;
             bool show_list = false;
             string command = null;
+
+            // Change current culture
+            CultureInfo culture;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+
             List<string> SupportedGame = DefaultConfig.GetSupportedList();
 
             var p = new OptionSet()
@@ -97,6 +104,7 @@ namespace FFDConverter
             if (show_list)
             {
                 PrintSupportedGame();
+                Console.ReadKey();
                 return;
             }
             else if (args.Length == 0 || version == null || originalFFD == null || (fntBMF == null && command == "fnt2ffd"))
@@ -127,32 +135,31 @@ namespace FFDConverter
                 }
             }
 
-            // Change current culture
-            CultureInfo culture;
-            culture = CultureInfo.CreateSpecificCulture("en-US");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
             // CreateFFD
-
-            switch (command)
+            try
             {
-                case "fnt2ffd":
-                    if (output == null)
-                        output = originalFFD + ".new";
-                    FNTtoFFD.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
-                    break;
-                case "ffd2fnt":
-                    if (output == null)
-                        output = originalFFD + ".FNT";
-                    FFDtoFNT.ConvertFFDtoFNT(originalFFD, output, version);
-                    break;
+                switch (command)
+                {
+                    case "fnt2ffd":
+                        if (output == null)
+                            output = originalFFD + ".new";
+                        FNTtoFFD.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
+                        break;
+                    case "ffd2fnt":
+                        if (output == null)
+                            output = originalFFD + ".FNT";
+                        FFDtoFNT.ConvertFFDtoFNT(originalFFD, output, version);
+                        break;
+                }
+                Done();
+            }
+            finally
+            {
+                Console.ReadKey();
             }
             
-            Done();
-
             void ShowHelp(OptionSet p)
             {
-                
                 switch (command)
                 {
                     case "fnt2ffd":

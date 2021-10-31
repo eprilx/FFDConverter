@@ -1,12 +1,53 @@
 ﻿<Window x:Class="FFDConverterGUI.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FFDConverterGUI"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:FFDConverterGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        ResizeMode="NoResize"
+        Title="FFDConverterGUI" Height="374" Width="727" >
+    <Grid Background="#FFEFEFEF">
+        <Button        
+                HorizontalAlignment="Center" Margin="0,0,0,29" Width="150"
+                FontSize="22" Height="37" VerticalAlignment="Bottom" Click="Button_Click">
+            <TextBlock Text="Convert!" TextWrapping="Wrap" TextAlignment="Center"/>
+        </Button>
+        <RadioButton x:Name="rbtn1"
+                     Margin="230,0,0,90" IsChecked="True" 
+                      VerticalContentAlignment="Center" Height="26" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="117" Checked="rbtn1_Checked">
+            <TextBlock Text="FNT to FFD" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </RadioButton>
+        <RadioButton x:Name="rbtn2"
+                     HorizontalAlignment="Right" 
+                     Margin="0,0,230,90"
+                      VerticalContentAlignment="Center" Height="26" VerticalAlignment="Bottom" Checked="rbtn2_Checked">
+            <TextBlock Text="FFD to FNT" FontSize="17" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        </RadioButton>
+        <Label x:Name="label1" HorizontalAlignment="Left" Margin="40,0,0,232" Height="37" VerticalAlignment="Bottom">
+            <TextBlock Text="Char Desc (*.fnt):" FontSize="16"/>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="40,0,0,182" Height="37" VerticalAlignment="Bottom">
+            <TextBlock Text="Original FFD:" FontSize="16"/>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="40,0,0,132" Height="37" VerticalAlignment="Bottom">
+            <TextBlock Text="Output:" FontSize="16"/>
+        </Label>
+        <Label HorizontalAlignment="Left" Margin="40,0,0,282" Height="37" VerticalAlignment="Bottom">
+            <TextBlock Text="Game name:" FontSize="16"/>
+        </Label>
+
+        <TextBox x:Name="txb1" Width="480" Height="22" Margin="170,0,0,239" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+            <TextBox.Text>*.fnt</TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="txb2" Width="480" Height="22" Margin="170,0,0,189" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextChanged="txb2_TextChanged">
+            <TextBox.Text>*.ffd, *.Fire_Font_Descriptor</TextBox.Text>
+        </TextBox>
+        <TextBox x:Name="txb3" Width="480" Height="22" Margin="170,0,0,139" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="(Optional)"/>
+        <ComboBox x:Name="cbx" Width="480" Height="22" Initialized="ComboBox_Initialized" FontSize="12"  Margin="170,0,0,289" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+        <Button x:Name="btn3" Content="..." Width="25" Height="22" Margin="660,0,0,139" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btn3_Click"/>
+        <Button x:Name="btn2" Content="..." Width="25" Height="22" Margin="660,0,0,189" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btn2_Click"/>
+        <Button x:Name="btn1" Content="..." Width="25" Height="22" Margin="660,0,0,239" FontSize="14" HorizontalAlignment="Left" VerticalAlignment="Bottom" Click="btn1_Click"/>
 
     </Grid>
 </Window>
