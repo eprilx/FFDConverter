@@ -132,6 +132,7 @@ namespace FFDConverter
 
             // read footer
             unkFFD.unkFooter = input.ReadBytes((int)(input.Length - input.Position));
+            input.Close();
         }
 
         private static void ReadHeaderFFD(FileStream input, ref generalInfoFFD infoFFD, ref UnknownStuff unkFFD, ref Config config)

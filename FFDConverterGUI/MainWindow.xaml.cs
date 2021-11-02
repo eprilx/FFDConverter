@@ -1,4 +1,28 @@
-﻿using System;
+﻿/*
+MIT License
+
+Copyright (c) 2021 eprilx
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -32,7 +56,7 @@ namespace FFDConverterGUI
 
         private void RunFFDConverterConsole(List<string> args)
         {
-            string exePath = System.AppDomain.CurrentDomain.BaseDirectory;
+            string exePath = AppDomain.CurrentDomain.BaseDirectory;
             exePath += "FFDConverter.exe";
             string strCmdText = exePath + " ";
             foreach(string str in args)
@@ -73,29 +97,25 @@ namespace FFDConverterGUI
             string inputFFD = null;
             string output = null;
             string fntInput = null;
-            List<string> args;
+            List<string> args = new List<string>();
             fntInput = txb1.Text.ToString();
             inputFFD = txb2.Text.ToString();
             output = txb3.Text.ToString();
+            if (!File.Exists(inputFFD))
+                { MessageBox.Show("Missing original ffd file"); return; }
             if (rbtn1.IsChecked == true)
             {
                 if (!File.Exists(fntInput))
                     { MessageBox.Show("Missing char desc file"); return; }
-                if (!File.Exists(inputFFD))
-                    { MessageBox.Show("Missing original ffd file"); return; }
                 args = new List<string>{ "-fnt2ffd", "-v", cbx.SelectedItem.ToString(), "-f",inputFFD, "-b", fntInput,"-o",output};
-
             }
-            else
+            else if (rbtn2.IsChecked == true)
             {
-                if (!File.Exists(inputFFD))
-                    { MessageBox.Show("Missing original ffd file"); return; }
                 args = new List<string> {"-ffd2fnt", "-v", cbx.SelectedItem.ToString(), "-f", inputFFD, "-o", output };
             }
 
             RunFFDConverterConsole(args);
         }
-
 
         private void ComboBox_Initialized(object sender, EventArgs e)
         {
@@ -117,7 +137,7 @@ namespace FFDConverterGUI
             {
                 txb3.Text = txb2.Text.ToString() + ".new";
             }
-            else
+            else if (rbtn2.IsChecked == true)
             {
                 txb3.Text = txb2.Text.ToString() + ".fnt";
             }
@@ -150,13 +170,22 @@ namespace FFDConverterGUI
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             if (rbtn1.IsChecked == true)
                 saveFileDialog.Filter = "New FFD file|*.ffd";
-            else
+            else if (rbtn2.IsChecked == true)
                 saveFileDialog.Filter = "FNT file|*.fnt";
             saveFileDialog.ShowDialog();
             if (saveFileDialog.FileName != "")
             {
                 txb3.Text = saveFileDialog.FileName;
             }
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process process = new Process();
+            process.StartInfo.UseShellExecute = true;
+            process.StartInfo.FileName = e.Uri.AbsoluteUri;
+            process.Start();
+            e.Handled = true;
         }
     }
 }
