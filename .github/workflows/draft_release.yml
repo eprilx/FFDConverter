@@ -22,6 +22,8 @@ jobs:
      # environmental variables
     - run: echo "PROJC=./FFDConverter/FFDConverter.csproj" >> $env:GITHUB_ENV
     - run: echo "OUTC=./publish/console/" >> $env:GITHUB_ENV
+    - run: echo "PROJGUI=./FFDConverterGUI/FFDConverterGUI.csproj" >> $env:GITHUB_ENV
+    - run: echo "OUTGUI=./publish/gui/" >> $env:GITHUB_ENV
     - run: echo "FINALOUT=./publish" >> $env:GITHUB_ENV
     - run: echo "NAME=FFDConverter" >> $env:GITHUB_ENV
     - run: echo "REF=${{github.ref}}" >> $env:GITHUB_ENV
@@ -37,13 +39,13 @@ jobs:
     - run: echo "VERSIONC=${{steps.get-version-cli.outputs.assembly-version}}" >> $env:GITHUB_ENV
     
     # Publish console
-    - run: msbuild ${{env.PROJC}} -t:restore -t:Build -t:Publish /p:PublishDir=".${{env.OUTC}}" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
+    - run: msbuild ${{env.PROJGUI}} -t:restore -t:Build -t:Publish /p:PublishDir=".${{env.OUTGUI}}" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
 
-    - run: echo "CONSOLE=${{env.NAME}}_${{env.VERSIONC}}.zip" >> $env:GITHUB_ENV
+    - run: echo "GUI=${{env.NAME}}_${{env.VERSIONC}}.zip" >> $env:GITHUB_ENV
 
     # Create assets
     # create zip
-    - run: Compress-Archive -Path ${{env.OUTC}}* -DestinationPath ${{env.FINALOUT}}/${{env.CONSOLE}}
+    - run: Compress-Archive -Path ${{env.OUTGUI}}* -DestinationPath ${{env.FINALOUT}}/${{env.GUI}}
 
 
     # RELEASE
@@ -51,5 +53,5 @@ jobs:
       run: |
           gh release create ${{ env.VERSIONC }} -t "${{env.NAME}} v${{env.VERSIONC}}" -d -F CHANGELOG.md ${{ env.FILES }}
       env:
-        FILES: ${{env.FINALOUT}}/${{env.CONSOLE}}
+        FILES: ${{env.FINALOUT}}/${{env.GUI}}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
