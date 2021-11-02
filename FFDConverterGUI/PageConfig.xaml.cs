@@ -22,22 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using FFDConverter;
+using System;
+using System.Text.RegularExpressions;
+using System.Windows;
+using System.Windows.Input;
 namespace FFDConverterGUI
 {
     /// <summary>
@@ -51,7 +40,7 @@ namespace FFDConverterGUI
         }
 
         private Config config = new();
-        private string gameName = ((MainWindow) Application.Current.MainWindow).cbx.SelectedItem.ToString();
+        private string gameName = ((MainWindow)Application.Current.MainWindow).cbx.SelectedItem.ToString();
         private void MyGrid_Initialized(object sender, EventArgs e)
         {
             config = DefaultConfig.Get(gameName);
@@ -74,11 +63,10 @@ namespace FFDConverterGUI
                 float.TryParse(scaleXoff.Text, out config.scaleXoffset);
                 float.TryParse(scaleYoff.Text, out config.scaleYoffset);
                 DefaultConfig.Set(gameName, config);
-                MessageBox.Show("Saved !!!");
             }
             catch
             {
-                MessageBox.Show("Can't save config");
+                MessageBox.Show("Can't save config", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             this.Close();
         }

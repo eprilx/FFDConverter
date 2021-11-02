@@ -24,15 +24,10 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
-using System.Xml.Serialization;
 
 namespace FFDConverter
 {
@@ -57,7 +52,7 @@ namespace FFDConverter
             XDocument xmlDoc = new();
             try
             {
-                xmlDoc = XDocument.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location),"config.xml"));
+                xmlDoc = XDocument.Load(Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.xml"));
             }
             catch (XmlException e)
             {

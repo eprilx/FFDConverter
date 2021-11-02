@@ -24,9 +24,6 @@ SOFTWARE.
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FFDConverter
 {
@@ -47,7 +44,7 @@ namespace FFDConverter
             FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, ref config);
 
             //generalInfoBMF BMFinfo, List< charDescBMF > charDescList, List<kernelDescBMF> kernelDescList)
-            
+
             //convert infoFFD 2 infoBMF
             generalInfoBMF infoBMF = new();
             infoBMF.setDefault();
@@ -89,19 +86,19 @@ namespace FFDConverter
 
             // convert kernel
             List<kernelDescBMF> kernelDescList = new();
-            foreach(kernelDescFFD kernelFFD in FFDkernelList)
+            foreach (kernelDescFFD kernelFFD in FFDkernelList)
             {
                 kernelDescList.Add(new kernelDescBMF
                 {
                     first = kernelFFD.first,
                     second = kernelFFD.second,
                     amount = (kernelFFD.amountScale / (float)200)
-                }) ;
+                });
             }
             BMFontFormat.CreateTextBMF(outputFNT, infoBMF, charDescList, kernelDescList);
         }
 
-        private static (int,int) getWidthHeightImageFont()
+        private static (int, int) getWidthHeightImageFont()
         {
             int width = 0;
             int height = 0;
