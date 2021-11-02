@@ -25,10 +25,12 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -51,6 +53,11 @@ namespace FFDConverterGUI
     {
         public MainWindow()
         {
+            // Change current culture
+            CultureInfo culture;
+            culture = CultureInfo.CreateSpecificCulture("en-US");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
             InitializeComponent();
         }
 
@@ -68,28 +75,20 @@ namespace FFDConverterGUI
             process.StartInfo.FileName = exePath;
             process.StartInfo.Arguments = strCmdText;
             process.Start();
-
+            process.WaitForExit();
         }
 
         private void rbtn2_Checked(object sender, RoutedEventArgs e)
         {
-            label1.Visibility = Visibility.Hidden;
-            txb1.Visibility = Visibility.Hidden;
-            btn1.Visibility = Visibility.Hidden;
             if (txb3.Text != "(Optional)")
                 txb3.Text = txb2.Text.ToString() + ".fnt";
         }
 
         private void rbtn1_Checked(object sender, RoutedEventArgs e)
         {
-            if (label1 != null)
-            {
-                label1.Visibility = Visibility.Visible;
-                txb1.Visibility = Visibility.Visible;
-                btn1.Visibility = Visibility.Visible;
+            if (txb3 != null)
                 if (txb3.Text != "(Optional)")
-                    txb3.Text = txb2.Text.ToString() + ".ffd";
-            }
+                    txb3.Text = txb2.Text.ToString() + ".new";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -102,18 +101,18 @@ namespace FFDConverterGUI
             inputFFD = txb2.Text.ToString();
             output = txb3.Text.ToString();
             if (!File.Exists(inputFFD))
-                { MessageBox.Show("Missing original ffd file"); return; }
+            { MessageBox.Show("Missing original ffd file"); return; }
             if (rbtn1.IsChecked == true)
             {
                 if (!File.Exists(fntInput))
-                    { MessageBox.Show("Missing char desc file"); return; }
+                { MessageBox.Show("Missing char desc file"); return; }
                 args = new List<string>{ "-fnt2ffd", "-v", cbx.SelectedItem.ToString(), "-f",inputFFD, "-b", fntInput,"-o",output};
             }
             else if (rbtn2.IsChecked == true)
             {
                 args = new List<string> {"-ffd2fnt", "-v", cbx.SelectedItem.ToString(), "-f", inputFFD, "-o", output };
             }
-
+            
             RunFFDConverterConsole(args);
         }
 
@@ -186,6 +185,16 @@ namespace FFDConverterGUI
             process.StartInfo.FileName = e.Uri.AbsoluteUri;
             process.Start();
             e.Handled = true;
+        }
+
+        private void btnConfig_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            PageConfig pageConfig = new PageConfig();
+            pageConfig.Title = cbx.SelectedItem.ToString();
+
+            pageConfig.ShowDialog();
+            this.Show();
         }
     }
 }

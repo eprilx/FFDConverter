@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFDConverter", "FFDConverter\FFDConverter.csproj", "{44C13259-8148-44D4-BFE7-F56D76E5E583}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FFDConverterGUI", "FFDConverterGUI\FFDConverterGUI.csproj", "{4F1A80E1-7A5A-456B-8B34-AA4F011B676B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFDConverterGUI", "FFDConverterGUI\FFDConverterGUI.csproj", "{4F1A80E1-7A5A-456B-8B34-AA4F011B676B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD18A19E-7475-4958-9A7E-3DEF7E06B6D2}"
+	ProjectSection(SolutionItems) = preProject
+		CHANGELOG.md = CHANGELOG.md
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

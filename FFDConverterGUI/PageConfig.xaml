@@ -1,0 +1,111 @@
+﻿<Window
+    x:Class="FFDConverterGUI.PageConfig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:FFDConverterGUI"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="326"
+    Height="271"
+    Background="#FFEFEFEF"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid x:Name="MyGrid" Initialized="MyGrid_Initialized">
+        <Label
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Scale Width = "
+            FontSize="15" />
+        <Label
+            Margin="0,30,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Scale Height = "
+            FontSize="15" />
+        <Label
+            Margin="0,60,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Scale Xadvance = "
+            FontSize="15" />
+        <Label
+            Margin="0,90,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Add custom Y-offset = "
+            FontSize="15" />
+        <Label
+            Margin="0,120,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Scale X-offset = "
+            FontSize="15" />
+        <Label
+            Margin="0,150,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Scale Y-offset = "
+            FontSize="15" />
+        <TextBox
+            x:Name="scaleW"
+            Width="140"
+            Margin="180,0,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="scaleH"
+            Width="140"
+            Margin="180,30,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="scaleXadv"
+            Width="140"
+            Margin="180,60,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="addY"
+            Width="140"
+            Margin="180,90,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="scaleXoff"
+            Width="140"
+            Margin="180,120,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="scaleYoff"
+            Width="140"
+            Margin="180,150,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <Button
+            VerticalAlignment="Bottom"
+            Click="Button_Click"
+            Content="Save!"
+            FontSize="17" />
+    </Grid>
+
+</Window>

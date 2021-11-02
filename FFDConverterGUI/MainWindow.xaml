@@ -9,7 +9,11 @@
     Width="727"
     Height="374"
     ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="b2v" />
+    </Window.Resources>
     <Grid Background="#FFEFEFEF">
         <Button
             Width="150"
@@ -54,12 +58,14 @@
                 FontSize="17"
                 Text="FFD to FNT" />
         </RadioButton>
+
         <Label
             x:Name="label1"
             Height="37"
             Margin="40,0,0,232"
             HorizontalAlignment="Left"
-            VerticalAlignment="Bottom">
+            VerticalAlignment="Bottom"
+            Visibility="{Binding IsChecked, ElementName=rbtn1, Converter={StaticResource b2v}}">
             <TextBlock FontSize="16" Text="Char Desc (*.fnt):" />
         </Label>
         <Label
@@ -91,7 +97,8 @@
             Margin="170,0,0,239"
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
-            FontSize="12">
+            FontSize="12"
+            Visibility="{Binding IsChecked, ElementName=rbtn1, Converter={StaticResource b2v}}">
             <TextBox.Text>(*.fnt)</TextBox.Text>
         </TextBox>
         <TextBox
@@ -116,7 +123,7 @@
             Text="(Optional)" />
         <ComboBox
             x:Name="cbx"
-            Width="480"
+            Width="405"
             Height="22"
             Margin="170,0,0,289"
             HorizontalAlignment="Left"
@@ -152,6 +159,17 @@
             VerticalAlignment="Bottom"
             Click="btn1_Click"
             Content="..."
+            FontSize="14"
+            Visibility="{Binding IsChecked, ElementName=rbtn1, Converter={StaticResource b2v}}" />
+        <Button
+            x:Name="btnConfig"
+            Width="100"
+            Height="22"
+            Margin="585,0,0,289"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Click="btnConfig_Click"
+            Content="Edit config.xml"
             FontSize="14" />
         <TextBlock
             Margin="580,0,0,45"
@@ -173,3 +191,4 @@
         </TextBlock>
     </Grid>
 </Window>
+

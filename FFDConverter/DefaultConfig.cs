@@ -87,6 +87,39 @@ namespace FFDConverter
             }
             return config;
         }
+
+        public static void Set(string versionGame, Config config)
+        {
+            XDocument xmlDoc = new();
+            string configPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), "config.xml");
+            try
+            {
+                xmlDoc = XDocument.Load(configPath);
+            }
+            catch (XmlException e)
+            {
+                throw new InvalidOperationException("config.xml file: " + e.Message);
+            }
+            XElement xmlRoot = xmlDoc.Element("config");
+
+            IEnumerable<XElement> xmlStringsGame = xmlRoot.Elements("game");
+            foreach (XElement xmlString in xmlStringsGame)
+            {
+                string nameGame = xmlString.Attribute("name").Value;
+                if (nameGame.Contains(versionGame))
+                {
+                    xmlString.Attribute("scaleXoffset").Value = config.scaleXoffset.ToString();
+                    xmlString.Attribute("scaleYoffset").Value = config.scaleYoffset.ToString();
+                    xmlString.Attribute("scaleWidth").Value = config.scaleWidth.ToString();
+                    xmlString.Attribute("scaleHeight").Value = config.scaleHeight.ToString();
+                    xmlString.Attribute("scaleXadvance").Value = config.scaleXadvance.ToString();
+                    xmlString.Attribute("addCustomYoffset").Value = config.addCustomYoffset.ToString();
+                    break;
+                }
+            }
+            xmlDoc.Save(configPath);
+        }
+
         public static List<string> GetSupportedList()
         {
             List<string> SupportedGame = new();
