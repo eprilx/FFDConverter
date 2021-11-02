@@ -145,7 +145,7 @@ namespace FFDConverter
 
             string page = input[2];
 
-            for(int i = 0; i < BMFinfo.pages; i++)
+            for (int i = 0; i < BMFinfo.pages; i++)
             {
                 BMFinfo.idImg.Add(int.Parse(Ulities.StringBetween(page, "id=", " ")));
                 BMFinfo.fileImg.Add(Ulities.StringBetween(page, "file=\"", "\""));
@@ -203,8 +203,8 @@ namespace FFDConverter
             output.WriteLine(String.Format("info face=\"{0}\" size={1} bold={2} italic={3} ", BMFinfo.face, BMFinfo.size, BMFinfo.bold, BMFinfo.italic));
             //common lineHeight=44 base=26 scaleW=512 scaleH=512 pages=1 packed=0
             output.WriteLine(String.Format("common lineHeight={0} base={1} scaleW={2} scaleH={3} pages={4} ", BMFinfo.lineHeight, BMFinfo._base, BMFinfo.WidthImg, BMFinfo.HeightImg, BMFinfo.pages));
-            
-            for(int i = 0; i < BMFinfo.pages; i++)
+
+            for (int i = 0; i < BMFinfo.pages; i++)
             {
                 //page id=0 file="test.png"
                 output.WriteLine(String.Format("page id={0} file=\"{1}\"", BMFinfo.idImg[i], BMFinfo.fileImg[i]));
@@ -213,15 +213,15 @@ namespace FFDConverter
             //chars count=97
             output.WriteLine(String.Format("chars count={0}", BMFinfo.charsCount));
 
-            foreach(charDescBMF _char in charDescList)
+            foreach (charDescBMF _char in charDescList)
             {
                 //char id=0       x=169  y=0    width=34   height=67   xoffset=4    yoffset=16   xadvance=42   page=0    chnl=0 
-                output.WriteLine(String.Format("char id={0,-8}x={1,-8:0.00}y={2,-8:0.00}width={3,-8:0.00}height={4,-8:0.00}xoffset={5,-8:0.00}yoffset={6,-8:0.00}xadvance={7,-8:0.00}page={8,-8}chnl={9,-8}", _char.id, _char.x,_char.y,_char.width,_char.height,_char.xoffset,_char.yoffset,_char.xadvance,_char.page,_char.chnl));
+                output.WriteLine(String.Format("char id={0,-8}x={1,-8:0.00}y={2,-8:0.00}width={3,-8:0.00}height={4,-8:0.00}xoffset={5,-8:0.00}yoffset={6,-8:0.00}xadvance={7,-8:0.00}page={8,-8}chnl={9,-8}", _char.id, _char.x, _char.y, _char.width, _char.height, _char.xoffset, _char.yoffset, _char.xadvance, _char.page, _char.chnl));
             }
 
             //kernings count=667
             output.WriteLine(String.Format("kernings count={0}", BMFinfo.kernsCount));
-            foreach(kernelDescBMF kerning in kernelDescList)
+            foreach (kernelDescBMF kerning in kernelDescList)
             {
                 //kerning first=57 second=56 amount=-2
                 output.WriteLine(String.Format("kerning first={0,-5} second={1,-5} amount={2,-5:0.0}", kerning.first, kerning.second, kerning.amount));

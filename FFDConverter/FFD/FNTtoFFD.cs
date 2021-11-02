@@ -23,12 +23,8 @@ SOFTWARE.
 */
 
 using Gibbed.IO;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FFDConverter
 {
@@ -53,7 +49,7 @@ namespace FFDConverter
             List<kernelDescBMF> BMFkernelDescList = new();
             generalInfoBMF infoBMF = new();
             (infoBMF, BMFcharDescList, BMFkernelDescList) = BMFontFormat.LoadBMF(inputBMF);
-            
+
             //Create FFD
             var output = File.Create(outputFFD);
 

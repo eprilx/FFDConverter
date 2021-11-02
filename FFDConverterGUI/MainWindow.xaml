@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:FFDConverterGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="FFDConverterGUI"
+
     Width="727"
     Height="374"
     ResizeMode="NoResize"

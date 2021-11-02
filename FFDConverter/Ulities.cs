@@ -41,7 +41,7 @@ namespace FFDConverter
             return FinalString;
         }
 
-        public static (float,float,float,float) getUVmappingFromPoint(float x, float y, float width, float height, int WidthImg, int HeightImg)
+        public static (float, float, float, float) getUVmappingFromPoint(float x, float y, float width, float height, int WidthImg, int HeightImg)
         {
             float UVLeft = x / (float)WidthImg;
             float UVTop = y / (float)HeightImg;
@@ -50,7 +50,7 @@ namespace FFDConverter
             return (UVLeft, UVTop, UVRight, UVBottom);
         }
 
-        public static (float,float,float, float) getPointFromUVmapping(float UVLeft, float UVTop, float UVRight, float UVBottom, int WidthImg, int HeightImg)
+        public static (float, float, float, float) getPointFromUVmapping(float UVLeft, float UVTop, float UVRight, float UVBottom, int WidthImg, int HeightImg)
         {
             float x = UVLeft * WidthImg;
             float y = UVTop * HeightImg;

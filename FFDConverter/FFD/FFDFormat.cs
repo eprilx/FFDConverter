@@ -23,10 +23,8 @@ SOFTWARE.
 */
 
 using Gibbed.IO;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
 
 namespace FFDConverter
 {
@@ -91,7 +89,7 @@ namespace FFDConverter
             if (infoFFD.kernsCount > 0)
             {
                 // data kernel
-                for (int i = 0; i <infoFFD.kernsCount; i++)
+                for (int i = 0; i < infoFFD.kernsCount; i++)
                 {
                     FFDkernelList.Add(new kernelDescFFD
                     {
@@ -101,9 +99,9 @@ namespace FFDConverter
                     });
                 }
             }
-            
+
             //read textures name
-            for (int i = 0; i < infoFFD.pagesCount; i ++)
+            for (int i = 0; i < infoFFD.pagesCount; i++)
             {
                 infoFFD.BitmapName.Add(input.ReadStringZ());
             }
@@ -137,7 +135,7 @@ namespace FFDConverter
 
         private static void ReadHeaderFFD(FileStream input, ref generalInfoFFD infoFFD, ref UnknownStuff unkFFD, ref Config config)
         {
-            if(config.unkHeaderAC > 0)
+            if (config.unkHeaderAC > 0)
             {
                 unkFFD.unkHeaderAC = input.ReadBytes(config.unkHeaderAC);
                 uint asizeFFD = input.ReadValueU32();
@@ -217,7 +215,7 @@ namespace FFDConverter
 
             if (infoFFD.table1Type == "U16" && !infoFFD.table1EqualZero)
                 for (int i = 0; i <= infoFFD.charsCount; i++)
-                     input.ReadValueU16(); // = charCount * 2 + 2 + i * 2
+                    input.ReadValueU16(); // = charCount * 2 + 2 + i * 2
             else if (infoFFD.table1Type == "U16")
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU16(); // = 0

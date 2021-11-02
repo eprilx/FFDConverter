@@ -71,7 +71,7 @@ namespace FFDConverter
             };
             p.Parse(args);
 
-            switch(command)
+            switch (command)
             {
                 case "fnt2ffd":
                     p = new OptionSet() {
@@ -112,7 +112,7 @@ namespace FFDConverter
                 ShowHelp(p);
                 return;
             }
-            else if (SupportedGame.FirstOrDefault(x => x.Contains(version)) == null )
+            else if (SupportedGame.FirstOrDefault(x => x.Contains(version)) == null)
             {
                 PrintSupportedGame();
                 return;
@@ -158,7 +158,7 @@ namespace FFDConverter
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
             }
-            
+
             void ShowHelp(OptionSet p)
             {
                 switch (command)
@@ -174,7 +174,7 @@ namespace FFDConverter
                         Console.WriteLine("\nUsage: FFDConverter [OPTIONS]");
                         break;
                 }
-                
+
                 Console.WriteLine("Options:");
                 p.WriteOptionDescriptions(Console.Out);
 

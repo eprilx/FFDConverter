@@ -13,11 +13,13 @@
     <ApplicationIcon />
     <StartupObject />
     <AssemblyVersion>1.0.0</AssemblyVersion>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageProjectUrl>https://github.com/eprilx/FFDConverter</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/eprilx/FFDConverter</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Copyright>Copyright (c) 2021 eprilx</Copyright>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="..\FFDConverter\FFDConverter.licenseheader" Link="FFDConverter.licenseheader" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FFDConverter\FFDConverter.csproj" />

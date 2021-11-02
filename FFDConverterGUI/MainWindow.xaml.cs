@@ -22,27 +22,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using FFDConverter;
-using Microsoft.Win32;
 
 namespace FFDConverterGUI
 {
@@ -58,7 +48,19 @@ namespace FFDConverterGUI
             culture = CultureInfo.CreateSpecificCulture("en-US");
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
+            
+            string ToolVersion = Assembly.LoadFrom("FFDConverter.dll").GetName().Version.ToString();
+            try
+            {
+                ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
+            }
+            catch
+            {
+                ToolVersion = "1.0.0";
+            }
             InitializeComponent();
+            DataContext = this;
+            this.Title = "FFDConverter GUI v" + ToolVersion;
         }
 
         private void RunFFDConverterConsole(List<string> args)
@@ -66,7 +68,7 @@ namespace FFDConverterGUI
             string exePath = AppDomain.CurrentDomain.BaseDirectory;
             exePath += "FFDConverter.exe";
             string strCmdText = exePath + " ";
-            foreach(string str in args)
+            foreach (string str in args)
             {
                 strCmdText += " \"" + str + "\"";
             }
@@ -101,18 +103,18 @@ namespace FFDConverterGUI
             inputFFD = txb2.Text.ToString();
             output = txb3.Text.ToString();
             if (!File.Exists(inputFFD))
-            { MessageBox.Show("Missing original ffd file"); return; }
+            { MessageBox.Show("Missing original ffd file", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
             if (rbtn1.IsChecked == true)
             {
                 if (!File.Exists(fntInput))
-                { MessageBox.Show("Missing char desc file"); return; }
-                args = new List<string>{ "-fnt2ffd", "-v", cbx.SelectedItem.ToString(), "-f",inputFFD, "-b", fntInput,"-o",output};
+                { MessageBox.Show("Missing char desc file", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
+                args = new List<string> { "-fnt2ffd", "-v", cbx.SelectedItem.ToString(), "-f", inputFFD, "-b", fntInput, "-o", output };
             }
             else if (rbtn2.IsChecked == true)
             {
-                args = new List<string> {"-ffd2fnt", "-v", cbx.SelectedItem.ToString(), "-f", inputFFD, "-o", output };
+                args = new List<string> { "-ffd2fnt", "-v", cbx.SelectedItem.ToString(), "-f", inputFFD, "-o", output };
             }
-            
+
             RunFFDConverterConsole(args);
         }
 
@@ -128,7 +130,7 @@ namespace FFDConverterGUI
 
         private void txb2_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(txb3 == null)
+            if (txb3 == null)
             {
                 return;
             }

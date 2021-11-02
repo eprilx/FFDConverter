@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:FFDConverterGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="326"
-    Height="271"
+    Height="261"
     Background="#FFEFEFEF"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
@@ -102,6 +102,7 @@
             PreviewTextInput="PreviewTextInput_"
             TextWrapping="Wrap" />
         <Button
+            Height="40"
             VerticalAlignment="Bottom"
             Click="Button_Click"
             Content="Save!"
