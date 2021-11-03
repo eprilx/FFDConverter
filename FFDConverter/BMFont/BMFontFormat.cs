@@ -123,7 +123,6 @@ namespace FFDConverter
             List<charDescBMF> charDescList = new();
             List<kernelDescBMF> kernelDescList = new();
             generalInfoBMF BMFinfo = new();
-            BMFinfo.setDefault();
             List<string> input = new();
             foreach (string line in File.ReadLines(inputBMF))
             {

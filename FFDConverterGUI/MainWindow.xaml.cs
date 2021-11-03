@@ -49,9 +49,10 @@ namespace FFDConverterGUI
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
             
-            string ToolVersion = Assembly.LoadFrom("FFDConverter.dll").GetName().Version.ToString();
+            string ToolVersion;
             try
             {
+                ToolVersion = Assembly.LoadFrom("FFDConverter.dll").GetName().Version.ToString();
                 ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
             }
             catch
@@ -59,8 +60,7 @@ namespace FFDConverterGUI
                 ToolVersion = "1.0.0";
             }
             InitializeComponent();
-            DataContext = this;
-            this.Title = "FFDConverter GUI v" + ToolVersion;
+            Title = "FFDConverter GUI v" + ToolVersion;
         }
 
         private void RunFFDConverterConsole(List<string> args)

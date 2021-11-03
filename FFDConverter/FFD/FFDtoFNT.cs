@@ -47,7 +47,6 @@ namespace FFDConverter
 
             //convert infoFFD 2 infoBMF
             generalInfoBMF infoBMF = new();
-            infoBMF.setDefault();
             infoBMF.face = infoFFD.fontName;
             infoBMF.charsCount = infoFFD.charsCount;
             infoBMF.kernsCount = infoFFD.kernsCount;
@@ -61,7 +60,6 @@ namespace FFDConverter
             // Get width/height image font from user
             (infoBMF.WidthImg, infoBMF.HeightImg) = getWidthHeightImageFont();
 
-
             //convert charDescFFD 2 charDescBMF
             List<charDescBMF> charDescList = new();
             foreach (charDescFFD charFFD in FFDDescList)
@@ -71,7 +69,6 @@ namespace FFDConverter
                 float yoffset = Ulities.floatRevScaleInt(charFFD.yoffset, config.scaleYoffset);
 
                 charDescBMF charBMF = new();
-                charBMF.setDefault();
                 charBMF.id = charFFD.id;
                 charBMF.x = x;
                 charBMF.y = y;

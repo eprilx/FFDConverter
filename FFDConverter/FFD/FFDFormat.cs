@@ -44,11 +44,11 @@ namespace FFDConverter
             // if table 1 = zero then table 2 = null
             if (infoFFD.table1EqualZero)
             {
-                if (infoFFD.table1Type == "U32")
+                if (infoFFD.table1Type == Type.U32)
                 {
                     uint sizeTable34 = input.ReadValueU32(); // = charCount * 4 + 4
                 }
-                else if (infoFFD.table1Type == "U16")
+                else if (infoFFD.table1Type == Type.U16)
                 {
                     uint sizeTable34 = input.ReadValueU16(); // = charCount * 2 + 2
                 }
@@ -109,9 +109,6 @@ namespace FFDConverter
             // read charDescFFD
             for (int i = 0; i < infoFFD.charsCount; i++)
             {
-                xadvanceDescFFD xadvance;
-                xadvance.unk = FFDxadvanceList[i].unk;
-                xadvance.xadvanceScale = FFDxadvanceList[i].xadvanceScale;
                 FFDDescList.Add(new charDescFFD
                 {
                     id = input.ReadValueU16(), // = id
@@ -124,7 +121,8 @@ namespace FFDConverter
                     yoffset = input.ReadValueS16(),
                     widthScale = input.ReadValueU16(),
                     heightScale = input.ReadValueU16(),
-                    xadvance = xadvance
+                    xadvance = FFDxadvanceList[i],
+
                 });
             }
 
@@ -194,13 +192,13 @@ namespace FFDConverter
             if (checkNull == 0)
             {
                 infoFFD.table1EqualZero = true;
-                infoFFD.table1Type = "U32";
+                infoFFD.table1Type = Type.U32;
                 for (int i = 0; i < infoFFD.charsCount; i++)
                 {
                     var checkNull2 = input.ReadValueU32(); // = 0
                     if (checkNull2 != 0)
                     {
-                        infoFFD.table1Type = "U16";
+                        infoFFD.table1Type = Type.U16;
                         break;
                     }
                 }
@@ -208,18 +206,18 @@ namespace FFDConverter
             else
             {
                 infoFFD.table1EqualZero = false;
-                infoFFD.table1Type = "U16";
+                infoFFD.table1Type = Type.U16;
             }
 
             input.Position = startOffsetTable1;
 
-            if (infoFFD.table1Type == "U16" && !infoFFD.table1EqualZero)
+            if (infoFFD.table1Type == Type.U16 && !infoFFD.table1EqualZero)
                 for (int i = 0; i <= infoFFD.charsCount; i++)
                     input.ReadValueU16(); // = charCount * 2 + 2 + i * 2
-            else if (infoFFD.table1Type == "U16")
+            else if (infoFFD.table1Type == Type.U16)
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU16(); // = 0
-            else if (infoFFD.table1Type == "U32")
+            else if (infoFFD.table1Type == Type.U16)
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU32(); // = 0
         }

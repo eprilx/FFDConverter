@@ -26,20 +26,28 @@ using System.Collections.Generic;
 
 namespace FFDConverter
 {
-    public struct generalInfoFFD
+    class generalInfoFFD
     {
         public string fontName;
         public byte pagesCount;
         public ushort charsCount;
         public bool table1EqualZero;
-        public string table1Type; // U16 or U32
+        public Type table1Type;
         public short table2Value;
         public short table5Value;
         public ushort kernsCount;
         public List<string> BitmapName;
+
     }
 
-    public struct charDescFFD
+    enum Type : byte
+    {
+        U16,
+        U32,
+        U64
+    }
+
+    class charDescFFD
     {
         public ushort id;
         public byte page;
@@ -52,9 +60,10 @@ namespace FFDConverter
         public ushort widthScale;
         public ushort heightScale;
         public xadvanceDescFFD xadvance;
+        public bool rotate;
         public bool checkRotate(int WidthImage, int HeightImage)
         {
-            (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(this.UVLeft, this.UVTop, this.UVRight, this.UVBottom, WidthImage, HeightImage);
+            (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(UVLeft, UVTop, this.UVRight, this.UVBottom, WidthImage, HeightImage);
             if (width < 0 || height < 0)
             {
                 return true;
@@ -68,20 +77,20 @@ namespace FFDConverter
         }
     }
 
-    public struct xadvanceDescFFD
+    class xadvanceDescFFD
     {
         public byte unk;
         public byte xadvanceScale;
     }
 
-    public struct kernelDescFFD
+    class kernelDescFFD
     {
         public ushort first;
         public ushort second;
         public short amountScale;
     }
 
-    public struct UnknownStuff
+    class UnknownStuff
     {
         public byte[] unkHeaderAC;
         public byte[] unkHeader1;
