@@ -33,6 +33,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Navigation;
+using AutoUpdaterDotNET;
 
 namespace FFDConverterGUI
 {
@@ -43,6 +44,7 @@ namespace FFDConverterGUI
     {
         public MainWindow()
         {
+            AutoUpdater.Start("https://github.com/eprilx/FFDConverter/blob/dev/AutoUpdate.xml");
             // Change current culture
             CultureInfo culture;
             culture = CultureInfo.CreateSpecificCulture("en-US");

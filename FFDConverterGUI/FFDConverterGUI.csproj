@@ -22,6 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autoupdater.NET.Official" Version="1.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\FFDConverter\FFDConverter.csproj" />
   </ItemGroup>
 
