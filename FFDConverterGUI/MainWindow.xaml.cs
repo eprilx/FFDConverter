@@ -44,7 +44,8 @@ namespace FFDConverterGUI
     {
         public MainWindow()
         {
-            AutoUpdater.Start("https://github.com/eprilx/FFDConverter/blob/dev/AutoUpdate.xml");
+            //AutoUpdater.UpdateFormSize = new System.Drawing.Size(900, 600);
+            AutoUpdater.Start("https://raw.githubusercontent.com/eprilx/FFDConverter/dev/AutoUpdate.xml");
             // Change current culture
             CultureInfo culture;
             culture = CultureInfo.CreateSpecificCulture("en-US");
