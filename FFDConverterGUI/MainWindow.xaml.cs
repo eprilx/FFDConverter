@@ -45,7 +45,7 @@ namespace FFDConverterGUI
         public MainWindow()
         {
             //AutoUpdater.UpdateFormSize = new System.Drawing.Size(900, 600);
-            AutoUpdater.Start("https://raw.githubusercontent.com/eprilx/FFDConverter/dev/AutoUpdate.xml");
+
             // Change current culture
             CultureInfo culture;
             culture = CultureInfo.CreateSpecificCulture("en-US");
@@ -64,6 +64,8 @@ namespace FFDConverterGUI
             }
             InitializeComponent();
             Title = "FFDConverter GUI v" + ToolVersion;
+            AutoUpdater.InstalledVersion = new Version(ToolVersion);
+            AutoUpdater.Start("https://raw.githubusercontent.com/eprilx/FFDConverter/dev/AutoUpdate.xml");
         }
 
         private void RunFFDConverterConsole(List<string> args)
