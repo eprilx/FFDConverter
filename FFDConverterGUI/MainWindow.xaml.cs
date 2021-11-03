@@ -59,8 +59,8 @@ namespace FFDConverterGUI
                 ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
                 Hide();
                 AutoUpdater.Synchronous = true;
-                AutoUpdater.InstalledVersion = new Version(ToolVersion);
-                AutoUpdater.OpenDownloadPage = true;
+                AutoUpdater.InstalledVersion = new Version("1.0");
+                AutoUpdater.UpdateFormSize = new System.Drawing.Size((int)SystemParameters.FullPrimaryScreenHeight / 2, (int)SystemParameters.FullPrimaryScreenWidth / 2);
                 AutoUpdater.Start("https://raw.githubusercontent.com/eprilx/FFDConverter/dev/AutoUpdate.xml");
             }
             catch
