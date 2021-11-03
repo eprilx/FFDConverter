@@ -67,6 +67,8 @@ namespace FFDConverterGUI
         {
             string exePath = AppDomain.CurrentDomain.BaseDirectory;
             exePath += "FFDConverter.exe";
+            if (!File.Exists(exePath))
+                { MessageBox.Show("Missing " + exePath, "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
             string strCmdText = exePath + " ";
             foreach (string str in args)
             {
@@ -95,13 +97,10 @@ namespace FFDConverterGUI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string inputFFD = null;
-            string output = null;
-            string fntInput = null;
             List<string> args = new List<string>();
-            fntInput = txb1.Text.ToString();
-            inputFFD = txb2.Text.ToString();
-            output = txb3.Text.ToString();
+            string fntInput = txb1.Text.ToString();
+            string inputFFD = txb2.Text.ToString();
+            string output = txb3.Text.ToString();
             if (!File.Exists(inputFFD))
             { MessageBox.Show("Missing original ffd file", "Error", MessageBoxButton.OK, MessageBoxImage.Error); return; }
             if (rbtn1.IsChecked == true)
@@ -191,12 +190,12 @@ namespace FFDConverterGUI
 
         private void btnConfig_Click(object sender, RoutedEventArgs e)
         {
-            this.Hide();
+            Hide();
             PageConfig pageConfig = new PageConfig();
             pageConfig.Title = cbx.SelectedItem.ToString();
 
             pageConfig.ShowDialog();
-            this.Show();
+            Show();
         }
     }
 }

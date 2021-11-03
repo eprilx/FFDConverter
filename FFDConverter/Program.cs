@@ -209,12 +209,12 @@ namespace FFDConverter
             }
             void Done()
             {
-                Console.ForegroundColor = ConsoleColor.Blue;
-                Console.WriteLine("\n" + output + " has been created!");
-                Console.ResetColor();
                 Console.Write("\n********************************************");
                 PrintCredit();
                 Console.WriteLine("********************************************");
+                Console.ForegroundColor = ConsoleColor.Blue;
+                Console.WriteLine("\n" + output + " has been created!");
+                Console.ResetColor();
             }
         }
     }
