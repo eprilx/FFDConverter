@@ -26,7 +26,7 @@ using System.Collections.Generic;
 
 namespace FFDConverter
 {
-    public struct generalInfoBMF
+    class generalInfoBMF
     {
         public int lineHeight;
         public int _base;
@@ -43,20 +43,20 @@ namespace FFDConverter
         public List<int> idImg;
         public List<string> fileImg;
 
-        public void setDefault()
+        public generalInfoBMF()
         {
-            this.face = "";
-            this.size = 0;
-            this.bold = 0;
-            this.italic = 0;
-            this.lineHeight = 0;
-            this._base = 0;
-            this.idImg = new();
-            this.fileImg = new();
+            face = "";
+            size = 0;
+            bold = 0;
+            italic = 0;
+            lineHeight = 0;
+            _base = 0;
+            idImg = new();
+            fileImg = new();
         }
     }
 
-    public struct charDescBMF
+    class charDescBMF
     {
         public int id;
         public float x;
@@ -69,15 +69,21 @@ namespace FFDConverter
         public int page;
         public int chnl;
 
-        public void setDefault()
+        public charDescBMF()
         {
-            this.xoffset = 0;
-            this.yoffset = 0;
-            this.page = 0;
-            this.chnl = 0;
+            id = 0;
+            x = 0;
+            y = 0;
+            width = 0;
+            height = 0;
+            xoffset = 0;
+            yoffset = 0;
+            xadvance = 0;
+            page = 0;
+            chnl = 0;
         }
     }
-    public struct kernelDescBMF
+    class kernelDescBMF
     {
         public int first;
         public int second;

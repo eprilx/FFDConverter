@@ -72,6 +72,5 @@ namespace FFDConverter
         {
             return ((float)number / Scale);
         }
-
     }
 }

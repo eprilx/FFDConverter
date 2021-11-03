@@ -88,7 +88,7 @@ namespace FFDConverter
             else
             {
                 // write only table1 = 0, table2 = null
-                if (infoFFD.table1Type == "U32")
+                if (infoFFD.table1Type == Type.U32)
                 {
                     for (int i = 0; i < infoBMF.charsCount; i++)
                     {
@@ -98,7 +98,7 @@ namespace FFDConverter
                     uint sizeTable34 = (uint)((infoBMF.charsCount * 4) + 4);
                     output.WriteValueU32(sizeTable34);
                 }
-                else if (infoFFD.table1Type == "U16")
+                else if (infoFFD.table1Type == Type.U16)
                 {
                     for (int i = 0; i < infoBMF.charsCount; i++)
                     {
@@ -108,7 +108,6 @@ namespace FFDConverter
                     uint sizeTable34 = (uint)((infoBMF.charsCount * 2) + 2);
                     output.WriteValueU16((ushort)sizeTable34);
                 }
-
             }
 
             foreach (charDescBMF infoChar in BMFcharDescList)
@@ -184,7 +183,7 @@ namespace FFDConverter
             int sizeTable3 = infoBMF.charsCount * 2;
             if (infoFFD.table1EqualZero)
             {
-                if (infoFFD.table1Type == "U32")
+                if (infoFFD.table1Type == Type.U32)
                 {
                     sizeTable1 = infoBMF.charsCount * 4 + 2;
                     sizeTable2 = 0;

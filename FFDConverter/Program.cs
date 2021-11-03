@@ -36,9 +36,10 @@ namespace FFDConverter
     {
         static void Main(string[] args)
         {
-            string ToolVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            string ToolVersion;
             try
             {
+                ToolVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
                 ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
             }
             catch
@@ -100,7 +101,6 @@ namespace FFDConverter
             }
             p.Parse(args);
 
-
             if (show_list)
             {
                 PrintSupportedGame();
@@ -157,6 +157,7 @@ namespace FFDConverter
             {
                 Console.WriteLine("Press any key to exit...");
                 Console.ReadKey();
+                Environment.Exit(0);
             }
 
             void ShowHelp(OptionSet p)
