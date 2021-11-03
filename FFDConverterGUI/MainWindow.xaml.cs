@@ -57,6 +57,11 @@ namespace FFDConverterGUI
             {
                 ToolVersion = Assembly.LoadFrom("FFDConverter.dll").GetName().Version.ToString();
                 ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
+                Hide();
+                AutoUpdater.Synchronous = true;
+                AutoUpdater.InstalledVersion = new Version(ToolVersion);
+                AutoUpdater.OpenDownloadPage = true;
+                AutoUpdater.Start("https://raw.githubusercontent.com/eprilx/FFDConverter/dev/AutoUpdate.xml");
             }
             catch
             {
@@ -64,8 +69,7 @@ namespace FFDConverterGUI
             }
             InitializeComponent();
             Title = "FFDConverter GUI v" + ToolVersion;
-            AutoUpdater.InstalledVersion = new Version(ToolVersion);
-            AutoUpdater.Start("https://raw.githubusercontent.com/eprilx/FFDConverter/dev/AutoUpdate.xml");
+            Show();
         }
 
         private void RunFFDConverterConsole(List<string> args)

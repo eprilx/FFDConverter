@@ -45,6 +45,7 @@ jobs:
 
     # Create assets
     # create zip
+    - run: Get-ChildItem -Path ${{env.OUTGUI}} -Directory | remove-Item -recurse -Force
     - run: Compress-Archive -Path ${{env.OUTGUI}}* -DestinationPath ${{env.FINALOUT}}/${{env.GUI}}
 
 
