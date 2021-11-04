@@ -26,77 +26,96 @@ using System.Collections.Generic;
 
 namespace FFDConverter
 {
-    class generalInfoFFD
+    public class FFDStruct
     {
-        public string fontName;
-        public byte pagesCount;
-        public ushort charsCount;
-        public bool table1EqualZero;
-        public Type table1Type;
-        public short table2Value;
-        public short table5Value;
-        public ushort kernsCount;
-        public List<string> BitmapName;
+        public general generalInfo;
+        public List<charDesc> charDescList;
+        public List<kernelDesc> kernelDescList;
+        public List<xadvanceDesc> xadvanceDescList;
+        public Unknown UnknownStuff;
 
-    }
-
-    enum Type : byte
-    {
-        U16,
-        U32,
-        U64
-    }
-
-    class charDescFFD
-    {
-        public ushort id;
-        public byte page;
-        public float UVLeft;
-        public float UVTop;
-        public float UVRight;
-        public float UVBottom;
-        public short xoffset;
-        public short yoffset;
-        public ushort widthScale;
-        public ushort heightScale;
-        public xadvanceDescFFD xadvance;
-        public bool rotate;
-        public bool checkRotate(int WidthImage, int HeightImage)
+        public FFDStruct()
         {
-            (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(UVLeft, UVTop, this.UVRight, this.UVBottom, WidthImage, HeightImage);
-            if (width < 0 || height < 0)
+            generalInfo = new();
+            charDescList = new();
+            kernelDescList = new();
+            xadvanceDescList = new();
+            UnknownStuff = new();
+        }
+        public class general
+        {
+            public string fontName;
+            public byte pagesCount;
+            public ushort charsCount;
+            public bool table1EqualZero;
+            public Type table1Type;
+            public short table2Value;
+            public short table5Value;
+            public ushort kernsCount;
+            public List<string> BitmapName;
+            public general()
             {
-                return true;
+                BitmapName = new();
             }
-            return false;
+            public enum Type : byte
+            {
+                U16,
+                U32,
+                U64
+            }
         }
-        public void setXadvance(byte unk, byte xadvanceScale)
+
+        public class charDesc
         {
-            this.xadvance.unk = unk;
-            this.xadvance.xadvanceScale = xadvanceScale;
+            public ushort id;
+            public byte page;
+            public float UVLeft;
+            public float UVTop;
+            public float UVRight;
+            public float UVBottom;
+            public short xoffset;
+            public short yoffset;
+            public ushort widthScale;
+            public ushort heightScale;
+            public xadvanceDesc xadvance;
+            //public bool rotate;
+            public bool checkRotate(int WidthImage, int HeightImage)
+            {
+                (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(UVLeft, UVTop, this.UVRight, this.UVBottom, WidthImage, HeightImage);
+                if (width < 0 || height < 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            public void setXadvance(byte unk, byte xadvanceScale)
+            {
+                this.xadvance.unk = unk;
+                this.xadvance.xadvanceScale = xadvanceScale;
+            }
         }
-    }
 
-    class xadvanceDescFFD
-    {
-        public byte unk;
-        public byte xadvanceScale;
-    }
+        public class xadvanceDesc
+        {
+            public byte unk;
+            public byte xadvanceScale;
+        }
 
-    class kernelDescFFD
-    {
-        public ushort first;
-        public ushort second;
-        public short amountScale;
-    }
+        public class kernelDesc
+        {
+            public ushort first;
+            public ushort second;
+            public short amountScale;
+        }
 
-    class UnknownStuff
-    {
-        public byte[] unkHeaderAC;
-        public byte[] unkHeader1;
-        public byte[] unkHeader2;
-        public byte[] unkHeader3;
-        public byte[] unk6bytes;
-        public byte[] unkFooter;
+        public class Unknown
+        {
+            public byte[] unkHeaderAC;
+            public byte[] unkHeader1;
+            public byte[] unkHeader2;
+            public byte[] unkHeader3;
+            public byte[] unk6bytes;
+            public byte[] unkFooter;
+        }
     }
 }

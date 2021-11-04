@@ -23,55 +23,55 @@ SOFTWARE.
 */
 
 using Gibbed.IO;
-using System.Collections.Generic;
 using System.IO;
 
 namespace FFDConverter
 {
-    class FFDFormat
+    public class FFDFormat
     {
-        public static void LoadFFD(string inputFFD, ref generalInfoFFD infoFFD, List<charDescFFD> FFDDescList, List<xadvanceDescFFD> FFDxadvanceList, List<kernelDescFFD> FFDkernelList, ref UnknownStuff unkFFD, ref Config config)
+        public static void LoadFFD(string inputFFD, ref FFDStruct ffd, ref Config config)
         {
             var input = File.OpenRead(inputFFD);
             input.Position = 0;
 
             //Read header
-            ReadHeaderFFD(input, ref infoFFD, ref unkFFD, ref config);
+            ReadHeaderFFD(input, ref ffd.generalInfo, ref ffd.UnknownStuff, ref config);
 
             // Read Table1
-            ReadTable1FFD(input, ref infoFFD);
+            ReadTable1FFD(input, ref ffd.generalInfo);
 
             // if table 1 = zero then table 2 = null
-            if (infoFFD.table1EqualZero)
+            if (ffd.generalInfo.table1EqualZero)
             {
-                if (infoFFD.table1Type == Type.U32)
+                if (ffd.generalInfo.table1Type == FFDStruct.general.Type.U32)
                 {
                     uint sizeTable34 = input.ReadValueU32(); // = charCount * 4 + 4
                 }
-                else if (infoFFD.table1Type == Type.U16)
+                else if (ffd.generalInfo.table1Type == FFDStruct.general.Type.U16)
                 {
                     uint sizeTable34 = input.ReadValueU16(); // = charCount * 2 + 2
                 }
             }
             else
             {
-                for (int i = 0; i < infoFFD.charsCount; i++)
+                for (int i = 0; i < ffd.generalInfo.charsCount; i++)
                 {
-                    infoFFD.table2Value = input.ReadValueS16(); // = 17
+                    ffd.generalInfo.table2Value = input.ReadValueS16(); // = 17
                 }
             }
 
             // read table 3 id
-            for (int i = 0; i < infoFFD.charsCount; i++)
+            for (int i = 0; i < ffd.generalInfo.charsCount; i++)
             {
                 input.ReadValueU16(); // = id
             }
 
             // read table 4
-            unkFFD.unk6bytes = input.ReadBytes(6); // ascender ???
-            for (int i = 0; i < infoFFD.charsCount; i++)
+            ffd.UnknownStuff.unk6bytes = input.ReadBytes(6); // ascender ???
+
+            for (int i = 0; i < ffd.generalInfo.charsCount; i++)
             {
-                FFDxadvanceList.Add(new xadvanceDescFFD
+                ffd.xadvanceDescList.Add(new FFDStruct.xadvanceDesc
                 {
                     unk = input.ReadValueU8(),
                     xadvanceScale = input.ReadValueU8()
@@ -79,19 +79,19 @@ namespace FFDConverter
             }
 
             // read table 5
-            for (int i = 0; i < infoFFD.charsCount; i++)
+            for (int i = 0; i < ffd.generalInfo.charsCount; i++)
             {
-                infoFFD.table5Value = input.ReadValueS16(); // = 8
+                ffd.generalInfo.table5Value = input.ReadValueS16(); // = 8
             }
 
             // read table 6 kernel
-            infoFFD.kernsCount = input.ReadValueU16();
-            if (infoFFD.kernsCount > 0)
+            ffd.generalInfo.kernsCount = input.ReadValueU16();
+            if (ffd.generalInfo.kernsCount > 0)
             {
                 // data kernel
-                for (int i = 0; i < infoFFD.kernsCount; i++)
+                for (int i = 0; i < ffd.generalInfo.kernsCount; i++)
                 {
-                    FFDkernelList.Add(new kernelDescFFD
+                    ffd.kernelDescList.Add(new FFDStruct.kernelDesc
                     {
                         first = input.ReadValueU16(),
                         second = input.ReadValueU16(),
@@ -101,15 +101,15 @@ namespace FFDConverter
             }
 
             //read textures name
-            for (int i = 0; i < infoFFD.pagesCount; i++)
+            for (int i = 0; i < ffd.generalInfo.pagesCount; i++)
             {
-                infoFFD.BitmapName.Add(input.ReadStringZ());
+                ffd.generalInfo.BitmapName.Add(input.ReadStringZ());
             }
 
             // read charDescFFD
-            for (int i = 0; i < infoFFD.charsCount; i++)
+            for (int i = 0; i < ffd.generalInfo.charsCount; i++)
             {
-                FFDDescList.Add(new charDescFFD
+                ffd.charDescList.Add(new FFDStruct.charDesc
                 {
                     id = input.ReadValueU16(), // = id
                     page = input.ReadValueU8(),
@@ -121,17 +121,17 @@ namespace FFDConverter
                     yoffset = input.ReadValueS16(),
                     widthScale = input.ReadValueU16(),
                     heightScale = input.ReadValueU16(),
-                    xadvance = FFDxadvanceList[i],
+                    xadvance = ffd.xadvanceDescList[i],
 
                 });
             }
 
             // read footer
-            unkFFD.unkFooter = input.ReadBytes((int)(input.Length - input.Position));
+            ffd.UnknownStuff.unkFooter = input.ReadBytes((int)(input.Length - input.Position));
             input.Close();
         }
 
-        private static void ReadHeaderFFD(FileStream input, ref generalInfoFFD infoFFD, ref UnknownStuff unkFFD, ref Config config)
+        private static void ReadHeaderFFD(FileStream input, ref FFDStruct.general infoFFD, ref FFDStruct.Unknown unkFFD, ref Config config)
         {
             if (config.unkHeaderAC > 0)
             {
@@ -183,7 +183,7 @@ namespace FFDConverter
             infoFFD.fontName = input.ReadString(sizeFontName);
         }
 
-        private static void ReadTable1FFD(FileStream input, ref generalInfoFFD infoFFD)
+        private static void ReadTable1FFD(FileStream input, ref FFDStruct.general infoFFD)
         {
             infoFFD.charsCount = input.ReadValueU16();
             long startOffsetTable1 = input.Position;
@@ -192,13 +192,13 @@ namespace FFDConverter
             if (checkNull == 0)
             {
                 infoFFD.table1EqualZero = true;
-                infoFFD.table1Type = Type.U32;
+                infoFFD.table1Type = FFDStruct.general.Type.U32;
                 for (int i = 0; i < infoFFD.charsCount; i++)
                 {
                     var checkNull2 = input.ReadValueU32(); // = 0
                     if (checkNull2 != 0)
                     {
-                        infoFFD.table1Type = Type.U16;
+                        infoFFD.table1Type = FFDStruct.general.Type.U16;
                         break;
                     }
                 }
@@ -206,18 +206,18 @@ namespace FFDConverter
             else
             {
                 infoFFD.table1EqualZero = false;
-                infoFFD.table1Type = Type.U16;
+                infoFFD.table1Type = FFDStruct.general.Type.U16;
             }
 
             input.Position = startOffsetTable1;
 
-            if (infoFFD.table1Type == Type.U16 && !infoFFD.table1EqualZero)
+            if (infoFFD.table1Type == FFDStruct.general.Type.U16 && !infoFFD.table1EqualZero)
                 for (int i = 0; i <= infoFFD.charsCount; i++)
                     input.ReadValueU16(); // = charCount * 2 + 2 + i * 2
-            else if (infoFFD.table1Type == Type.U16)
+            else if (infoFFD.table1Type == FFDStruct.general.Type.U16)
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU16(); // = 0
-            else if (infoFFD.table1Type == Type.U16)
+            else if (infoFFD.table1Type == FFDStruct.general.Type.U16)
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU32(); // = 0
         }

@@ -143,12 +143,12 @@ namespace FFDConverter
                     case "fnt2ffd":
                         if (output == null)
                             output = originalFFD + ".new";
-                        FNTtoFFD.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
+                        FFDFunction.CreateFFDfromFNT(originalFFD, fntBMF, output, version);
                         break;
                     case "ffd2fnt":
                         if (output == null)
                             output = originalFFD + ".FNT";
-                        FFDtoFNT.ConvertFFDtoFNT(originalFFD, output, version);
+                        FFDFunction.ConvertFFDtoFNT(originalFFD, output, version);
                         break;
                 }
                 Done();
