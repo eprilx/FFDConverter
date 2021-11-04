@@ -45,30 +45,30 @@ namespace FFDConverter
 
             //generalInfoBMF BMFinfo, List< charDescBMF > charDescList, List<kernelDescBMF> kernelDescList)
 
+            // create BMF
+            BMFontStruct bmf = new();
             //convert infoFFD 2 infoBMF
-            generalInfoBMF infoBMF = new();
-            infoBMF.face = infoFFD.fontName;
-            infoBMF.charsCount = infoFFD.charsCount;
-            infoBMF.kernsCount = infoFFD.kernsCount;
-            infoBMF.pages = infoFFD.pagesCount;
-            for (int i = 0; i < infoBMF.pages; i++)
+            bmf.generalInfo.face = infoFFD.fontName;
+            bmf.generalInfo.charsCount = infoFFD.charsCount;
+            bmf.generalInfo.kernsCount = infoFFD.kernsCount;
+            bmf.generalInfo.pages = infoFFD.pagesCount;
+            for (int i = 0; i < bmf.generalInfo.pages; i++)
             {
-                infoBMF.idImg.Add(i);
-                infoBMF.fileImg.Add(infoFFD.BitmapName[i]);
+                bmf.generalInfo.idImg.Add(i);
+                bmf.generalInfo.fileImg.Add(infoFFD.BitmapName[i]);
             }
 
             // Get width/height image font from user
-            (infoBMF.WidthImg, infoBMF.HeightImg) = getWidthHeightImageFont();
+            (bmf.generalInfo.WidthImg, bmf.generalInfo.HeightImg) = getWidthHeightImageFont();
 
             //convert charDescFFD 2 charDescBMF
-            List<charDescBMF> charDescList = new();
             foreach (charDescFFD charFFD in FFDDescList)
             {
-                (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(charFFD.UVLeft, charFFD.UVTop, charFFD.UVRight, charFFD.UVBottom, infoBMF.WidthImg, infoBMF.HeightImg);
+                (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(charFFD.UVLeft, charFFD.UVTop, charFFD.UVRight, charFFD.UVBottom, bmf.generalInfo.WidthImg, bmf.generalInfo.HeightImg);
                 float xoffset = Ulities.floatRevScaleInt(charFFD.xoffset, config.scaleXoffset);
                 float yoffset = Ulities.floatRevScaleInt(charFFD.yoffset, config.scaleYoffset);
 
-                charDescBMF charBMF = new();
+                BMFontStruct.charDesc charBMF = new();
                 charBMF.id = charFFD.id;
                 charBMF.x = x;
                 charBMF.y = y;
@@ -78,21 +78,20 @@ namespace FFDConverter
                 charBMF.yoffset = yoffset;
                 charBMF.xadvance = Ulities.floatRevScaleInt(charFFD.xadvance.xadvanceScale, config.scaleXadvance);
                 charBMF.page = charFFD.page;
-                charDescList.Add(charBMF);
+                bmf.charDescList.Add(charBMF);
             }
 
             // convert kernel
-            List<kernelDescBMF> kernelDescList = new();
             foreach (kernelDescFFD kernelFFD in FFDkernelList)
             {
-                kernelDescList.Add(new kernelDescBMF
+                bmf.kernelDescList.Add(new BMFontStruct.kernelDesc
                 {
                     first = kernelFFD.first,
                     second = kernelFFD.second,
                     amount = (kernelFFD.amountScale / (float)200)
                 });
             }
-            BMFontFormat.CreateTextBMF(outputFNT, infoBMF, charDescList, kernelDescList);
+            BMFontFormat.CreateTextBMF(outputFNT, bmf);
         }
 
         private static (int, int) getWidthHeightImageFont()

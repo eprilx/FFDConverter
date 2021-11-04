@@ -45,10 +45,8 @@ namespace FFDConverter
             FFDFormat.LoadFFD(inputFFD, ref infoFFD, FFDDescList, FFDxadvanceList, FFDkernelList, ref unkFFD, ref config);
 
             //Load BMFont
-            List<charDescBMF> BMFcharDescList = new();
-            List<kernelDescBMF> BMFkernelDescList = new();
-            generalInfoBMF infoBMF = new();
-            (infoBMF, BMFcharDescList, BMFkernelDescList) = BMFontFormat.LoadBMF(inputBMF);
+            BMFontStruct bmf = new();
+            bmf = BMFontFormat.LoadBMF(inputBMF);
 
             //Create FFD
             var output = File.Create(outputFFD);
@@ -57,30 +55,30 @@ namespace FFDConverter
             if (config.unkHeaderAC > 0)
             {
                 output.WriteBytes(unkFFD.unkHeaderAC);
-                uint asizeFFD = GetAsizeFFD(infoFFD, infoBMF, config);
+                uint asizeFFD = GetAsizeFFD(infoFFD, bmf.generalInfo, config);
                 output.WriteValueU32(asizeFFD);
             }
             output.WriteBytes(unkFFD.unkHeader1);
             output.WriteValueU8(infoFFD.pagesCount);
-            output.WriteValueU16((ushort)infoBMF.charsCount);
+            output.WriteValueU16((ushort)bmf.generalInfo.charsCount);
             output.WriteBytes(unkFFD.unkHeader2);
 
-            uint OffsetBitmapNames = GetOffsetBitmapNames(infoFFD, infoBMF);
+            uint OffsetBitmapNames = GetOffsetBitmapNames(infoFFD, bmf.generalInfo);
             output.WriteValueU32(OffsetBitmapNames);
             output.WriteBytes(unkFFD.unkHeader3);
             output.WriteValueU8((byte)infoFFD.fontName.Length);
             output.WriteString(infoFFD.fontName);
-            output.WriteValueU16((ushort)infoBMF.charsCount);
+            output.WriteValueU16((ushort)bmf.generalInfo.charsCount);
 
             //Write table 1, 2
             if (!infoFFD.table1EqualZero)
             {
                 // write table 1 and 2
-                for (int i = 0; i <= infoBMF.charsCount; i++)
+                for (int i = 0; i <= bmf.generalInfo.charsCount; i++)
                 {
-                    output.WriteValueU16((ushort)((infoBMF.charsCount * 2) + 2 + (i * 2)));
+                    output.WriteValueU16((ushort)((bmf.generalInfo.charsCount * 2) + 2 + (i * 2)));
                 }
-                for (int i = 0; i < infoBMF.charsCount; i++)
+                for (int i = 0; i < bmf.generalInfo.charsCount; i++)
                 {
                     output.WriteValueU16((ushort)infoFFD.table2Value);
                 }
@@ -90,49 +88,49 @@ namespace FFDConverter
                 // write only table1 = 0, table2 = null
                 if (infoFFD.table1Type == Type.U32)
                 {
-                    for (int i = 0; i < infoBMF.charsCount; i++)
+                    for (int i = 0; i < bmf.generalInfo.charsCount; i++)
                     {
                         output.WriteValueU32(0);
                     }
                     // write size table34
-                    uint sizeTable34 = (uint)((infoBMF.charsCount * 4) + 4);
+                    uint sizeTable34 = (uint)((bmf.generalInfo.charsCount * 4) + 4);
                     output.WriteValueU32(sizeTable34);
                 }
                 else if (infoFFD.table1Type == Type.U16)
                 {
-                    for (int i = 0; i < infoBMF.charsCount; i++)
+                    for (int i = 0; i < bmf.generalInfo.charsCount; i++)
                     {
                         output.WriteValueU16(0);
                     }
                     // write size table34
-                    uint sizeTable34 = (uint)((infoBMF.charsCount * 2) + 2);
+                    uint sizeTable34 = (uint)((bmf.generalInfo.charsCount * 2) + 2);
                     output.WriteValueU16((ushort)sizeTable34);
                 }
             }
 
-            foreach (charDescBMF infoChar in BMFcharDescList)
+            foreach (BMFontStruct.charDesc infoChar in bmf.charDescList)
             {
                 output.WriteValueU16((ushort)infoChar.id);
             }
 
             output.WriteBytes(unkFFD.unk6bytes);
 
-            foreach (charDescBMF infoChar in BMFcharDescList)
+            foreach (BMFontStruct.charDesc infoChar in bmf.charDescList)
             {
                 output.WriteByte(0);
                 output.WriteByte((byte)(Ulities.floatScaleInt(infoChar.xadvance, config.scaleXadvance)));
             }
 
-            for (int i = 0; i < infoBMF.charsCount; i++)
+            for (int i = 0; i < bmf.generalInfo.charsCount; i++)
             {
                 output.WriteValueU16((ushort)infoFFD.table5Value);
             }
 
-            if (infoFFD.kernsCount > 0 && infoBMF.kernsCount > 0)
+            if (infoFFD.kernsCount > 0 && bmf.generalInfo.kernsCount > 0)
             {
                 //kernel stuff
-                output.WriteValueU16((ushort)infoBMF.kernsCount);
-                foreach (kernelDescBMF kerning in BMFkernelDescList)
+                output.WriteValueU16((ushort)bmf.generalInfo.kernsCount);
+                foreach (BMFontStruct.kernelDesc kerning in bmf.kernelDescList)
                 {
                     output.WriteValueU16((ushort)kerning.first);
                     output.WriteValueU16((ushort)kerning.second);
@@ -149,11 +147,11 @@ namespace FFDConverter
                 output.WriteStringZ(infoFFD.BitmapName[i]);
             }
 
-            foreach (charDescBMF infoChar in BMFcharDescList)
+            foreach (BMFontStruct.charDesc infoChar in bmf.charDescList)
             {
                 output.WriteValueU16((ushort)infoChar.id);
                 output.WriteByte((byte)infoChar.page);
-                (float UVleft, float UVtop, float UVright, float UVbottom) = Ulities.getUVmappingFromPoint(infoChar.x, infoChar.y, infoChar.width, infoChar.height, infoBMF.WidthImg, infoBMF.HeightImg);
+                (float UVleft, float UVtop, float UVright, float UVbottom) = Ulities.getUVmappingFromPoint(infoChar.x, infoChar.y, infoChar.width, infoChar.height, bmf.generalInfo.WidthImg, bmf.generalInfo.HeightImg);
                 output.WriteValueF32(UVleft);
                 output.WriteValueF32(UVtop);
                 output.WriteValueF32(UVright);
@@ -175,7 +173,7 @@ namespace FFDConverter
             output.Close();
         }
 
-        private static uint GetOffsetBitmapNames(generalInfoFFD infoFFD, generalInfoBMF infoBMF)
+        private static uint GetOffsetBitmapNames(generalInfoFFD infoFFD, BMFontStruct.general infoBMF)
         {
             int sizefontName = infoFFD.fontName.Length + 1;
             int sizeTable1 = (infoBMF.charsCount * 2) + 2 + 2;
@@ -206,7 +204,7 @@ namespace FFDConverter
             return OffsetBitmapNames;
         }
 
-        private static uint GetAsizeFFD(generalInfoFFD infoFFD, generalInfoBMF infoBMF, Config config)
+        private static uint GetAsizeFFD(generalInfoFFD infoFFD, BMFontStruct.general infoBMF, Config config)
         {
             uint asize = 0;
             asize += (uint)(config.unkHeader1 + 3 + config.unkHeader2 + 4);
