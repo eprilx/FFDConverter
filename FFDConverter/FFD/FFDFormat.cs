@@ -151,7 +151,7 @@ namespace FFDConverter
                 unkFFD.unkHeader1 = input.ReadBytes(3);
                 switch (config.nameGame)
                 {
-                    case "Anno2025 - Anno2025":
+                    case "Anno 2025 - Anno2025":
                         if (scaleFont > 8000)
                         {
                             config.scaleXoffset = 8;
