@@ -43,6 +43,7 @@ namespace FFDConverter
         public int unkHeader2;
         public int unkHeader3;
         public int unkHeaderAC;
+        public string nameGame;
     }
     public class DefaultConfig
     {
@@ -66,6 +67,7 @@ namespace FFDConverter
                 string nameGame = xmlString.Attribute("name").Value;
                 if (nameGame.Contains(versionGame))
                 {
+                    config.nameGame = nameGame;
                     config.scaleXoffset = float.Parse(xmlString.Attribute("scaleXoffset").Value);
                     config.scaleYoffset = float.Parse(xmlString.Attribute("scaleYoffset").Value);
                     config.scaleWidth = float.Parse(xmlString.Attribute("scaleWidth").Value);

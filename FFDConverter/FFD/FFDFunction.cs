@@ -28,7 +28,7 @@ using System.IO;
 
 namespace FFDConverter
 {
-    class FFDFunction : FFDFormat
+    public static class FFDFunction
     {
         public static void ConvertFFDtoFNT(string inputFFD, string outputFNT, string versionGame)
         {
@@ -36,8 +36,7 @@ namespace FFDConverter
             Config config = DefaultConfig.Get(versionGame);
 
             //Load FFD
-            FFDStruct ffd = new();
-            LoadFFD(inputFFD, ref ffd, ref config);
+            FFDStruct ffd = FFDFormat.Load(inputFFD, ref config);
 
             //generalInfoBMF BMFinfo, List< charDescBMF > charDescList, List<kernelDescBMF> kernelDescList)
 
@@ -61,8 +60,8 @@ namespace FFDConverter
             foreach (FFDStruct.charDesc charFFD in ffd.charDescList)
             {
                 (float x, float y, float width, float height) = Ulities.getPointFromUVmapping(charFFD.UVLeft, charFFD.UVTop, charFFD.UVRight, charFFD.UVBottom, bmf.generalInfo.WidthImg, bmf.generalInfo.HeightImg);
-                float xoffset = Ulities.floatRevScaleInt(charFFD.xoffset, config.scaleXoffset);
-                float yoffset = Ulities.floatRevScaleInt(charFFD.yoffset, config.scaleYoffset);
+                float xoffset = Ulities.floatRevScale(charFFD.xoffset, config.scaleXoffset);
+                float yoffset = Ulities.floatRevScale(charFFD.yoffset, config.scaleYoffset);
 
                 BMFontStruct.charDesc charBMF = new();
                 charBMF.id = charFFD.id;
@@ -72,7 +71,7 @@ namespace FFDConverter
                 charBMF.height = height;
                 charBMF.xoffset = xoffset;
                 charBMF.yoffset = yoffset;
-                charBMF.xadvance = Ulities.floatRevScaleInt(charFFD.xadvance.xadvanceScale, config.scaleXadvance);
+                charBMF.xadvance = Ulities.floatRevScale(charFFD.xadvance.xadvanceScale, config.scaleXadvance);
                 charBMF.page = charFFD.page;
                 bmf.charDescList.Add(charBMF);
             }
@@ -87,7 +86,7 @@ namespace FFDConverter
                     amount = kernelFFD.amountScale / (float)200
                 });
             }
-            BMFontFormat.CreateTextBMF(outputFNT, bmf);
+            BMFontFormat.CreateText(outputFNT, bmf);
         }
 
         public static void CreateFFDfromFNT(string inputFFD, string inputBMF, string outputFFD, string versionGame)
@@ -96,12 +95,10 @@ namespace FFDConverter
             Config config = DefaultConfig.Get(versionGame);
 
             //Load FFD
-            FFDStruct ffd = new();
-            LoadFFD(inputFFD, ref ffd, ref config);
+            FFDStruct ffd = FFDFormat.Load(inputFFD, ref config);
 
             //Load BMFont
-            BMFontStruct bmf = new();
-            bmf = BMFontFormat.LoadBMF(inputBMF);
+            BMFontStruct bmf = BMFontFormat.Load(inputBMF);
 
             //Create FFD
             var output = File.Create(outputFFD);
@@ -173,7 +170,7 @@ namespace FFDConverter
             foreach (BMFontStruct.charDesc infoChar in bmf.charDescList)
             {
                 output.WriteByte(0);
-                output.WriteByte((byte)(Ulities.floatScaleInt(infoChar.xadvance, config.scaleXadvance)));
+                output.WriteByte((byte)Ulities.floatScaleInt(infoChar.xadvance, config.scaleXadvance));
             }
 
             for (int i = 0; i < bmf.generalInfo.charsCount; i++)
@@ -216,7 +213,7 @@ namespace FFDConverter
                 if (infoChar.width < 0)
                 {
                     output.WriteValueU16((ushort)(Ulities.floatScaleInt(infoChar.height, config.scaleHeight)));
-                    output.WriteValueU16((ushort)(Ulities.floatScaleInt(-infoChar.width, config.scaleWidth)));
+                    output.WriteValueU16((ushort)Ulities.floatScaleInt(-infoChar.width, config.scaleWidth));
                 }
                 else
                 {
@@ -280,7 +277,7 @@ namespace FFDConverter
             {
                 asize += (uint)(infoFFD.BitmapName[i].Length + 1);
             }
-            asize += (uint)(infoBMF.charsCount * 27 + (config.unkHeaderAC - 9));
+            asize += (uint)((infoBMF.charsCount * 27) + (config.unkHeaderAC - 9));
             return asize;
         }
     }

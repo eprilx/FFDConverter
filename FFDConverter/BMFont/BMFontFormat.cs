@@ -31,9 +31,9 @@ using System.Xml.Linq;
 
 namespace FFDConverter
 {
-    class BMFontFormat
+    class BMFontFormat : BMFontStruct
     {
-        public static BMFontStruct LoadBMF(string inputBMF)
+        public static BMFontStruct Load(string inputBMF)
         {
             try
             {
@@ -41,12 +41,12 @@ namespace FFDConverter
             }
             catch (XmlException)
             {
-                return LoadTextBMF(inputBMF);
+                return LoadText(inputBMF);
             }
-            return LoadXMLBMF(inputBMF);
+            return LoadXML(inputBMF);
         }
 
-        private static BMFontStruct LoadXMLBMF(string inputBMF)
+        private static BMFontStruct LoadXML(string inputBMF)
         {
             BMFontStruct bmf = new();
 
@@ -66,7 +66,7 @@ namespace FFDConverter
             IEnumerable<XElement> _xmlStringinfo = xmlRoot.Elements("info");
             foreach (XElement xmlString in _xmlStringinfo)
             {
-                bmf.generalInfo.face = (string)xmlString.Attribute("face").Value;
+                bmf.generalInfo.face = xmlString.Attribute("face").Value;
                 bmf.generalInfo.size = int.Parse(xmlString.Attribute("size").Value);
                 bmf.generalInfo.bold = int.Parse(xmlString.Attribute("bold").Value);
                 bmf.generalInfo.italic = int.Parse(xmlString.Attribute("italic").Value);
@@ -79,7 +79,7 @@ namespace FFDConverter
                 IEnumerable<XElement> xmlStrings = xmlSection.Elements("char");
                 foreach (XElement xmlString in xmlStrings)
                 {
-                    bmf.charDescList.Add(new BMFontStruct.charDesc
+                    bmf.charDescList.Add(new charDesc
                     {
                         id = int.Parse(xmlString.Attribute("id").Value),
                         x = float.Parse(xmlString.Attribute("x").Value),
@@ -105,7 +105,7 @@ namespace FFDConverter
                     IEnumerable<XElement> xmlStrings = xmlSection.Elements("kerning");
                     foreach (XElement xmlString in xmlStrings)
                     {
-                        bmf.kernelDescList.Add(new BMFontStruct.kernelDesc
+                        bmf.kernelDescList.Add(new kernelDesc
                         {
                             first = int.Parse(xmlString.Attribute("first").Value),
                             second = int.Parse(xmlString.Attribute("second").Value),
@@ -117,7 +117,7 @@ namespace FFDConverter
             return bmf;
         }
 
-        private static BMFontStruct LoadTextBMF(string inputBMF)
+        private static BMFontStruct LoadText(string inputBMF)
         {
             BMFontStruct bmf = new();
             List<string> input = new();
@@ -154,7 +154,7 @@ namespace FFDConverter
             for (int i = 1; i <= bmf.generalInfo.charsCount; i++)
             {
                 string _char = input[2 + bmf.generalInfo.pages + i];
-                bmf.charDescList.Add(new BMFontStruct.charDesc
+                bmf.charDescList.Add(new charDesc
                 {
                     id = int.Parse(Ulities.StringBetween(_char, "id=", " ")),
                     x = float.Parse(Ulities.StringBetween(_char, "x=", " ")),
@@ -177,7 +177,7 @@ namespace FFDConverter
                 for (int i = 1; i <= bmf.generalInfo.kernsCount; i++)
                 {
                     string kern = input[kernLine + i];
-                    bmf.kernelDescList.Add(new BMFontStruct.kernelDesc
+                    bmf.kernelDescList.Add(new kernelDesc
                     {
                         first = int.Parse(Ulities.StringBetween(kern, "first=", " ")),
                         second = int.Parse(Ulities.StringBetween(kern, "second=", " ")),
@@ -192,7 +192,7 @@ namespace FFDConverter
             return bmf;
         }
 
-        public static void CreateTextBMF(string outputBMF, BMFontStruct bmf)
+        public static void CreateText(string outputBMF, BMFontStruct bmf)
         {
             var output = File.CreateText(outputBMF);
             //info face = "TITANESE Regular" size = 32 bold = 0 italic = 0 charset = "" unicode = 0 stretchH = 100 smooth = 1 aa = 1 padding = 4,4,4,4 spacing = -8,-8
@@ -209,7 +209,7 @@ namespace FFDConverter
             //chars count=97
             output.WriteLine(String.Format("chars count={0}", bmf.generalInfo.charsCount));
 
-            foreach (BMFontStruct.charDesc _char in bmf.charDescList)
+            foreach (charDesc _char in bmf.charDescList)
             {
                 //char id=0       x=169  y=0    width=34   height=67   xoffset=4    yoffset=16   xadvance=42   page=0    chnl=0 
                 output.WriteLine(String.Format("char id={0,-8}x={1,-8:0.00}y={2,-8:0.00}width={3,-8:0.00}height={4,-8:0.00}xoffset={5,-8:0.00}yoffset={6,-8:0.00}xadvance={7,-8:0.00}page={8,-8}chnl={9,-8}", _char.id, _char.x, _char.y, _char.width, _char.height, _char.xoffset, _char.yoffset, _char.xadvance, _char.page, _char.chnl));
@@ -217,7 +217,7 @@ namespace FFDConverter
 
             //kernings count=667
             output.WriteLine(String.Format("kernings count={0}", bmf.generalInfo.kernsCount));
-            foreach (BMFontStruct.kernelDesc kerning in bmf.kernelDescList)
+            foreach (kernelDesc kerning in bmf.kernelDescList)
             {
                 //kerning first=57 second=56 amount=-2
                 output.WriteLine(String.Format("kerning first={0,-5} second={1,-5} amount={2,-5:0.0}", kerning.first, kerning.second, kerning.amount));

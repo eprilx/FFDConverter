@@ -2,7 +2,7 @@
   "profiles": {
     "FFDConverter": {
       "commandName": "Project",
-      "commandLineArgs": "--fnt2ffd -v IamAlive -f \"IamAlive\\Chainprinter_Latin.ffd\" -b arialFC5.fnt -o new.ffd"
+      "commandLineArgs": "--fnt2ffd -v Anno -f \"Anno2025\\roboto_medium_default.ffd\" -b arialFC5.fnt"
     }
   }
 }
