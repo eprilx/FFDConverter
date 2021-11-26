@@ -74,6 +74,7 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 - [halfway](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=65552) (providing sample files for FC3)
 - [ramyzahran](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=63812) (providing sample files for FC Primal)
 - [shadow_lonely](https://zenhax.com/memberlist.php?mode=viewprofile&u=221) (providing sample files for I Am Alive)
+- [CloudBank-3055](https://github.com/CloudBank-3055) (providing sample files for Anno 2025)
 - [Rick Gibbed](https://github.com/gibbed) ([Gibbed.IO](https://github.com/gibbed/Gibbed.IO) library)
 ## TODO
 [Support more game.](https://github.com/eprilx/FFDConverter/issues/2)
