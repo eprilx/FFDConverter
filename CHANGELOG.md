@@ -1,5 +1,5 @@
 Supported games:
-- Far Cry: 3, BloodDragon, Primal, 4, 5, New Dawn
+- Far Cry: 3, BloodDragon, Primal, 4, 5, New Dawn (for Far Cry 2 use [FC2MFTConverter](https://github.com/eprilx/FC2MFTConverter))
 - Assassin Creed: 2, Brotherhood, Revelation, 3, Liberation HD, 3 Remastered, 4, Rogue
 - Watch dogs: 1, 2, Legion
 - I Am Alive
