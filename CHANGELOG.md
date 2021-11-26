@@ -3,7 +3,7 @@ Supported games:
 - Assassin Creed: 2, Brotherhood, Revelation, 3, Liberation HD, 3 Remastered, 4, Rogue
 - Watch dogs: 1, 2, Legion
 - I Am Alive
-- Anno 2025
+- Anno 2205
 
 Make sure installed [.Net 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
 
