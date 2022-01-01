@@ -99,6 +99,7 @@ namespace FFDConverter
 
             //Load BMFont
             BMFontStruct bmf = BMFontFormat.Load(inputBMF);
+            bmf.SortCharDescListById();
 
             //Create FFD
             var output = File.Create(outputFFD);
