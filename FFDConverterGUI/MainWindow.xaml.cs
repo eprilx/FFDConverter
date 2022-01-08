@@ -53,8 +53,7 @@ namespace FFDConverterGUI
             string ToolVersion;
             try
             {
-                ToolVersion = Assembly.LoadFrom("FFDConverter.dll").GetName().Version.ToString();
-                ToolVersion = ToolVersion.Remove(ToolVersion.Length - 2);
+                ToolVersion = FileVersionInfo.GetVersionInfo("FFDConverter.dll").FileVersion;
                 Hide();
                 AutoUpdater.Synchronous = true;
                 AutoUpdater.InstalledVersion = new Version(ToolVersion);
