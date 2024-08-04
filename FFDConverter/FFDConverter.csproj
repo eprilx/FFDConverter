@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <NeutralLanguage>en</NeutralLanguage>
     <AssemblyVersion>1.3.2</AssemblyVersion>
     <PackageProjectUrl>https://github.com/eprilx/FFDConverter</PackageProjectUrl>
@@ -13,18 +12,14 @@
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
-
   <PropertyGroup>
     <OutputPath>..\bin\</OutputPath>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
   </PropertyGroup>
-
-
   <ItemGroup>
     <None Update="config.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>
