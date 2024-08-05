@@ -241,7 +241,7 @@ namespace FFDConverter
             else if (infoFFD.table1Type == general.Type.U16)
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU16(); // = 0
-            else if (infoFFD.table1Type == general.Type.U16)
+            else if (infoFFD.table1Type == general.Type.U32)
                 for (int i = 0; i < infoFFD.charsCount; i++)
                     input.ReadValueU32(); // = 0
         }
