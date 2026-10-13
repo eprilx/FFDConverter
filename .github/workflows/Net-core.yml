@@ -12,18 +12,20 @@ on:
 jobs:
   check-console-win:
     runs-on: windows-latest
-    
+      
     steps:
-    # setup  
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Checkout repository & submodules
+      uses: actions/checkout@v4
       with:
-        dotnet-version: 8.0.x
-    - uses: microsoft/setup-msbuild@v1.0.2
+        submodules: recursive
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
 
     - name: Get version
       uses: naminodarie/get-net-sdk-project-versions-action@v1
@@ -31,29 +33,31 @@ jobs:
       with:
         proj-path: ./FFDConverter/FFDConverter.csproj
 
-    - name: publish FFDConverter
+    - name: Publish FFDConverter
       run: msbuild .\FFDConverter\FFDConverter.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/console/windows" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
 
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
-        name: windows_${{steps.get-version.outputs.assembly-version}}
+        name: windows_${{ steps.get-version.outputs.assembly-version }}
         path: ./publish/console/windows
 
   check-gui-win:
     runs-on: windows-latest
-    
+      
     steps:
-    # setup  
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+    - name: Checkout repository & submodules
+      uses: actions/checkout@v4
       with:
-        dotnet-version: 8.0.x
-    - uses: microsoft/setup-msbuild@v1.0.2
+        submodules: recursive
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
 
     - name: Get version
       uses: naminodarie/get-net-sdk-project-versions-action@v1
@@ -61,46 +65,49 @@ jobs:
       with:
         proj-path: ./FFDConverterGUI/FFDConverterGUI.csproj
 
-    - name: publish FFDConverter
+    - name: Publish FFDConverterGUI
       run: msbuild .\FFDConverterGUI\FFDConverterGUI.csproj -t:restore -t:Build -t:Publish /p:PublishDir="../publish/gui/windows" /p:Configuration=Release /p:SelfContained=False /p:PublishReadyToRun=False /p:PublishTrimmed=False
 
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
-        name: windows_gui_${{steps.get-version.outputs.assembly-version}}
+        name: windows_gui_${{ steps.get-version.outputs.assembly-version }}
         path: ./publish/gui/windows
  
   check-console-linux:
     runs-on: ubuntu-latest
-    
-    steps:
-    # setup  
-    - name: checkout
-      uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 8.0.x
-
-    - name: Restore dependencies
-      run: dotnet restore FFDConverter/FFDConverter.csproj
-    - name: Build
-      run: dotnet build  FFDConverter/FFDConverter.csproj --no-restore
-    - name: Test
-      run: dotnet test FFDConverter/FFDConverter.csproj --no-build --verbosity normal
-    - name: Publish
-      run: dotnet publish FFDConverter/FFDConverter.csproj -c Release -o "publish/console/linux/"
       
+    steps:
+    - name: Checkout repository & submodules
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 10.0.x
+
     - name: Get version
       uses: naminodarie/get-net-sdk-project-versions-action@v1
       id: get-version
       with:
         proj-path: ./FFDConverter/FFDConverter.csproj
 
+    - name: Restore dependencies
+      run: dotnet restore FFDConverter/FFDConverter.csproj
+
+    - name: Build
+      run: dotnet build FFDConverter/FFDConverter.csproj --no-restore
+
+    - name: Test
+      run: dotnet test FFDConverter/FFDConverter.csproj --no-build --verbosity normal
+
+    - name: Publish
+      run: dotnet publish FFDConverter/FFDConverter.csproj -c Release -o "publish/console/linux/"
+      
     - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
-        name: linux_${{steps.get-version.outputs.assembly-version}}
-        path: /home/runner/work/FFDConverter/FFDConverter/publish/console/linux
+        name: linux_${{ steps.get-version.outputs.assembly-version }}
+        path: publish/console/linux

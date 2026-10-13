@@ -10,14 +10,14 @@ jobs:
     steps:
     # setup  
     - name: checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
       with:
         submodules: recursive
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
-    - uses: microsoft/setup-msbuild@v1.0.2
+        dotnet-version: 10.0.x
+    - uses: microsoft/setup-msbuild@v2
 
      # environmental variables
     - run: echo "PROJC=./FFDConverter/FFDConverter.csproj" >> $env:GITHUB_ENV
