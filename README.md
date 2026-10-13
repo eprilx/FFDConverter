@@ -55,7 +55,7 @@ FFDConverter --ffd2fnt -v FC5 -f fcz_bold_default.ffd -o - fcz_bold_default.ffd.
 *Note 2: Make font more smoother without nasty pixel, try creating [signed distance field font with Hiero](https://libgdx.com/wiki/graphics/2d/fonts/distance-field-fonts#generating-the-font) or searching about ``signed distance field`` for more solution.*
 
 If the font is displayed incorrectly in game, you should edit config.xml to be more compatible.
-- *scaleXadvance = 1.0 (left) and scaleXadvance = 1.3 (right)*
+- *scaleXadvance = 1.0 (left) and scaleXadvance = 1.3 (right) (Additionally, try setting the addCustomXadvance = 10, 20...)*
 
 <img src="sampleImg/1.0xadvance.png" height="360"/>&emsp;<img src="sampleImg/1.3xadvance.png" height="360"/>
 
