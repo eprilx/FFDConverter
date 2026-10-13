@@ -16,7 +16,7 @@
     <RepositoryUrl>https://github.com/eprilx/FFDConverter</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Copyright>Copyright (c) 2021 eprilx</Copyright>
+    <Copyright>Copyright (c) 2021-2026 eprilx</Copyright>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Autoupdater.NET.Official" Version="1.9.3" />

@@ -1,7 +1,7 @@
 ﻿/*
 MIT License
 
-Copyright (c) 2021 eprilx
+Copyright (c) 2021-2026 eprilx
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
