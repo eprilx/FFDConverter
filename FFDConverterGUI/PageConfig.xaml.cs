@@ -48,6 +48,7 @@ namespace FFDConverterGUI
             scaleH.Text = config.scaleHeight.ToString();
             scaleXadv.Text = config.scaleXadvance.ToString();
             addY.Text = config.addCustomYoffset.ToString();
+            addX.Text = config.addCustomXadvance.ToString();
             scaleXoff.Text = config.scaleXoffset.ToString();
             scaleYoff.Text = config.scaleYoffset.ToString();
         }
@@ -60,6 +61,7 @@ namespace FFDConverterGUI
                 float.TryParse(scaleH.Text, out config.scaleHeight);
                 float.TryParse(scaleXadv.Text, out config.scaleXadvance);
                 int.TryParse(addY.Text, out config.addCustomYoffset);
+                float.TryParse(addX.Text, out config.addCustomXadvance);
                 float.TryParse(scaleXoff.Text, out config.scaleXoffset);
                 float.TryParse(scaleYoff.Text, out config.scaleYoffset);
                 DefaultConfig.Set(gameName, config);

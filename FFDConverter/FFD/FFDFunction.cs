@@ -171,7 +171,7 @@ namespace FFDConverter
             foreach (BMFontStruct.charDesc infoChar in bmf.charDescList)
             {
                 output.WriteByte(0);
-                output.WriteByte((byte)Ulities.floatScaleInt(infoChar.xadvance, config.scaleXadvance));
+                output.WriteByte((byte)Ulities.floatScaleInt(infoChar.xadvance + config.addCustomXadvance, config.scaleXadvance));
             }
 
             for (int i = 0; i < bmf.generalInfo.charsCount; i++)

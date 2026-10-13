@@ -7,7 +7,7 @@ FFDConverter is a tool used for creating/editing custom bitmap fonts for AnvilNe
 - Run `FFDConverterGUI.exe` (or run FFDConverter.exe in the cmd)
 
 ## Building from source
-- **[Install .NET 5](https://dotnet.microsoft.com/download/dotnet/5.0)**
+- **[Install .NET 10](https://dotnet.microsoft.com/download/dotnet/10.0)**
 - ``git clone --recurse-submodules https://github.com/eprilx/FFDConverter.git``
 
 ## Usage
@@ -75,6 +75,7 @@ If the font is displayed incorrectly in game, you should edit config.xml to be m
 - [ramyzahran](https://forum.xentax.com/memberlist.php?mode=viewprofile&u=63812) (providing sample files for FC Primal)
 - [shadow_lonely](https://zenhax.com/memberlist.php?mode=viewprofile&u=221) (providing sample files for I Am Alive)
 - [CloudBank-3055](https://github.com/CloudBank-3055) (providing sample files for Anno 2205)
+- [Gmk999](https://github.com/Gmk999) (providing sample files for Prince of Persia: The Forgotten Sands)
 - [Rick Gibbed](https://github.com/gibbed) ([Gibbed.IO](https://github.com/gibbed/Gibbed.IO) library)
 ## TODO
 [Support more game.](https://github.com/eprilx/FFDConverter/issues/2)

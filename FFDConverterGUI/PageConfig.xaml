@@ -6,7 +6,7 @@
     xmlns:local="clr-namespace:FFDConverterGUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Width="326"
-    Height="261"
+    Height="300"
     Background="#FFEFEFEF"
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
@@ -33,16 +33,22 @@
             Margin="0,90,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Add custom Y-offset = "
+            Content="Add custom Xadvance = "
             FontSize="15" />
         <Label
             Margin="0,120,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Content="Scale X-offset = "
+            Content="Add custom Y-offset = "
             FontSize="15" />
         <Label
             Margin="0,150,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Content="Scale X-offset = "
+            FontSize="15" />
+        <Label
+            Margin="0,180,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Content="Scale Y-offset = "
@@ -75,7 +81,7 @@
             PreviewTextInput="PreviewTextInput_"
             TextWrapping="Wrap" />
         <TextBox
-            x:Name="addY"
+            x:Name="addX"
             Width="140"
             Margin="180,90,0,0"
             HorizontalAlignment="Left"
@@ -84,7 +90,7 @@
             PreviewTextInput="PreviewTextInput_"
             TextWrapping="Wrap" />
         <TextBox
-            x:Name="scaleXoff"
+            x:Name="addY"
             Width="140"
             Margin="180,120,0,0"
             HorizontalAlignment="Left"
@@ -93,9 +99,18 @@
             PreviewTextInput="PreviewTextInput_"
             TextWrapping="Wrap" />
         <TextBox
-            x:Name="scaleYoff"
+            x:Name="scaleXoff"
             Width="140"
             Margin="180,150,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            FontSize="15"
+            PreviewTextInput="PreviewTextInput_"
+            TextWrapping="Wrap" />
+        <TextBox
+            x:Name="scaleYoff"
+            Width="140"
+            Margin="180,180,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             FontSize="15"

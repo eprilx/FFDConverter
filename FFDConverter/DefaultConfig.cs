@@ -39,6 +39,7 @@ namespace FFDConverter
         public float scaleHeight;
         public float scaleXadvance;
         public int addCustomYoffset;
+        public float addCustomXadvance;
         public int unkHeader1;
         public int unkHeader2;
         public int unkHeader3;
@@ -74,6 +75,7 @@ namespace FFDConverter
                     config.scaleHeight = float.Parse(xmlString.Attribute("scaleHeight").Value);
                     config.scaleXadvance = float.Parse(xmlString.Attribute("scaleXadvance").Value);
                     config.addCustomYoffset = int.Parse(xmlString.Attribute("addCustomYoffset").Value);
+                    config.addCustomXadvance = float.Parse(xmlString.Attribute("addCustomXadvance").Value);
                     config.unkHeader1 = int.Parse(xmlString.Attribute("unkHeader1").Value);
                     config.unkHeader2 = int.Parse(xmlString.Attribute("unkHeader2").Value);
                     config.unkHeader3 = int.Parse(xmlString.Attribute("unkHeader3").Value);
@@ -111,6 +113,7 @@ namespace FFDConverter
                     xmlString.Attribute("scaleHeight").Value = config.scaleHeight.ToString();
                     xmlString.Attribute("scaleXadvance").Value = config.scaleXadvance.ToString();
                     xmlString.Attribute("addCustomYoffset").Value = config.addCustomYoffset.ToString();
+                    xmlString.Attribute("addCustomXadvance").Value = config.addCustomXadvance.ToString();
                     break;
                 }
             }
