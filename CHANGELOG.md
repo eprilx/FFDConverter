@@ -4,7 +4,8 @@ Supported games:
 - Watch dogs: 1, 2, Legion
 - I Am Alive
 - Anno 2205
+- Prince of Persia: The Forgotten Sands
 
-Make sure installed [.Net 5.0](https://dotnet.microsoft.com/download/dotnet/5.0)
+Make sure installed [.Net 10.0](https://dotnet.microsoft.com/download/dotnet/10.0)
 
 Read [here](https://github.com/eprilx/FFDConverter#usage) for some usage.
